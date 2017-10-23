@@ -4,5 +4,4 @@ App enables people to earn money by doing small jobs for people who don't have t
 
 # Participants
 
-Tin Ivan Križ
-Alen Carin
+Tin Ivan Križ, Alen Carin

@@ -8,4 +8,3 @@ App enables people to earn money by doing small jobs for people who don't have t
 * Alen Carin
 * Josip Kalafatić
 * Karlo Butorac
-*Ups krivo ime

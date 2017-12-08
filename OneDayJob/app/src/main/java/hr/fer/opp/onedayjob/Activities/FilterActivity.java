@@ -1,16 +1,15 @@
-package hr.fer.opp.onedayjob;
+package hr.fer.opp.onedayjob.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import hr.fer.opp.onedayjob.R;
+
+public class FilterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //test test
-        //Lude nove promjene
+        setContentView(R.layout.activity_filter);
     }
 }

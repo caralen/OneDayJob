@@ -9,10 +9,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
+
+        <ImageView
+            android:id="@+id/register_avatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/anonymous_user"
+            android:onClick="loadImage"/>
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ime" />
 
@@ -74,14 +87,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/datum_ro_enja" />
+            android:text="Broj godina" />
 
         <EditText
-            android:id="@+id/register_birthday"
+            android:id="@+id/register_years"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="number" />
 
         <TextView
             android:layout_width="match_parent"
@@ -113,11 +126,11 @@
             android:id="@+id/register_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="attemptRegister"
             android:text="@string/register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:onClick="attemptRegister"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 </ScrollView>

@@ -17,6 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:visibility="gone" />
 
     <ScrollView
@@ -66,18 +68,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:onClick="attemptLogin"
                 android:text="@string/signIn"
-                android:textStyle="bold"
-                android:onClick="attemptLogin"/>
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/open_register_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:onClick="openRegistration"
                 android:text="@string/register"
-                android:textStyle="bold"
-                android:onClick="openRegistration"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>

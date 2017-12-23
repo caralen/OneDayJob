@@ -118,6 +118,15 @@ public class Korisnik implements Serializable {
 
     @Override
     public String toString() {
-        return "Korisnik: " + ime + " " + prezime + " " + email + " " + brojTelefona;
+        return "\nKorisnik: \n" + ime + "\n" + prezime + "\n" + zaporkaHash+  "\n" + email + "\n" + brojTelefona +"\n" + dob + "\n" + jeValidiran + "\n" + datumRegistracije + "\n" + opis;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Korisnik)){
+            return false;
+        }
+        Korisnik other = (Korisnik) obj;
+        return other.getEmail().equals(email);
     }
 }

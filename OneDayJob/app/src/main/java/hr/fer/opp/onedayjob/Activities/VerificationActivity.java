@@ -6,13 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.util.Util;
 
 public class VerificationActivity extends AppCompatActivity {
+
+    private boolean fillTestCode = true;
 
     @BindView(R.id.verification_code)
     EditText verificationCode;
@@ -23,18 +27,23 @@ public class VerificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verification);
         ButterKnife.bind(this);
 
+        if(fillTestCode){
+            verificationCode.setText("3418");
+        }
     }
-    void attemptVerification(View view){
-        /*// get user email from bundle
-        String userGivenCode = verificationCode.getText().toString();
-        if(!Util.checkVerification("user email froom bundle", userGivenCode)){
-            Toast.makeText(this, "Invalid code given!", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
+    public void attemptVerification(View view){
+
         Korisnik noviKorisnik = (Korisnik) getIntent().getExtras().get("noviKorisnik");
+        Integer userGivenCode = Integer.parseInt(verificationCode.getText().toString());
+        int expected = Util.calculateVerificationHash(noviKorisnik.getEmail());
+
+        if(!userGivenCode.equals(expected)){
+            Toast.makeText(this, "Invalid code given! Expected " + expected, Toast.LENGTH_SHORT).show();
+            return;
+        }
         noviKorisnik.setJeValidiran(true);
+        Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik.getEmail());
         //Spremi ga u bazu
-        Log.d("vrlo bitno", "attemptVerification: " + noviKorisnik);
        Intent intent = new Intent(VerificationActivity.this, LoginActivity.class);
        startActivity(intent);
     }

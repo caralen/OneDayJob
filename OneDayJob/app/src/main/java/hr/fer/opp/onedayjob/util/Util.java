@@ -6,8 +6,11 @@ package hr.fer.opp.onedayjob.util;
 
 public class Util {
 
-    public static boolean checkVerification(String email, String code){
-        return true;
+    /**
+     * Računa hash od maila kao četvorznamenkasti kraj od hashCode metode
+     */
+    public static int calculateVerificationHash(String email){
+        return Math.abs(email.hashCode()%10000);
     }
     public static String calculatePasswordHash(String password){
         return password;

@@ -26,24 +26,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegisterActivity"
-            android:label="@string/title_activity_register"/>
-        <activity android:name=".Activities.VerificationActivity"
-            android:label="@string/title_activity_verification"/>
-        <activity android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main"/>
-        <activity android:name=".Activities.FilterActivity"
-            android:label="@string/title_activity_filter"/>
-        <activity android:name=".Activities.ChatActivity"
-            android:label="@string/title_activity_chat"/>
-        <activity android:name=".Activities.ProfileActivity"
-            android:label="@string/title_activity_profile"/>
-        <activity android:name=".Activities.MailboxActivity"
-            android:label="@string/title_activity_mailbox"/>
-        <activity android:name=".Activities.GpsActivity"
-            android:label="@string/title_activity_gps"/>
-        <activity android:name=".Activities.JobManagementActivity"
-            android:label="@string/title_activity_job_management"/>
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".Activities.VerificationActivity"
+            android:label="@string/title_activity_verification" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:label="@string/title_activity_main" />
+        <activity
+            android:name=".Activities.FilterActivity"
+            android:label="@string/title_activity_filter" />
+        <activity
+            android:name=".Activities.ChatActivity"
+            android:label="@string/title_activity_chat" />
+        <activity
+            android:name=".Activities.ProfileActivity"
+            android:label="@string/title_activity_profile" />
+        <activity
+            android:name=".Activities.MailboxActivity"
+            android:label="@string/title_activity_mailbox" />
+        <activity
+            android:name=".Activities.GpsActivity"
+            android:label="@string/title_activity_gps" />
+        <activity
+            android:name=".Activities.JobManagementActivity"
+            android:label="@string/title_activity_job_management" />
+        <activity android:name=".Activities.ProfileViewActivity" />
+        <activity
+            android:name=".Activities.TheMainActivity"
+            android:label="@string/title_activity_the_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.JobActivity" />
+        <activity android:name=".Activities.StatisticsActivity"></activity>
     </application>
 
 </manifest>

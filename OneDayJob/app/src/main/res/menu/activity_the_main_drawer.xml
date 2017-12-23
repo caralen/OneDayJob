@@ -3,33 +3,35 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/filter_item"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Filter" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/moji_poslovi_item"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Moji poslovi" />
+
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/dodaj_posao_item"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Dodaj posao" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/statistika"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Statistika" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Dodatno">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/uredi_profil"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Uredi profil" />
+
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/odjava"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Odjava" />
         </menu>
     </item>
 

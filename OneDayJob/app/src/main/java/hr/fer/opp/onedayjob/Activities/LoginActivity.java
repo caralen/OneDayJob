@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.*/
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
             startActivity(intent);
             /*ovo se treba odkomentirati i iskoristiti kad ce se fakat spajat na backend*/
 //            showProgress(true);
@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //}
     }
 
-    void openRegistration(View view){
+    public void openRegistration(View view){
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

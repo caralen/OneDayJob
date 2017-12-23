@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Zaporke se ne poklapaju!", Toast.LENGTH_SHORT).show();
             return;
         }else if(!avatarSet){
-            Toast.makeText(this, "Morate koristiti vlastitu sliku kao avatar! Sliku možete promjeniti pristiskom na sliku", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Molim vas da pritiskom promjenite sliku na vrhu ekrana", Toast.LENGTH_SHORT).show();
             return;
         }
 

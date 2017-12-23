@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Date;
 
 import butterknife.BindView;
@@ -20,6 +22,7 @@ import hr.fer.opp.onedayjob.util.Util;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 69;
+    private boolean avatarSet = false;
 
     @BindView(R.id.register_avatar)
     ImageView avatar;
@@ -87,10 +90,13 @@ public class RegisterActivity extends AppCompatActivity {
         Korisnik noviKorisnik = new Korisnik(fName, lName, email, passHash, Short.parseShort(age), description, new Date(), phoneN);
 
         if (fName.isEmpty() || lName.isEmpty() || lName.isEmpty() || password.isEmpty() || email.isEmpty() || age.isEmpty() || description.isEmpty() || phoneN.isEmpty()) {
-            Toast.makeText(this, "All fields are required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sva polja su obavezna!", Toast.LENGTH_SHORT).show();
             return;
         } else if (!password.equals(password2)) {
-            Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Zaporke se ne poklapaju!", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(!avatarSet){
+            Toast.makeText(this, "Morate koristiti vlastitu sliku kao avatar! Sliku možete promjeniti pristiskom na sliku", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -117,14 +123,11 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
-
                 //Get ImageURi and load with help of picasso
                 //Uri selectedImageURI = data.getData();
-
-                Picasso.with(MainActivity1.this).load(data.getData()).noPlaceholder().centerCrop().fit()
-                        .into((ImageView) findViewById(R.id.imageView1));
+                avatarSet = true;
+                Picasso.with(RegisterActivity.this).load(data.getData()).noPlaceholder().centerCrop().fit().into(avatar);
             }
-
         }
     }
 }

@@ -38,7 +38,7 @@ public class VerificationActivity extends AppCompatActivity {
         int expected = Util.calculateVerificationHash(noviKorisnik.getEmail());
 
         if(!userGivenCode.equals(expected)){
-            Toast.makeText(this, "Invalid code given! Expected " + expected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Kod nije odgovarajuć! Očekivani kod je " + expected, Toast.LENGTH_SHORT).show();
             return;
         }
         noviKorisnik.setJeValidiran(true);

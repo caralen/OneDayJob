@@ -25,4 +25,12 @@
     </string>
     <string name="signIn">Sign in</string>
     <string name="register">Register</string>
+    <string name="kratki_opis">Kratki opis</string>
+    <string name="broj_mobitela">Broj mobitela</string>
+    <string name="mail">Mail</string>
+    <string name="ime">Ime</string>
+    <string name="prezime">Prezime</string>
+    <string name="zaporka">Zaporka</string>
+    <string name="ponovi_zaporku">Ponovi Zaporku</string>
+    <string name="datum_ro_enja">Datum rođenja</string>
 </resources>

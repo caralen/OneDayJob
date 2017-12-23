@@ -21,6 +21,21 @@ public class Korisnik implements Serializable {
 
     // TODO equals i hash
 
+
+    public Korisnik() {
+    }
+
+    public Korisnik(String ime, String prezime, String email, String zaporkaHash, short dob, String opis, Date datumRegistracije, String brojTelefona) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.email = email;
+        this.zaporkaHash = zaporkaHash;
+        this.dob = dob;
+        this.opis = opis;
+        this.datumRegistracije = datumRegistracije;
+        this.brojTelefona = brojTelefona;
+    }
+
     public String getKorisnikId() {
         return korisnikId;
     }
@@ -99,5 +114,10 @@ public class Korisnik implements Serializable {
 
     public void setJeValidiran(boolean jeValidiran) {
         this.jeValidiran = jeValidiran;
+    }
+
+    @Override
+    public String toString() {
+        return "Korisnik: " + ime + " " + prezime + " " + email + " " + brojTelefona;
     }
 }

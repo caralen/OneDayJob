@@ -24,7 +24,7 @@ public class VerificationActivity extends AppCompatActivity {
         });
     }
     private void attemptVerification(){
-       Intent intent = new Intent(VerificationActivity.this, MainActivity.class);
+       Intent intent = new Intent(VerificationActivity.this, TheMainActivity.class);
         startActivity(intent);
     }
 }

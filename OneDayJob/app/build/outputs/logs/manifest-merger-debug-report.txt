@@ -1,0 +1,237 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+MERGED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.1.aar\cb044e1b1c78784a1282e69eed61b928\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\27afa984f4d28262382bf67126139dd7\AndroidManifest.xml:2:1-11:12
+MERGED from [com.jakewharton:butterknife:8.6.0] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\butterknife-8.6.0.aar\1678d496f38eac0530847cd220ef33b9\AndroidManifest.xml:2:1-7:12
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.1.aar\10cb3051cddb6be460c871ee6d90ef97\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.1.aar\9d743bee7018f32bb173e21ac75a5463\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.3.1.aar\5e267b63f1b46b384c7a37ffad0bc9e0\AndroidManifest.xml:17:1-26:12
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\transition-25.3.1.aar\2002776a39dc01bb02ccc9e725299f38\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.1.aar\479804c7168ce9122ee80c4dd4537fa2\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.1.aar\39dcba43c4d8cb0452f9951a860a0284\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.1.aar\482f6fbbbe3db2a5d6469253e8595ce1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.1.aar\c3c6f4275ec95b414faae76be69a61b3\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.1.aar\8e648d6407db5d61f1b640abad0a5d63\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.1.aar\bd5d9c52c563fbbe1e932a9a528a3596\AndroidManifest.xml:17:1-31:12
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+	package
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:3:5-35
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:1-49:12
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:6:5-71
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:6:22-68
+uses-permission#android.permission.READ_PROFILE
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:7:5-71
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:7:22-68
+uses-permission#android.permission.READ_CONTACTS
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:8:5-72
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:8:22-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:9:5-66
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:9:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:10:5-81
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:10:22-78
+application
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:12:5-47:19
+MERGED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.1.aar\cb044e1b1c78784a1282e69eed61b928\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.1.aar\cb044e1b1c78784a1282e69eed61b928\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\27afa984f4d28262382bf67126139dd7\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\27afa984f4d28262382bf67126139dd7\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.1.aar\10cb3051cddb6be460c871ee6d90ef97\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.1.aar\10cb3051cddb6be460c871ee6d90ef97\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.1.aar\9d743bee7018f32bb173e21ac75a5463\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.1.aar\9d743bee7018f32bb173e21ac75a5463\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\transition-25.3.1.aar\2002776a39dc01bb02ccc9e725299f38\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\transition-25.3.1.aar\2002776a39dc01bb02ccc9e725299f38\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.1.aar\479804c7168ce9122ee80c4dd4537fa2\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.1.aar\479804c7168ce9122ee80c4dd4537fa2\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.1.aar\39dcba43c4d8cb0452f9951a860a0284\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.1.aar\39dcba43c4d8cb0452f9951a860a0284\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.1.aar\482f6fbbbe3db2a5d6469253e8595ce1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.1.aar\482f6fbbbe3db2a5d6469253e8595ce1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.1.aar\c3c6f4275ec95b414faae76be69a61b3\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.1.aar\c3c6f4275ec95b414faae76be69a61b3\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.1.aar\8e648d6407db5d61f1b640abad0a5d63\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.1.aar\8e648d6407db5d61f1b640abad0a5d63\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.1.aar\bd5d9c52c563fbbe1e932a9a528a3596\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.1.aar\bd5d9c52c563fbbe1e932a9a528a3596\AndroidManifest.xml:29:5-20
+	android:supportsRtl
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:17:9-35
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:15:9-41
+	android:roundIcon
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:16:9-54
+	android:icon
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:14:9-43
+	android:allowBackup
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:13:9-35
+	android:theme
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:18:9-40
+activity#hr.fer.opp.onedayjob.Activities.LoginActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:20:9-28:20
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:22:13-45
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:21:13-53
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:23:13-27:29
+action#android.intent.action.MAIN
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:24:17-69
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:24:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:26:17-77
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:26:27-74
+activity#hr.fer.opp.onedayjob.Activities.RegisterActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:29:9-30:62
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:30:13-60
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:29:19-62
+activity#hr.fer.opp.onedayjob.Activities.VerificationActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:31:9-32:66
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:32:13-64
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:31:19-66
+activity#hr.fer.opp.onedayjob.Activities.MainActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:33:9-34:58
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:34:13-56
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:33:19-58
+activity#hr.fer.opp.onedayjob.Activities.FilterActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:35:9-36:60
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:36:13-58
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:35:19-60
+activity#hr.fer.opp.onedayjob.Activities.ChatActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:37:9-38:58
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:38:13-56
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:37:19-58
+activity#hr.fer.opp.onedayjob.Activities.ProfileActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:39:9-40:61
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:40:13-59
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:39:19-61
+activity#hr.fer.opp.onedayjob.Activities.MailboxActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:41:9-42:61
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:42:13-59
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:41:19-61
+activity#hr.fer.opp.onedayjob.Activities.GpsActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:43:9-44:57
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:44:13-55
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:43:19-57
+activity#hr.fer.opp.onedayjob.Activities.JobManagementActivity
+ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:45:9-46:68
+	android:label
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:46:13-66
+	android:name
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml:45:19-67
+uses-sdk
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.1.aar\cb044e1b1c78784a1282e69eed61b928\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.1.aar\cb044e1b1c78784a1282e69eed61b928\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\27afa984f4d28262382bf67126139dd7\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\27afa984f4d28262382bf67126139dd7\AndroidManifest.xml:5:5-7:41
+MERGED from [com.jakewharton:butterknife:8.6.0] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\butterknife-8.6.0.aar\1678d496f38eac0530847cd220ef33b9\AndroidManifest.xml:5:5-43
+MERGED from [com.jakewharton:butterknife:8.6.0] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\butterknife-8.6.0.aar\1678d496f38eac0530847cd220ef33b9\AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.1.aar\10cb3051cddb6be460c871ee6d90ef97\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.1.aar\10cb3051cddb6be460c871ee6d90ef97\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.1.aar\9d743bee7018f32bb173e21ac75a5463\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.1.aar\9d743bee7018f32bb173e21ac75a5463\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.3.1.aar\5e267b63f1b46b384c7a37ffad0bc9e0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.3.1.aar\5e267b63f1b46b384c7a37ffad0bc9e0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\transition-25.3.1.aar\2002776a39dc01bb02ccc9e725299f38\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\transition-25.3.1.aar\2002776a39dc01bb02ccc9e725299f38\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.1.aar\479804c7168ce9122ee80c4dd4537fa2\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.1.aar\479804c7168ce9122ee80c4dd4537fa2\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.1.aar\39dcba43c4d8cb0452f9951a860a0284\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.1.aar\39dcba43c4d8cb0452f9951a860a0284\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.1.aar\482f6fbbbe3db2a5d6469253e8595ce1\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.1.aar\482f6fbbbe3db2a5d6469253e8595ce1\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.1.aar\c3c6f4275ec95b414faae76be69a61b3\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.1.aar\c3c6f4275ec95b414faae76be69a61b3\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.1.aar\8e648d6407db5d61f1b640abad0a5d63\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.1.aar\8e648d6407db5d61f1b640abad0a5d63\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.1.aar\bd5d9c52c563fbbe1e932a9a528a3596\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.1.aar\bd5d9c52c563fbbe1e932a9a528a3596\AndroidManifest.xml:21:5-23:58
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+		ADDED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+		INJECTED from C:\ProjectExceptionAl\OneDayJob\OneDayJob\app\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.1.aar\cb044e1b1c78784a1282e69eed61b928\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.1.aar\cb044e1b1c78784a1282e69eed61b928\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.1.aar\10cb3051cddb6be460c871ee6d90ef97\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.1.aar\10cb3051cddb6be460c871ee6d90ef97\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.1.aar\9d743bee7018f32bb173e21ac75a5463\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.1.aar\9d743bee7018f32bb173e21ac75a5463\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.3.1.aar\5e267b63f1b46b384c7a37ffad0bc9e0\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.3.1.aar\5e267b63f1b46b384c7a37ffad0bc9e0\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\transition-25.3.1.aar\2002776a39dc01bb02ccc9e725299f38\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\transition-25.3.1.aar\2002776a39dc01bb02ccc9e725299f38\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.1.aar\479804c7168ce9122ee80c4dd4537fa2\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.1.aar\479804c7168ce9122ee80c4dd4537fa2\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.1.aar\39dcba43c4d8cb0452f9951a860a0284\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.1.aar\39dcba43c4d8cb0452f9951a860a0284\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.1.aar\482f6fbbbe3db2a5d6469253e8595ce1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.1.aar\482f6fbbbe3db2a5d6469253e8595ce1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.1.aar\c3c6f4275ec95b414faae76be69a61b3\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.1.aar\c3c6f4275ec95b414faae76be69a61b3\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.1.aar\8e648d6407db5d61f1b640abad0a5d63\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.1.aar\8e648d6407db5d61f1b640abad0a5d63\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.1.aar\bd5d9c52c563fbbe1e932a9a528a3596\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.1.aar\bd5d9c52c563fbbe1e932a9a528a3596\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:design:25.3.1] C:\Users\Toshiba\.gradle\caches\transforms-1\files-1.1\design-25.3.1.aar\a9eaef0a40a7bd7d05c1ce47e681f6d3\AndroidManifest.xml:26:9-47

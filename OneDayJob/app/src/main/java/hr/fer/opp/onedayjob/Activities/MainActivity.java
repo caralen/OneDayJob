@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import hr.fer.opp.onedayjob.R;
 
+/* DEPRICATED */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,14 +18,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //test test
-        //Lude nove promjene
 
         Button filterButton = (Button) findViewById(R.id.filter_button);
         Button jobManagementButton = (Button) findViewById(R.id.job_management_button);
         Button gpsButton = (Button) findViewById(R.id.gps_button);
         Button profileButton = (Button) findViewById(R.id.profile_button);
         Button mailboxButton = (Button) findViewById(R.id.mailbox_button);
+        Button randomUserButton = (Button) findViewById(R.id.profile_view_buttton);
+        Button main = (Button) findViewById(R.id.main2);
 
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +57,33 @@ public class MainActivity extends AppCompatActivity {
                 openMailbox();
             }
         });
+        randomUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openUser();
+            }
+        });
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMain();
+            }
+        });
+
+
     }
+
+    private void openMain(){
+        Intent intent = new Intent(MainActivity.this, TheMainActivity.class);
+        startActivity(intent);
+    }
+
+
+    private void openUser(){
+        Intent intent = new Intent(MainActivity.this, ProfileViewActivity.class);
+        startActivity(intent);
+    }
+
 
     private void openFilter(){
         Intent intent = new Intent(MainActivity.this, FilterActivity.class);

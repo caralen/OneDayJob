@@ -1,8 +1,13 @@
 package hr.fer.opp.onedayjob.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,21 +20,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
+import hr.fer.opp.onedayjob.FeedAdapter;
+import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
 public class TheMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     //layout_FEED
+    ListView listJobs;
     RelativeLayout feedLayout;
     BottomNavigationView navigation;
-    TextView text;
-    Button randomPosao; //TODO
-    Button randomUserProfile; //
     //layout_gps
     RelativeLayout gpsLayout;
     Button gpsButton;
@@ -47,9 +58,7 @@ public class TheMainActivity extends AppCompatActivity
 
         //FEED LAYOUT
         feedLayout = (RelativeLayout) findViewById(R.id.navigation_feed);
-        text = (TextView)findViewById(R.id.message);
-        randomPosao = (Button)findViewById(R.id.random_Posao);
-        randomUserProfile = (Button)findViewById(R.id.random_korisnik);
+        listJobs = (ListView) findViewById(R.id.list_jobs);
 
         //GPS LAYOUT
         gpsLayout = (RelativeLayout) findViewById(R.id.navigation_gps);
@@ -60,22 +69,10 @@ public class TheMainActivity extends AppCompatActivity
         mailbox = (Button)findViewById(R.id.navigation_mail_button);
 
 
-        randomPosao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openJob();
-            }
-        });
         gpsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGps();
-            }
-        });
-        randomUserProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openProfile();
             }
         });
         mailbox.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +131,23 @@ public class TheMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        generateData();
+    }
+
+    private void generateData() {
+        //Retrofit poziv, bla bla
+        //stvaranje i punjenje ove arrayListe koja je treci argument u konstruktoru FeedAdaptera sa stvarnim podacima
+        final ArrayList<Posao> jobs = new ArrayList<Posao>();
+        jobs.add(new Posao("Ciscenje snijega", Timestamp.valueOf("2011-10-02 18:48:05"), "Bas super posao vam je to"));
+        jobs.add(new Posao("Pranje auta", Timestamp.valueOf("2013-11-12 4:26:56"), "Treba mi oprati moj novi audi R8, masnu lovu placam"));
+        jobs.add(new Posao("Hranjenje ljubimaca", Timestamp.valueOf("2017-03-03 12:11:12"), "Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt treba vam vremena da to napravite"));
+        FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, jobs);
+        listJobs.setAdapter(feedAdapter);
     }
 
     @Override

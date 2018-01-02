@@ -19,6 +19,12 @@ public class Posao implements Serializable {
     private int ponudeniNovac;
     private boolean posaoGotov;
 
+    public Posao(String naslov, Timestamp vrijeme, String opis) {
+        this.naslov = naslov;
+        this.vrijeme = vrijeme;
+        this.opis = opis;
+    }
+
     public String getPosaoId() {
         return posaoId;
     }

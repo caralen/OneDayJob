@@ -27,68 +27,36 @@
 
             <!-- OVO JE LAYOUT ZA FEED -->
             <RelativeLayout
+                android:id="@+id/navigation_feed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/navigation_feed"
                 android:visibility="visible">
 
 
-                <TextView
-                    android:id="@+id/navigation_feed_textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                <ListView
+                    android:id="@+id/list_jobs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
-                    android:textSize="30dp"
-                    android:textColor="#000000"
-                    android:text=" FEED " />
-
-
-                <Button
-                    android:id="@+id/random_Posao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/navigation_feed_textView1"
-                    android:textSize="15dp"
-                    android:text="  Posao 1  " />
-
-
-                <Button
-                    android:id="@+id/random_korisnik"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/random_Posao"
-                    android:textSize="15dp"
-                    android:text="  Korisnik X  " />
-
-
-
-
-
+                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
             <!-- OVO JE LAYOUT ZA GPS -->
             <RelativeLayout
+                android:id="@+id/navigation_gps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/navigation_gps"
                 android:visibility="gone">
 
                 <Button
                     android:id="@+id/navigation_gps_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="50dp"
-                    android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:textSize="50dp"
-                    android:text="  GPS  " />
+                    android:layout_centerVertical="true"
+                    android:layout_margin="50dp"
+                    android:text="  GPS  "
+                    android:textSize="50dp" />
 
             </RelativeLayout>
 
@@ -123,17 +91,5 @@
             app:menu="@menu/navigation" />
 
     </LinearLayout>
-
-    <!--
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="40dp"
-        android:textSize="25dp"
-        android:text="HELLO WORLD"/>
-
-    -->
-
 
 </android.support.constraint.ConstraintLayout>

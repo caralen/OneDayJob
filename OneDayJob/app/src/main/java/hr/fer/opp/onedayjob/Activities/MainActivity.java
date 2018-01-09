@@ -17,12 +17,21 @@ import android.widget.ListView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.opp.onedayjob.FeedAdapter;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final List<Posao> posloviTest = new ArrayList<>();
+
+    static{
+        posloviTest.add(new Posao(" u parku", Timestamp.valueOf("2011-10-02 18:48:05"), "Bas super posao vam je to"));
+        posloviTest.add(new Posao(" u parku", Timestamp.valueOf("2013-11-12 4:26:56"), "Mozda jos i bolji"));
+        posloviTest.add(new Posao(" u parku", Timestamp.valueOf("2017-03-03 12:11:12"), "Najbolji"));
+    }
 
     private ListView listJobs;
 
@@ -124,11 +133,7 @@ public class MainActivity extends AppCompatActivity {
     private void generateData() {
         //Retrofit poziv, bla bla
         //stvaranje i punjenje ove arrayListe koja je treci argument sa stvarnim podacima
-        final ArrayList<Posao> jobs = new ArrayList<Posao>();
-        jobs.add(new Posao("Drkanje u parku", Timestamp.valueOf("2011-10-02 18:48:05"), "Bas super posao vam je to"));
-        jobs.add(new Posao("Smrkanje u parku", Timestamp.valueOf("2013-11-12 4:26:56"), "Mozda jos i bolji"));
-        jobs.add(new Posao("Krkanje u parku", Timestamp.valueOf("2017-03-03 12:11:12"), "Najbolji"));
-        FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_element, jobs);
+        FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_element, posloviTest);
         listJobs.setAdapter(feedAdapter);
     }
 

@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,14 +29,25 @@ import android.widget.TextView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import hr.fer.opp.onedayjob.FeedAdapter;
+import hr.fer.opp.onedayjob.Models.Kategorija;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
 public class TheMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private static final List<Posao> posloviTest = new ArrayList<>();
+
+    static{
+        posloviTest.add(new Posao("User1", "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00"), 120, 80, Arrays.asList(new Kategorija[]{Kategorija.FIZICKI_POSAO})));
+        posloviTest.add(new Posao("User2", "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00"), 60, 150, Arrays.asList(new Kategorija[]{Kategorija.CISCENJE})));
+        posloviTest.add(new Posao("User3", "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00"), 90, 60, Arrays.asList(new Kategorija[]{Kategorija.CUVANJE_ZIVOTINJE})));
+    }
 
     //layout_FEED
     ListView listJobs;
@@ -142,11 +154,9 @@ public class TheMainActivity extends AppCompatActivity
     private void generateData() {
         //Retrofit poziv, bla bla
         //stvaranje i punjenje ove arrayListe koja je treci argument u konstruktoru FeedAdaptera sa stvarnim podacima
-        final ArrayList<Posao> jobs = new ArrayList<Posao>();
-        jobs.add(new Posao("Ciscenje snijega", Timestamp.valueOf("2011-10-02 18:48:05"), "Bas super posao vam je to"));
-        jobs.add(new Posao("Pranje auta", Timestamp.valueOf("2013-11-12 4:26:56"), "Treba mi oprati moj novi audi R8, masnu lovu placam"));
-        jobs.add(new Posao("Hranjenje ljubimaca", Timestamp.valueOf("2017-03-03 12:11:12"), "Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt treba vam vremena da to napravite"));
-        FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, jobs);
+        Log.d("poslovi_test", "generateData: " + posloviTest);
+        // zasad koristimo dummy podatke
+        FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviTest);
         listJobs.setAdapter(feedAdapter);
     }
 
@@ -199,7 +209,8 @@ public class TheMainActivity extends AppCompatActivity
         } else if (id == R.id.statistika) {
             openStatistics();
         } else if (id == R.id.odjava) {
-
+            Intent intent = new Intent(TheMainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -228,7 +239,7 @@ public class TheMainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void openJob(){
+    public void openJob(){
         Intent intent = new Intent(TheMainActivity.this, JobActivity.class);
         startActivity(intent);
     }
@@ -252,7 +263,4 @@ public class TheMainActivity extends AppCompatActivity
         Intent intent = new Intent(TheMainActivity.this, MailboxActivity.class);
         startActivity(intent);
     }
-
-
-
 }

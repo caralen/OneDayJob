@@ -67,8 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void fillTestData() {
         firstName.setText("James");
         lastName.setText("Bond");
-        pass1.setText("007");
-        pass2.setText("007");
+        pass1.setText("007Bond");
+        pass2.setText("007Bond");
         mail.setText("007@MI6.private");
         years.setText("32");
         desc.setText("Agilan, šarmantan i ubojit");
@@ -91,12 +91,23 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (fName.isEmpty() || lName.isEmpty() || lName.isEmpty() || password.isEmpty() || email.isEmpty() || age.isEmpty() || description.isEmpty() || phoneN.isEmpty()) {
             Toast.makeText(this, "Sva polja su obavezna!", Toast.LENGTH_SHORT).show();
+            firstName.requestFocus();
+            return;
+        } else if (!LoginActivity.isPasswordValid(password)){
+            Toast.makeText(this, "Minimalna duljina zaporke je 4!", Toast.LENGTH_SHORT).show();
+            pass1.requestFocus();
+            return;
+        } else if(!LoginActivity.isEmailValid(email)){
+            Toast.makeText(this, "Email nije valjan!", Toast.LENGTH_SHORT).show();
+            mail.requestFocus();
             return;
         } else if (!password.equals(password2)) {
             Toast.makeText(this, "Zaporke se ne poklapaju!", Toast.LENGTH_SHORT).show();
+            pass1.requestFocus();
             return;
         }else if(!avatarSet){
             Toast.makeText(this, "Molim vas da pritiskom promjenite sliku na vrhu ekrana", Toast.LENGTH_SHORT).show();
+            avatar.requestFocus();
             return;
         }
 

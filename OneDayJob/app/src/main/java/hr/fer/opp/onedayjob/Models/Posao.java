@@ -3,6 +3,7 @@ package hr.fer.opp.onedayjob.Models;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Toshiba on 21-Dec-17.
@@ -18,7 +19,20 @@ public class Posao implements Serializable {
     private long trajanje;
     private int ponudeniNovac;
     private boolean posaoGotov;
+    private List<Kategorija> kategorije;
 
+    public Posao(String poslodavacId, String naslov, String opis, String lokacija, Timestamp vrijeme, long trajanje, int ponudeniNovac, List<Kategorija> kategorije) {
+        this.poslodavacId = poslodavacId;
+        this.naslov = naslov;
+        this.opis = opis;
+        this.lokacija = lokacija;
+        this.vrijeme = vrijeme;
+        this.trajanje = trajanje;
+        this.ponudeniNovac = ponudeniNovac;
+        this.kategorije = kategorije;
+    }
+
+    // OVO JE KONSTRUKTOR NAPRAVLJEN SAMO ZA POTREBE TESTIRANJA FEEDA
     public Posao(String naslov, Timestamp vrijeme, String opis) {
         this.naslov = naslov;
         this.vrijeme = vrijeme;
@@ -95,5 +109,12 @@ public class Posao implements Serializable {
 
     public void setPosaoGotov(boolean posaoGotov) {
         this.posaoGotov = posaoGotov;
+    }
+    public List<Kategorija> getKategorije() {
+        return kategorije;
+    }
+
+    public void setKategorije(List<Kategorija> kategorije) {
+        this.kategorije = kategorije;
     }
 }

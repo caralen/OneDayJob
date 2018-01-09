@@ -55,6 +55,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
+    private boolean fazaTestiranja = true;
+
+
     // UI references.
     @BindView(R.id.password)
     EditText mPasswordView;
@@ -74,6 +77,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         populateAutoComplete();
+
+        if(fazaTestiranja){
+            mEmailView.setText("james.bond007@MI6.com");
+            mPasswordView.setText("JB007");
+        }
     }
 
     private void populateAutoComplete() {

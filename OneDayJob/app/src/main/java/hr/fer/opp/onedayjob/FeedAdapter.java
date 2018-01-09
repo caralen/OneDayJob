@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.Activities.JobActivity;
 import hr.fer.opp.onedayjob.Activities.TheMainActivity;
 import hr.fer.opp.onedayjob.Models.*;
+import hr.fer.opp.onedayjob.util.Util;
 
 /**
  * Created by Alen Carin on 2.1.2018..
@@ -61,7 +62,7 @@ public class FeedAdapter extends ArrayAdapter {
         jobTitle.setText(currentJob.getNaslov());
 
         String vrijemeString = currentJob.getVrijeme().toString();
-        jobDate.setText(vrijemeString.substring(0,10));
+        jobDate.setText(Util.datumIz(vrijemeString));
 
         String opisPosla =currentJob.getOpis();
         String prikazaniOpis = opisPosla.length() > MAX_LEN_OPISA ? opisPosla.substring(0,MAX_LEN_OPISA-3) + "..." : opisPosla;

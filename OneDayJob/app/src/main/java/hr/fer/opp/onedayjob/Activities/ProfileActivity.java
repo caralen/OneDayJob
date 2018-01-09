@@ -51,11 +51,12 @@ public class ProfileActivity extends AppCompatActivity {
         userImage = (ImageView)findViewById(R.id.user_profile_photo);
 
         Log.d("trump", "onCreate: Trebao bih staviti trumpa");
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userImage.setImageResource(R.drawable.user1); // TIN - ovo mi ne radi pa sam hardkodirao trumpa
-            }
+                // Dohvati ovdje sve s ekrana korisnika i pretvori u objekt Korisnik
+                Log.d("ProfileActivity", "onClick: zelim spremiti sve promjene u bazu za korisnika:");            }
         });
     }
 

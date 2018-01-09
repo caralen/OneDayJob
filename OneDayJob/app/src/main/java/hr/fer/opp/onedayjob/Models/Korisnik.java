@@ -18,6 +18,7 @@ public class Korisnik implements Serializable {
     private Date datumRegistracije;
     private String brojTelefona;
     private boolean jeValidiran;
+    private boolean jeAdmin;
 
     // TODO equals i hash
 
@@ -34,6 +35,7 @@ public class Korisnik implements Serializable {
         this.opis = opis;
         this.datumRegistracije = datumRegistracije;
         this.brojTelefona = brojTelefona;
+        this.jeAdmin = false;
     }
 
     public String getKorisnikId() {
@@ -119,6 +121,10 @@ public class Korisnik implements Serializable {
     @Override
     public String toString() {
         return "\nKorisnik: \n" + ime + "\n" + prezime + "\n" + zaporkaHash+  "\n" + email + "\n" + brojTelefona +"\n" + dob + "\n" + jeValidiran + "\n" + datumRegistracije + "\n" + opis;
+    }
+
+    public boolean isJeAdmin() {
+        return jeAdmin;
     }
 
     @Override

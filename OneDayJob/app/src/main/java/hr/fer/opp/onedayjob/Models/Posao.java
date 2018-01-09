@@ -117,4 +117,9 @@ public class Posao implements Serializable {
     public void setKategorije(List<Kategorija> kategorije) {
         this.kategorije = kategorije;
     }
+
+    @Override
+    public String toString() {
+        return "Posao: \nNaslov:" + naslov + "\nPoslodavac:" + poslodavacId + "\nid: " + posaoId;
+    }
 }

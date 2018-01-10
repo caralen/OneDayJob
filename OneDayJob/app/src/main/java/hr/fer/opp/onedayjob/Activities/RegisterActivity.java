@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         String phoneN = phone.getText().toString();
 
         String passHash = Util.calculatePasswordHash(password);
-        Korisnik noviKorisnik = new Korisnik(fName, lName, email, passHash, Short.parseShort(age), description, new Date(), phoneN);
+        Korisnik noviKorisnik = new Korisnik(1, fName, lName, email, passHash, Short.parseShort(age), description, new Date(), phoneN, false, false);
 
         if (fName.isEmpty() || lName.isEmpty() || lName.isEmpty() || password.isEmpty() || email.isEmpty() || age.isEmpty() || description.isEmpty() || phoneN.isEmpty()) {
             Toast.makeText(this, "Sva polja su obavezna!", Toast.LENGTH_SHORT).show();

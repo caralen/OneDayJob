@@ -13,7 +13,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import hr.fer.opp.onedayjob.Models.Kategorija;
+import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.util.Util;
@@ -77,25 +77,27 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void popuniZaPosao(Posao posao) {
-        Log.d("posao aktivnost", "popuniZaPosao: " + posao);
+        Log.d("posao aktivnost", "popuniZaPosao: " + posao + "koji ima kategorije " + posao.getKategorijeID());
 
         String opis = posao.getOpis();
         String naslov = posao.getNaslov();
         String lokacija = posao.getLokacija();
         Integer zarada = posao.getPonudeniNovac();
         Long trajanje = posao.getTrajanje();
-        String poslodavac = posao.getPoslodavacId();
+        Long poslodavac = posao.getPoslodavacId();
         String vrijeme = Util.datumIz(posao.getVrijeme().toString());
 
-        List<Kategorija> kategorije = posao.getKategorije();
-        Kategorija prikazanaKategorija = kategorije.get(0);
+
+        List<Kategorija2> kategorije = Util.dajEnumKategorije(posao.getKategorijeID());
+        Kategorija2 prikazanaKategorija = kategorije.get(0);
+        Log.d("JobAct", "popuniZaPosao: prikazujem" + prikazanaKategorija);
         String nazivKategorije = prikazanaKategorija.getIme();
 
         nazivKategorijePosla.setText(nazivKategorije);
         opisPosla.setText(opis);
         trajanjePosla.setText(trajanje.toString());
         zaradaPosla.setText(zarada.toString());
-        poslodavacPosla.setText(poslodavac);
+        poslodavacPosla.setText(poslodavac.toString()); // Dohvat baš imena
         lokacijaPosla.setText(lokacija);
         naslovPosla.setText(naslov);
         vrijemePosla.setText(vrijeme);

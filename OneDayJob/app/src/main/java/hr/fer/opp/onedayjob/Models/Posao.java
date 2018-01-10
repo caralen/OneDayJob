@@ -5,53 +5,81 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Toshiba on 21-Dec-17.
- */
 
 public class Posao implements Serializable {
-    private String posaoId;
-    private String poslodavacId;
+    private long posaoId;
+    private long poslodavacId;
+    private long posloprimacId;
     private String naslov;
     private String opis;
     private String lokacija;
-    private Timestamp vrijeme;
+    private Date vrijeme;
+
+    public long getPosloprimacId() {
+        return posloprimacId;
+    }
+
+    public void setPosloprimacId(long posloprimacId) {
+        this.posloprimacId = posloprimacId;
+    }
+
+    public List<Long> getKategorijeID() {
+        return kategorijeID;
+    }
+
+    public void setKategorijeID(List<Long> kategorijeID) {
+        this.kategorijeID = kategorijeID;
+    }
+
+    public boolean isPosaoRezerviran() {
+        return posaoRezerviran;
+    }
+
+    public void setPosaoRezerviran(boolean posaoRezerviran) {
+        this.posaoRezerviran = posaoRezerviran;
+    }
+
     private long trajanje;
     private int ponudeniNovac;
     private boolean posaoGotov;
-    private List<Kategorija> kategorije;
+    private List<Long> kategorijeID;
+    private boolean posaoRezerviran;
 
-    public Posao(String poslodavacId, String naslov, String opis, String lokacija, Timestamp vrijeme, long trajanje, int ponudeniNovac, List<Kategorija> kategorije) {
+    public Posao(long posaoId, long poslodavacId, long posloprimacId, String naslov, String opis, String lokacija, Date vrijeme, long trajanje, int ponudeniNovac, boolean posaoGotov, List<Long> kategorijeID, boolean posaoRezerviran) {
+        this.posaoId = posaoId;
         this.poslodavacId = poslodavacId;
+        this.posloprimacId = posloprimacId;
         this.naslov = naslov;
         this.opis = opis;
         this.lokacija = lokacija;
         this.vrijeme = vrijeme;
         this.trajanje = trajanje;
         this.ponudeniNovac = ponudeniNovac;
-        this.kategorije = kategorije;
+        this.posaoGotov = posaoGotov;
+        this.kategorijeID = kategorijeID;
+        this.posaoRezerviran = posaoRezerviran;
     }
 
-    // OVO JE KONSTRUKTOR NAPRAVLJEN SAMO ZA POTREBE TESTIRANJA FEEDA
+    // OVO JE KONSTRUKTOR NAPRAVLJEN SAMO ZA POTREBE TESTIRANJA FEEDA - BRISI
     public Posao(String naslov, Timestamp vrijeme, String opis) {
         this.naslov = naslov;
         this.vrijeme = vrijeme;
         this.opis = opis;
     }
 
-    public String getPosaoId() {
+    public long getPosaoId() {
         return posaoId;
     }
 
-    public void setPosaoId(String posaoId) {
+    public void setPosaoId(long posaoId) {
         this.posaoId = posaoId;
     }
 
-    public String getPoslodavacId() {
+    public long getPoslodavacId() {
         return poslodavacId;
     }
 
-    public void setPoslodavacId(String poslodavacId) {
+    public void setPoslodavacId(long poslodavacId) {
         this.poslodavacId = poslodavacId;
     }
 
@@ -79,11 +107,11 @@ public class Posao implements Serializable {
         this.lokacija = lokacija;
     }
 
-    public Timestamp getVrijeme() {
+    public Date getVrijeme() {
         return vrijeme;
     }
 
-    public void setVrijeme(Timestamp vrijeme) {
+    public void setVrijeme(Date vrijeme) {
         this.vrijeme = vrijeme;
     }
 
@@ -110,13 +138,7 @@ public class Posao implements Serializable {
     public void setPosaoGotov(boolean posaoGotov) {
         this.posaoGotov = posaoGotov;
     }
-    public List<Kategorija> getKategorije() {
-        return kategorije;
-    }
 
-    public void setKategorije(List<Kategorija> kategorije) {
-        this.kategorije = kategorije;
-    }
 
     @Override
     public String toString() {

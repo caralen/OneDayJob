@@ -1,30 +1,59 @@
 package hr.fer.opp.onedayjob.Models;
 
-import hr.fer.opp.onedayjob.R;
-
-/**
- * Created by Toshiba on 09-Jan-18.
- */
-
-public enum Kategorija {
-    INSTRUKCIJE("Instrukcije", R.drawable.instrukcije),
-    FIZICKI_POSAO("Fizički posao", R.drawable.fizicki_rad),
-    CUVANJE_ZIVOTINJE("Čuvanje životinja", R.drawable.cuvanje_zivotinja),
-    CUVANJE_DJETETA("Čuvanje djece", R.drawable.cuvanje_djece),
-    CISCENJE("Čišćenje", R.drawable.ciscenje),
-    VOZNJA("Vožnja", R.drawable.voznja);
-
-    private String ime;
-    private int slikaID;
+import java.io.Serializable;
 
 
-    Kategorija(String ime, int slikaID) {
-        this.ime = ime;
-        this.slikaID = slikaID;
+
+public class Kategorija implements Serializable {
+
+    public long kategorijaID;
+
+    public String naziv;
+
+    public String opis;
+
+
+
+    public String getNaziv() {
+        return naziv;
     }
 
-    public String getIme() {
-        return ime;
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
     }
-    public int getSlikaID(){return slikaID;}
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
+
+    public long getKategorijaID() {
+        return kategorijaID;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (kategorijaID ^ (kategorijaID >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Kategorija other = (Kategorija) obj;
+        if (kategorijaID != other.kategorijaID)
+            return false;
+        return true;
+    }
+
 }

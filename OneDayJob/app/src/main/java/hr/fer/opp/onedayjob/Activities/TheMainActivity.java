@@ -1,13 +1,8 @@
 package hr.fer.opp.onedayjob.Activities;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,11 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -33,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import hr.fer.opp.onedayjob.FeedAdapter;
-import hr.fer.opp.onedayjob.Models.Kategorija;
+import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
@@ -44,9 +37,9 @@ public class TheMainActivity extends AppCompatActivity
     private static final List<Posao> posloviTest = new ArrayList<>();
 
     static{
-        posloviTest.add(new Posao("User1", "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00"), 120, 80, Arrays.asList(new Kategorija[]{Kategorija.FIZICKI_POSAO})));
-        posloviTest.add(new Posao("User2", "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00"), 60, 150, Arrays.asList(new Kategorija[]{Kategorija.CISCENJE})));
-        posloviTest.add(new Posao("User3", "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00"), 90, 60, Arrays.asList(new Kategorija[]{Kategorija.CUVANJE_ZIVOTINJE})));
+        posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00"), 120, 80, false,  Arrays.asList(new Long[]{Kategorija2.FIZICKI_POSAO.getId()}), false));
+        posloviTest.add(new Posao(2, 2, 2, "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00"), 60, 150, false, Arrays.asList(new Long[]{Kategorija2.CISCENJE.getId()}), false));
+        posloviTest.add(new Posao(3, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00"), 90, 60, false,  Arrays.asList(new Long[]{Kategorija2.CUVANJE_ZIVOTINJE.getId()}), false));
     }
 
     //layout_FEED

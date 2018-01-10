@@ -29,7 +29,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -82,6 +89,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setText("james.bond007@MI6.com");
             mPasswordView.setText("JB007");
         }
+
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://m.uploadedit.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+        service.getKorisnik("").enqueue(new Callback<Korisnik>() {
+
+
+            @Override
+            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                Korisnik korisnik = response.body();
+                Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
+            }
+
+            @Override
+            public void onFailure(Call<Korisnik> call, Throwable t) {
+                Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+            }
+        });
     }
 
     private void populateAutoComplete() {

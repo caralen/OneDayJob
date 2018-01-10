@@ -9,17 +9,24 @@ import java.util.Date;
  */
 
 public class Poruka implements Serializable {
-    private String porukaId;
+    private long porukaId;
     private String sadrzaj;
     private Date datum;
-    private String posiljateljId;
-    private String primateljId;
+    private long posiljateljId;
+    private long primateljId;
 
-    public String getPorukaId() {
-        return porukaId;
+    public Poruka(long porukaId, String sadrzaj, Date datum, long posiljateljId, long primateljId) {
+        this.porukaId = porukaId;
+        this.sadrzaj = sadrzaj;
+        this.datum = datum;
+        this.posiljateljId = posiljateljId;
+        this.primateljId = primateljId;
     }
 
-    public void setPorukaId(String porukaId) {
+    public long getPorukaId() {
+        return porukaId;
+    }
+    public void setPorukaId(long porukaId) {
         this.porukaId = porukaId;
     }
 
@@ -39,19 +46,19 @@ public class Poruka implements Serializable {
         this.datum = datum;
     }
 
-    public String getPosiljateljId() {
+    public long getPosiljateljId() {
         return posiljateljId;
     }
 
-    public void setPosiljateljId(String posiljateljId) {
+    public void setPosiljateljId(long posiljateljId) {
         this.posiljateljId = posiljateljId;
     }
 
-    public String getPrimateljId() {
+    public long getPrimateljId() {
         return primateljId;
     }
 
-    public void setPrimateljId(String primateljId) {
+    public void setPrimateljId(long primateljId) {
         this.primateljId = primateljId;
     }
 }

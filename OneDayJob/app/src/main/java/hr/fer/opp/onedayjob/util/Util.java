@@ -1,11 +1,17 @@
 package hr.fer.opp.onedayjob.util;
 
+import android.os.Looper;
 import android.util.Log;
 
+import org.apache.http.params.HttpConnectionParams;
+import org.json.JSONObject;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.opp.onedayjob.Models.Kategorija2;
+import retrofit2.http.HTTP;
 
 /**
  * Created by Toshiba on 21-Dec-17.
@@ -39,4 +45,6 @@ public class Util {
         }
         return kategorije;
     }
+
+
 }

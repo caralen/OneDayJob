@@ -2,7 +2,6 @@ package hr.fer.opp.onedayjob.Models;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 
@@ -13,7 +12,12 @@ public class Posao implements Serializable {
     private String naslov;
     private String opis;
     private String lokacija;
-    private Date vrijeme;
+    private long vrijeme;
+    private long trajanje;
+    private int ponudeniNovac;
+    private boolean posaoGotov;
+    private List<Long> kategorijeID;
+    private boolean posaoRezerviran;
 
     public long getPosloprimacId() {
         return posloprimacId;
@@ -39,13 +43,8 @@ public class Posao implements Serializable {
         this.posaoRezerviran = posaoRezerviran;
     }
 
-    private long trajanje;
-    private int ponudeniNovac;
-    private boolean posaoGotov;
-    private List<Long> kategorijeID;
-    private boolean posaoRezerviran;
 
-    public Posao(long posaoId, long poslodavacId, long posloprimacId, String naslov, String opis, String lokacija, Date vrijeme, long trajanje, int ponudeniNovac, boolean posaoGotov, List<Long> kategorijeID, boolean posaoRezerviran) {
+    public Posao(long posaoId, long poslodavacId, long posloprimacId, String naslov, String opis, String lokacija, long vrijeme, long trajanje, int ponudeniNovac, boolean posaoGotov, List<Long> kategorijeID, boolean posaoRezerviran) {
         this.posaoId = posaoId;
         this.poslodavacId = poslodavacId;
         this.posloprimacId = posloprimacId;
@@ -60,12 +59,6 @@ public class Posao implements Serializable {
         this.posaoRezerviran = posaoRezerviran;
     }
 
-    // OVO JE KONSTRUKTOR NAPRAVLJEN SAMO ZA POTREBE TESTIRANJA FEEDA - BRISI
-    public Posao(String naslov, Timestamp vrijeme, String opis) {
-        this.naslov = naslov;
-        this.vrijeme = vrijeme;
-        this.opis = opis;
-    }
 
     public long getPosaoId() {
         return posaoId;
@@ -107,11 +100,11 @@ public class Posao implements Serializable {
         this.lokacija = lokacija;
     }
 
-    public Date getVrijeme() {
+    public long getVrijeme() {
         return vrijeme;
     }
 
-    public void setVrijeme(Date vrijeme) {
+    public void setVrijeme(long vrijeme) {
         this.vrijeme = vrijeme;
     }
 

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -61,7 +62,7 @@ public class FeedAdapter extends ArrayAdapter {
 
         jobTitle.setText(currentJob.getNaslov());
 
-        String vrijemeString = currentJob.getVrijeme().toString();
+        String vrijemeString = new Date(currentJob.getVrijeme()).toString();
         jobDate.setText(Util.datumIz(vrijemeString));
 
         String opisPosla =currentJob.getOpis();

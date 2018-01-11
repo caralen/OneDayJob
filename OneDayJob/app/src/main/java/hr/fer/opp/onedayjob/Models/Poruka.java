@@ -1,8 +1,7 @@
 package hr.fer.opp.onedayjob.Models;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
+
 
 /**
  * Created by Toshiba on 21-Dec-17.
@@ -11,11 +10,11 @@ import java.util.Date;
 public class Poruka implements Serializable {
     private long porukaId;
     private String sadrzaj;
-    private Date datum;
+    private long datum;
     private long posiljateljId;
     private long primateljId;
 
-    public Poruka(long porukaId, String sadrzaj, Date datum, long posiljateljId, long primateljId) {
+    public Poruka(long porukaId, String sadrzaj, long datum, long posiljateljId, long primateljId) {
         this.porukaId = porukaId;
         this.sadrzaj = sadrzaj;
         this.datum = datum;
@@ -38,11 +37,11 @@ public class Poruka implements Serializable {
         this.sadrzaj = sadrzaj;
     }
 
-    public Date getDatum() {
+    public long getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(long datum) {
         this.datum = datum;
     }
 

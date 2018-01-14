@@ -1,17 +1,68 @@
 package hr.fer.opp.onedayjob.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import hr.fer.opp.onedayjob.FeedAdapter;
+import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
-/* DEPRICATED */
-
 public class MainActivity extends AppCompatActivity {
+
+    private static final List<Posao> posloviTest = new ArrayList<>();
+
+    static{
+        posloviTest.add(new Posao(" u parku", Timestamp.valueOf("2011-10-02 18:48:05"), "Bas super posao vam je to"));
+        posloviTest.add(new Posao(" u parku", Timestamp.valueOf("2013-11-12 4:26:56"), "Mozda jos i bolji"));
+        posloviTest.add(new Posao(" u parku", Timestamp.valueOf("2017-03-03 12:11:12"), "Najbolji"));
+    }
+
+    private ListView listJobs;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        listJobs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // Animate the background color of clicked Item
+                ColorDrawable[] color = {
+                        new ColorDrawable(Color.parseColor("#ffffff")),
+                        new ColorDrawable(Color.parseColor("#efeded"))
+                };
+                TransitionDrawable trans = new TransitionDrawable(color);
+                view.setBackground(trans);
+                trans.startTransition(2000); // duration 2 seconds
+
+                // Go back to the default background color of Item
+                ColorDrawable[] color2 = {
+                        new ColorDrawable(Color.parseColor("#efeded")),
+                        new ColorDrawable(Color.parseColor("#ffffff"))
+                };
+                TransitionDrawable trans2 = new TransitionDrawable(color2);
+                view.setBackground(trans2);
+                trans2.startTransition(2000); // duration 2 seconds
+                //goToJob(position);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         Button mailboxButton = (Button) findViewById(R.id.mailbox_button);
         Button randomUserButton = (Button) findViewById(R.id.profile_view_buttton);
         Button main = (Button) findViewById(R.id.main2);
+
+        listJobs = (ListView) findViewById(R.id.list_jobs);
 
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +122,19 @@ public class MainActivity extends AppCompatActivity {
                 openMain();
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        generateData();
+    }
 
+    private void generateData() {
+        //Retrofit poziv, bla bla
+        //stvaranje i punjenje ove arrayListe koja je treci argument sa stvarnim podacima
+        FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_element, posloviTest);
+        listJobs.setAdapter(feedAdapter);
     }
 
     private void openMain(){
@@ -78,12 +142,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void openUser(){
         Intent intent = new Intent(MainActivity.this, ProfileViewActivity.class);
         startActivity(intent);
     }
-
 
     private void openFilter(){
         Intent intent = new Intent(MainActivity.this, FilterActivity.class);

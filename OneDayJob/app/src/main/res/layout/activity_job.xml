@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="hr.fer.opp.onedayjob.Activities.JobActivity"
-    android:background="#ffffff">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="hr.fer.opp.onedayjob.Activities.JobActivity">
 
 
     <RelativeLayout
@@ -18,69 +18,62 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/instrukcije"
-            />
+            android:src="@drawable/instrukcije" />
 
 
         <LinearLayout
+            android:id="@+id/public_information"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header_cover_image"
             android:layout_marginTop="5dp"
-            android:id="@+id/public_information"
-            android:orientation="vertical"
             android:background="#ffffff"
-            >
+            android:orientation="vertical">
 
 
             <TextView
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/naziv_kategorije"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
                 android:layout_marginRight="10dp"
-                android:textSize="15dp"
+                android:layout_marginStart="13dp"
                 android:text="INSTRUKCIJE"
-                />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
-            <TextView
+            <EditText
+                android:id="@+id/naslov_posla"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"
-
-                android:textStyle="bold"
-                android:textSize="24dp"
-                android:gravity="center"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="13dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
+
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:background="@android:color/transparent"
                 android:text="Instrukcije iz matematike"
-                />
+                android:textColor="#000000"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
 
-
-            <TextView
-
+            <EditText
+                android:id="@+id/opis_posla"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
+                android:background="@android:color/transparent"
                 android:layout_marginRight="10dp"
-                android:text="Za posao skladištara važna je dobra organiziranost i pamćenje. Neophodna je i dobra tjelesna kondicija i fizička snaga, jer se pri radu često prenose teži tereti. Spretnost i okretnost poželjne su osobine koje olakšavaju obavljanje posla. Kako sve više skladišta pri vođenju evidencija koristi računalo, skladištar mora poznavati osnove rada na računalu."
-                />
-
-
-
+                android:layout_marginStart="13dp"
+                android:text="Za posao skladištara važna je dobra organiziranost i pamćenje. Neophodna je i dobra tjelesna kondicija i fizička snaga, jer se pri radu često prenose teži tereti. Spretnost i okretnost poželjne su osobine koje olakšavaju obavljanje posla. Kako sve više skladišta pri vođenju evidencija koristi računalo, skladištar mora poznavati osnove rada na računalu." />
         </LinearLayout>
-
-
 
 
         <LinearLayout
@@ -89,97 +82,97 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/public_information"
             android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:orientation="vertical">
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:background="@android:color/darker_gray" />
 
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="13dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="25dp"
-                android:textStyle="bold"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="10dp"
+                android:text="Dodatne informacije"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15dp"
-                android:text="Dodatne informacije"
-                />
+                android:textStyle="bold" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
             android:id="@+id/dodatne_inf_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@+id/dodatne_info"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/objavljeno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollHorizontally="false"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
                 android:layout_marginRight="10dp"
-                android:textSize="15dp"
-                android:textStyle="bold"
+                android:layout_marginStart="13dp"
                 android:layout_weight="1"
-                android:text="Posao treba obaviti :"
-                />
+                android:scrollHorizontally="false"
+                android:text="Datum odrade"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
-            <TextView
-
+            <EditText
+                android:id="@+id/vrijeme_posla"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
                 android:scrollHorizontally="false"
                 android:text="31.1.2017"
-                android:textSize="15dp"
-                android:layout_weight="1" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/dodatne_inf_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@+id/dodatne_inf_1"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/trajanje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollHorizontally="false"
-                android:text="trajanje:"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginStart="13dp"
+                android:layout_weight="1"
+                android:scrollHorizontally="false"
+                android:text="Trajanje (min)"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:layout_weight="1" />
+                android:textStyle="bold" />
 
-            <TextView
+            <EditText
+                android:id="@+id/posao_trajanje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:scrollHorizontally="false"
                 android:text="2h"
-                android:textSize="15dp"
-                android:layout_weight="1" />
+                android:textSize="15dp" />
 
         </LinearLayout>
 
@@ -187,31 +180,33 @@
             android:id="@+id/dodatne_inf_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@+id/dodatne_inf_2"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/inf3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollHorizontally="false"
-                android:text="Ponudeni novac:"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginStart="13dp"
+                android:layout_weight="1"
+                android:scrollHorizontally="false"
+                android:text="Plaća (HRK)"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:layout_weight="1" />
+                android:textStyle="bold" />
 
-            <TextView
+            <EditText
+                android:id="@+id/posao_zarada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:scrollHorizontally="false"
-                android:text="100kn"
-                android:textSize="15dp"
-                android:layout_weight="1" />
+                android:text="100"
+                android:textSize="15dp" />
 
         </LinearLayout>
 
@@ -219,31 +214,33 @@
             android:id="@+id/dodatne_inf_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@+id/dodatne_inf_3"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/inf4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollHorizontally="false"
-                android:text="objavio : "
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginStart="13dp"
+                android:layout_weight="1"
+                android:scrollHorizontally="false"
+                android:text="Poslodavac"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:layout_weight="1" />
+                android:textStyle="bold" />
 
-            <TextView
+            <EditText
+                android:id="@+id/posao_poslodavac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:scrollHorizontally="false"
                 android:text="Pero Perić"
-                android:textSize="15dp"
-                android:layout_weight="1" />
+                android:textSize="15dp" />
 
         </LinearLayout>
 
@@ -251,36 +248,58 @@
             android:id="@+id/dodatne_inf_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@+id/dodatne_inf_4"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/inf5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollHorizontally="false"
-                android:text="lokacija:"
-                android:layout_marginStart="13dp"
-                android:layout_marginLeft="13dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="13dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginStart="13dp"
+                android:layout_weight="1"
+                android:scrollHorizontally="false"
+                android:text="Lokacija"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:layout_weight="1" />
+                android:textStyle="bold" />
 
-            <TextView
+            <EditText
+                android:id="@+id/posao_lokacija"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:scrollHorizontally="false"
+                android:background="@android:color/transparent"
                 android:text="Ninska ulica 3, Zagreb, Croatia"
-                android:textSize="15dp"
-                android:layout_weight="1" />
+                android:textSize="15dp" />
 
         </LinearLayout>
 
-
-
-
+        <LinearLayout
+            android:id="@+id/dodatne_inf_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dodatne_inf_5"
+            android:background="#ffffff"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/gumb_izmijeni_posao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Izmijeni"
+                android:visibility="invisible"
+                android:onClick="izmijeniPosao"/>
+            <Button
+                android:id="@+id/gumb_izbrisi_posao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Izbrisi"
+                android:textColor="#FF0000"
+                android:visibility="invisible"
+                android:onClick="izbrisiPosao"/>
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>

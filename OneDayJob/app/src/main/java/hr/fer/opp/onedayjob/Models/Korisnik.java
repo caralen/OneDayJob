@@ -8,7 +8,7 @@ import java.util.Date;
  */
 
 public class Korisnik implements Serializable {
-    private String korisnikId;
+    private long korisnikId;
     private String ime;
     private String prezime;
     private String email;
@@ -18,14 +18,13 @@ public class Korisnik implements Serializable {
     private Date datumRegistracije;
     private String brojTelefona;
     private boolean jeValidiran;
+    private boolean jeAdmin;
 
-    // TODO equals i hash
+    // TODO hash
 
 
-    public Korisnik() {
-    }
-
-    public Korisnik(String ime, String prezime, String email, String zaporkaHash, short dob, String opis, Date datumRegistracije, String brojTelefona) {
+    public Korisnik(long korisnikId, String ime, String prezime, String email, String zaporkaHash, short dob, String opis, Date datumRegistracije, String brojTelefona, boolean jeValidiran, boolean jeAdmin) {
+        this.korisnikId = korisnikId;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;
@@ -34,13 +33,15 @@ public class Korisnik implements Serializable {
         this.opis = opis;
         this.datumRegistracije = datumRegistracije;
         this.brojTelefona = brojTelefona;
+        this.jeValidiran = jeValidiran;
+        this.jeAdmin = jeAdmin;
     }
 
-    public String getKorisnikId() {
+    public long getKorisnikId() {
         return korisnikId;
     }
 
-    public void setKorisnikId(String korisnikId) {
+    public void setKorisnikId(long korisnikId) {
         this.korisnikId = korisnikId;
     }
 
@@ -119,6 +120,10 @@ public class Korisnik implements Serializable {
     @Override
     public String toString() {
         return "\nKorisnik: \n" + ime + "\n" + prezime + "\n" + zaporkaHash+  "\n" + email + "\n" + brojTelefona +"\n" + dob + "\n" + jeValidiran + "\n" + datumRegistracije + "\n" + opis;
+    }
+
+    public boolean isJeAdmin() {
+        return jeAdmin;
     }
 
     @Override

@@ -17,6 +17,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -27,7 +29,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -53,6 +62,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
+    private boolean fazaTestiranja = true;
+
+
     // UI references.
     @BindView(R.id.password)
     EditText mPasswordView;
@@ -72,6 +84,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         populateAutoComplete();
+
+        if(fazaTestiranja){
+            mEmailView.setText("james.bond007@MI6.com");
+            mPasswordView.setText("JB007");
+        }
+
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://m.uploadedit.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+        service.getKorisnik("").enqueue(new Callback<Korisnik>() {
+
+
+            @Override
+            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                Korisnik korisnik = response.body();
+                Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
+            }
+
+            @Override
+            public void onFailure(Call<Korisnik> call, Throwable t) {
+                Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -124,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
      public void attemptLogin(View view) {
-        /*if (mAuthTask != null) {
+        if (mAuthTask != null) {
             return;
         }
          Log.d("tu", "attemptLogin: tu");
@@ -140,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -163,14 +203,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.*/
+            // perform the user login attempt.
             Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
             startActivity(intent);
             /*ovo se treba odkomentirati i iskoristiti kad ce se fakat spajat na backend*/
 //            showProgress(true);
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
-        //}
+        }
     }
 
     public void openRegistration(View view){
@@ -178,14 +218,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivity(intent);
     }
 
-    private boolean isEmailValid(String email) {
+    public static boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
-    private boolean isPasswordValid(String password) {
+    public static boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 4;
     }
 
     /**

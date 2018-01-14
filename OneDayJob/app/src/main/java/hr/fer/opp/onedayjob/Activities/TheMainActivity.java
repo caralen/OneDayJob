@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,20 +17,35 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import hr.fer.opp.onedayjob.FeedAdapter;
+import hr.fer.opp.onedayjob.Models.Kategorija2;
+import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
 public class TheMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private static final List<Posao> posloviTest = new ArrayList<>();
+
+    static{
+        posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00"), 120, 80, false,  Arrays.asList(new Long[]{Kategorija2.FIZICKI_POSAO.getId()}), false));
+        posloviTest.add(new Posao(2, 2, 2, "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00"), 60, 150, false, Arrays.asList(new Long[]{Kategorija2.CISCENJE.getId()}), false));
+        posloviTest.add(new Posao(3, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00"), 90, 60, false,  Arrays.asList(new Long[]{Kategorija2.CUVANJE_ZIVOTINJE.getId()}), false));
+    }
+
     //layout_FEED
+    ListView listJobs;
     RelativeLayout feedLayout;
     BottomNavigationView navigation;
-    TextView text;
-    Button randomPosao; //TODO
-    Button randomUserProfile; //
     //layout_gps
     RelativeLayout gpsLayout;
     Button gpsButton;
@@ -47,9 +63,7 @@ public class TheMainActivity extends AppCompatActivity
 
         //FEED LAYOUT
         feedLayout = (RelativeLayout) findViewById(R.id.navigation_feed);
-        text = (TextView)findViewById(R.id.message);
-        randomPosao = (Button)findViewById(R.id.random_Posao);
-        randomUserProfile = (Button)findViewById(R.id.random_korisnik);
+        listJobs = (ListView) findViewById(R.id.list_jobs);
 
         //GPS LAYOUT
         gpsLayout = (RelativeLayout) findViewById(R.id.navigation_gps);
@@ -60,22 +74,10 @@ public class TheMainActivity extends AppCompatActivity
         mailbox = (Button)findViewById(R.id.navigation_mail_button);
 
 
-        randomPosao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openJob();
-            }
-        });
         gpsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGps();
-            }
-        });
-        randomUserProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openProfile();
             }
         });
         mailbox.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +139,21 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        generateData();
+    }
+
+    private void generateData() {
+        //Retrofit poziv, bla bla
+        //stvaranje i punjenje ove arrayListe koja je treci argument u konstruktoru FeedAdaptera sa stvarnim podacima
+        Log.d("poslovi_test", "generateData: " + posloviTest);
+        // zasad koristimo dummy podatke
+        FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviTest);
+        listJobs.setAdapter(feedAdapter);
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -185,7 +202,8 @@ public class TheMainActivity extends AppCompatActivity
         } else if (id == R.id.statistika) {
             openStatistics();
         } else if (id == R.id.odjava) {
-
+            Intent intent = new Intent(TheMainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -214,7 +232,7 @@ public class TheMainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void openJob(){
+    public void openJob(){
         Intent intent = new Intent(TheMainActivity.this, JobActivity.class);
         startActivity(intent);
     }
@@ -238,7 +256,4 @@ public class TheMainActivity extends AppCompatActivity
         Intent intent = new Intent(TheMainActivity.this, MailboxActivity.class);
         startActivity(intent);
     }
-
-
-
 }

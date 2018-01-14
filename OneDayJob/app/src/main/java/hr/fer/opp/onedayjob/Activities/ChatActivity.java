@@ -1,6 +1,7 @@
 package hr.fer.opp.onedayjob.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ public class ChatActivity extends AppCompatActivity {
 
     int[] slike={R.drawable.user1, R.drawable.instrukcije};
     String[] messages={"bok", "posao?"};
+    String[] user={"You", "Franko Krsto Frankopan?"};
 
 
     @Override
@@ -51,13 +53,16 @@ public class ChatActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view= getLayoutInflater().inflate(R.layout.customlayout,null);
-            ImageView imageView=(ImageView)view.findViewById(R.id.imageView3);
+            view= getLayoutInflater().inflate(R.layout.customlayout2,null);
+            //ImageView imageView=(ImageView)view.findViewById(R.id.imageView3);
+            TextView textUser= (TextView) view.findViewById(R.id.textView_username);
             TextView textView= (TextView) view.findViewById(R.id.textView_message);
 
             //userova slika ovisno cija je poruka
-            imageView.setImageResource(slike[i]);
+            //imageView.setImageResource(slike[i]);
             textView.setText(messages[i]);
+            textView.setBackgroundColor(Color.GREEN);
+            textUser.setText(user[i]);
 
 
             return view;

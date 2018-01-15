@@ -19,7 +19,7 @@ public class ChatActivity extends AppCompatActivity {
 
     int[] slike={R.drawable.user1, R.drawable.instrukcije};
     String[] messages={"bok", "posao?"};
-    String[] user={"You", "Franko Krsto Frankopan?"};
+    String[] user={" You ", " Franko Krsto Frankopan? "};
 
 
     @Override
@@ -61,7 +61,7 @@ public class ChatActivity extends AppCompatActivity {
             //userova slika ovisno cija je poruka
             //imageView.setImageResource(slike[i]);
             textView.setText(messages[i]);
-            textView.setBackgroundColor(Color.GREEN);
+            textView.setBackgroundResource(R.drawable.bg);
             textUser.setText(user[i]);
 
 

@@ -29,6 +29,7 @@ public class MailboxActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mailbox);
 
+        new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
         //Button chatButton = (Button) findViewById(R.id.chat_button);
 
         //chatButton.setOnClickListener(new View.OnClickListener() {

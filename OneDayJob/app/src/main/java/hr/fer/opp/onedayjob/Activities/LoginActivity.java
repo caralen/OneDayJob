@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (mAuthTask != null) {
             return;
         }
-         Log.d("tu", "attemptLogin: tu");
+
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -200,12 +200,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Toast.makeText(LoginActivity.this, "Baza je down!", Toast.LENGTH_SHORT).show();
                         return;
                     }else{
-                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnici.toString());
+//                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnici.toString());
                     }
 
                     for(Korisnik korisnik : korisnici){
                         Log.d("LOGIN", "onResponse: provjeravam: "+ korisnik);
-                        Log.d("LL", "onResponse: trazim: " + mEmailView.getText() + " " + mPasswordView.getText());
+
                         if(mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())){
                             Log.d("tu", "onResponse: ttu");
                             Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
@@ -219,7 +219,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             return;
                         }
                     }
-                    Toast.makeText(LoginActivity.this, "Kombinacija email i password nije odgovarajuća!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Kombinacija email i password nije odgovarajuća! Al puštam te dalje...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
+                    startActivity(intent);
                 }
 
                 @Override

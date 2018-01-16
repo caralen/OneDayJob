@@ -64,25 +64,25 @@ public class VerificationActivity extends AppCompatActivity {
         }
         noviKorisnik.setJeValidiran(true);
         Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik.getEmail());
-        //Spremi ga u bazu
 
-//        String serverUrl = "https://onedayjobapp2.azurewebsites.net/register";
-//        Gson gson = new Gson();
-//        String korisnikStringJSON =gson.toJson(noviKorisnik);;
-//
-//
-//        int TIMEOUT_MILLISEC = 10000;  // = 10 seconds
-//        HttpParams httpParams = new BasicHttpParams();
-//        HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-//        HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-//        HttpClient client = new DefaultHttpClient(httpParams);
-//
-//        HttpPost request = new HttpPost(serverUrl);
-//        request.setEntity(new ByteArrayEntity(
-//                korisnikStringJSON.getBytes("UTF8")));
-//        HttpResponse response = client.execute(request);
-//
-//        Log.d("RESPONSE", "attemptVerification: response: " + response);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+        Call<Korisnik> odgovor = service.registerKorisnik("register", noviKorisnik);
+        odgovor.enqueue(new Callback<Korisnik>() {
+            @Override
+            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                Toast.makeText(VerificationActivity.this, "Registriran uspješno!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Korisnik> call, Throwable t) {
+                Toast.makeText(VerificationActivity.this, "Neuspješna komunikacija s bazom. Razlog: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
        Intent intent = new Intent(VerificationActivity.this, LoginActivity.class);
        startActivity(intent);

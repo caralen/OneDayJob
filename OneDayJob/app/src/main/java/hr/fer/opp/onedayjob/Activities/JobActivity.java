@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,7 +86,7 @@ public class JobActivity extends AppCompatActivity {
         Integer zarada = posao.getPonudeniNovac();
         Long trajanje = posao.getTrajanje();
         Long poslodavac = posao.getPoslodavacId();
-        String vrijeme = Util.datumIz(posao.getVrijeme().toString());
+        String vrijeme = new Date(posao.getVrijeme()).toString();
 
 
         List<Kategorija2> kategorije = Util.dajEnumKategorije(posao.getKategorijeID());

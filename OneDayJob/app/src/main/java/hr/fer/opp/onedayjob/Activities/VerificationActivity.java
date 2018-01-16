@@ -9,11 +9,31 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
 import hr.fer.opp.onedayjob.util.Util;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class VerificationActivity extends AppCompatActivity {
 
@@ -32,7 +52,7 @@ public class VerificationActivity extends AppCompatActivity {
             verificationCode.setText("3418");
         }
     }
-    public void attemptVerification(View view){
+    public void attemptVerification(View view) throws IOException {
 
         Korisnik noviKorisnik = (Korisnik) getIntent().getExtras().get("noviKorisnik");
         Integer userGivenCode = Integer.parseInt(verificationCode.getText().toString());
@@ -45,7 +65,28 @@ public class VerificationActivity extends AppCompatActivity {
         noviKorisnik.setJeValidiran(true);
         Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik.getEmail());
         //Spremi ga u bazu
+
+//        String serverUrl = "https://onedayjobapp2.azurewebsites.net/register";
+//        Gson gson = new Gson();
+//        String korisnikStringJSON =gson.toJson(noviKorisnik);;
+//
+//
+//        int TIMEOUT_MILLISEC = 10000;  // = 10 seconds
+//        HttpParams httpParams = new BasicHttpParams();
+//        HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+//        HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+//        HttpClient client = new DefaultHttpClient(httpParams);
+//
+//        HttpPost request = new HttpPost(serverUrl);
+//        request.setEntity(new ByteArrayEntity(
+//                korisnikStringJSON.getBytes("UTF8")));
+//        HttpResponse response = client.execute(request);
+//
+//        Log.d("RESPONSE", "attemptVerification: response: " + response);
+
        Intent intent = new Intent(VerificationActivity.this, LoginActivity.class);
        startActivity(intent);
     }
+
+
 }

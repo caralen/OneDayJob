@@ -1,5 +1,7 @@
 package hr.fer.opp.onedayjob.Servisi;
 
+import java.util.List;
+
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,4 +20,7 @@ public interface KorisnikServis {
      */
     @GET("/{path}")
     Call<Korisnik> getKorisnik(@Path("path") String path);
+
+    @GET("/{path}")
+    Call<List<Korisnik>> getKorisnici(@Path("path") String path);
 }

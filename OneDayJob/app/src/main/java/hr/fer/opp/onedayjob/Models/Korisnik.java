@@ -1,5 +1,9 @@
 package hr.fer.opp.onedayjob.Models;
 
+import android.util.Log;
+
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,41 +12,67 @@ import java.util.Date;
  */
 
 public class Korisnik implements Serializable {
-    private long korisnikId;
+
+    @SerializedName("korisnikID")
+    private long korisnikID;
+
+    @SerializedName("ime")
     private String ime;
+
+    @SerializedName("prezime")
     private String prezime;
+
+    @SerializedName("email")
     private String email;
+
+    @SerializedName("zaporkaHash")
     private String zaporkaHash;
-    private short dob;
+
+    @SerializedName("opis")
     private String opis;
-    private Date datumRegistracije;
+
+    @SerializedName("dob")
+    private short dob;
+
+    @SerializedName("datumRegistracije")
+    private long datumRegistracije;
+
+    @SerializedName("brojTelefona")
     private String brojTelefona;
+
+    @SerializedName("jeValidiran")
     private boolean jeValidiran;
+
+    @SerializedName("jeAdmin")
     private boolean jeAdmin;
 
     // TODO hash
 
+    public Korisnik(){
 
-    public Korisnik(long korisnikId, String ime, String prezime, String email, String zaporkaHash, short dob, String opis, Date datumRegistracije, String brojTelefona, boolean jeValidiran, boolean jeAdmin) {
-        this.korisnikId = korisnikId;
+    }
+
+    public Korisnik(long korisnikID, String ime, String prezime, String email, String zaporkaHash, short dob, String opis, long datumRegistracije, String brojTelefona, boolean jeValidiran, boolean jeAdmin) {
+        this.korisnikID = korisnikID;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;
         this.zaporkaHash = zaporkaHash;
         this.dob = dob;
         this.opis = opis;
-        this.datumRegistracije = datumRegistracije;
+        setDatumRegistracije(datumRegistracije);
         this.brojTelefona = brojTelefona;
         this.jeValidiran = jeValidiran;
         this.jeAdmin = jeAdmin;
+        Log.d("Korisnik", "Korisnik:radim ");
     }
 
-    public long getKorisnikId() {
-        return korisnikId;
+    public long getkorisnikID() {
+        return korisnikID;
     }
 
-    public void setKorisnikId(long korisnikId) {
-        this.korisnikId = korisnikId;
+    public void setkorisnikID(long korisnikID) {
+        this.korisnikID = korisnikID;
     }
 
     public String getIme() {
@@ -93,11 +123,11 @@ public class Korisnik implements Serializable {
         this.opis = opis;
     }
 
-    public Date getDatumRegistracije() {
+    public long getDatumRegistracije() {
         return datumRegistracije;
     }
 
-    public void setDatumRegistracije(Date datumRegistracije) {
+    public void setDatumRegistracije(long datumRegistracije) {
         this.datumRegistracije = datumRegistracije;
     }
 
@@ -115,6 +145,18 @@ public class Korisnik implements Serializable {
 
     public void setJeValidiran(boolean jeValidiran) {
         this.jeValidiran = jeValidiran;
+    }
+
+    public long getKorisnikID() {
+        return korisnikID;
+    }
+
+    public void setKorisnikID(long korisnikID) {
+        this.korisnikID = korisnikID;
+    }
+
+    public void setJeAdmin(boolean jeAdmin) {
+        this.jeAdmin = jeAdmin;
     }
 
     @Override

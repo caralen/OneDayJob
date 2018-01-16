@@ -32,11 +32,13 @@ import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.StringServis;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -93,23 +95,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://m.uploadedit.com")
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         final KorisnikServis service = retrofit.create(KorisnikServis.class);
 
-        service.getKorisnik("").enqueue(new Callback<Korisnik>() {
-
+        service.getKorisnik("korisnik/1/detalji").enqueue(new Callback<Korisnik>() {
 
             @Override
             public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
                 Korisnik korisnik = response.body();
-                Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
+                if(korisnik==null){
+                    Log.d("LOGIN RETROFIT", "onResponse: nema");
+                }else{
+                    Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
+                }
             }
 
             @Override
             public void onFailure(Call<Korisnik> call, Throwable t) {
                 Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+                Log.d("LOGIN", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -202,6 +208,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
+
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);

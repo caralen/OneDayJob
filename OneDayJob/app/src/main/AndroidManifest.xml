@@ -32,9 +32,6 @@
             android:name=".Activities.VerificationActivity"
             android:label="@string/title_activity_verification" />
         <activity
-            android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main" />
-        <activity
             android:name=".Activities.FilterActivity"
             android:label="@string/title_activity_filter" />
         <activity

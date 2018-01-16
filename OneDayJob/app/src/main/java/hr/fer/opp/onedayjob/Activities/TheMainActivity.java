@@ -37,9 +37,9 @@ public class TheMainActivity extends AppCompatActivity
     private static final List<Posao> posloviTest = new ArrayList<>();
 
     static{
-        posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00"), 120, 80, false,  Arrays.asList(new Long[]{Kategorija2.FIZICKI_POSAO.getId()}), false));
-        posloviTest.add(new Posao(2, 2, 2, "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00"), 60, 150, false, Arrays.asList(new Long[]{Kategorija2.CISCENJE.getId()}), false));
-        posloviTest.add(new Posao(3, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00"), 90, 60, false,  Arrays.asList(new Long[]{Kategorija2.CUVANJE_ZIVOTINJE.getId()}), false));
+        posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00").getTime(), 120, 80, false,  Arrays.asList(new Long[]{Kategorija2.FIZICKI_POSAO.getId()}), false));
+        posloviTest.add(new Posao(2, 2, 2, "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00").getTime(), 60, 150, false, Arrays.asList(new Long[]{Kategorija2.CISCENJE.getId()}), false));
+        posloviTest.add(new Posao(3, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00").getTime(), 90, 60, false,  Arrays.asList(new Long[]{Kategorija2.CUVANJE_ZIVOTINJE.getId()}), false));
     }
 
     //layout_FEED

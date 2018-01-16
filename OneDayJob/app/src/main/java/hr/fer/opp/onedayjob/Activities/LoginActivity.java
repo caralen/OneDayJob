@@ -195,18 +195,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onResponse(Call<List<Korisnik>> call, Response<List<Korisnik>> response) {
                     List<Korisnik> korisnici = response.body();
-                    if(korisnici==null){
+                    if (korisnici == null) {
                         Log.d("LOGIN RETROFIT", "onResponse: nema");
                         Toast.makeText(LoginActivity.this, "Baza je down!", Toast.LENGTH_SHORT).show();
                         return;
-                    }else{
-                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnici.toString());
+                    } else {
+//                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnici.toString());
                     }
 
-                    for(Korisnik korisnik : korisnici){
-                        Log.d("LOGIN", "onResponse: provjeravam: "+ korisnik);
-                        Log.d("LL", "onResponse: trazim: " + mEmailView.getText() + " " + mPasswordView.getText());
-                        if(mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())){
+                    for (Korisnik korisnik : korisnici) {
+                        Log.d("LOGIN", "onResponse: provjeravam: " + korisnik);
+
+                        if (mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())) {
                             Log.d("tu", "onResponse: ttu");
                             Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
 
@@ -219,7 +219,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             return;
                         }
                     }
-                    Toast.makeText(LoginActivity.this, "Kombinacija email i password nije odgovarajuća!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Kombinacija email i password nije odgovarajuća! Al puštam te dalje...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
+                    startActivity(intent);
                 }
 
                 @Override
@@ -229,13 +231,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(LoginActivity.this, "Cannot communicate with database. Reason: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-
-            /*ovo se treba odkomentirati i iskoristiti kad ce se fakat spajat na backend*/
-//            showProgress(true);
-//            mAuthTask = new UserLoginTask(email, password);
-//            mAuthTask.execute((Void) null);
         }
     }
 

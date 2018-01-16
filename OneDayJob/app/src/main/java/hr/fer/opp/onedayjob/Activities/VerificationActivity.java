@@ -41,6 +41,7 @@ public class VerificationActivity extends AppCompatActivity {
 
     @BindView(R.id.verification_code)
     EditText verificationCode;
+Korisnik noviKorisnik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,9 @@ public class VerificationActivity extends AppCompatActivity {
             verificationCode.setText("3418");
         }
     }
-    public void attemptVerification(View view) throws IOException {
+    public void attemptVerification(View view) throws IOException, InterruptedException {
 
-        Korisnik noviKorisnik = (Korisnik) getIntent().getExtras().get("noviKorisnik");
+        noviKorisnik = (Korisnik) getIntent().getExtras().get("noviKorisnik");
         Integer userGivenCode = Integer.parseInt(verificationCode.getText().toString());
         int expected = Util.calculateVerificationHash(noviKorisnik.getEmail());
 
@@ -63,30 +64,37 @@ public class VerificationActivity extends AppCompatActivity {
             return;
         }
         noviKorisnik.setJeValidiran(true);
-        Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik.getEmail());
+        noviKorisnik.setkorisnikID(0);
+        Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik);
         //Spremi ga u bazu
 
-//        String serverUrl = "https://onedayjobapp2.azurewebsites.net/register";
-//        Gson gson = new Gson();
-//        String korisnikStringJSON =gson.toJson(noviKorisnik);;
-//
-//
-//        int TIMEOUT_MILLISEC = 10000;  // = 10 seconds
-//        HttpParams httpParams = new BasicHttpParams();
-//        HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-//        HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-//        HttpClient client = new DefaultHttpClient(httpParams);
-//
-//        HttpPost request = new HttpPost(serverUrl);
-//        request.setEntity(new ByteArrayEntity(
-//                korisnikStringJSON.getBytes("UTF8")));
-//        HttpResponse response = client.execute(request);
-//
-//        Log.d("RESPONSE", "attemptVerification: response: " + response);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                final KorisnikServis service = retrofit.create(KorisnikServis.class);
 
-       Intent intent = new Intent(VerificationActivity.this, LoginActivity.class);
-       startActivity(intent);
-    }
+                service.registerKorisnik(noviKorisnik).enqueue(new Callback<Korisnik>() {
+                    @Override
+                    public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                        Toast.makeText(VerificationActivity.this, "Registrirao sam korisnika!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Korisnik> call, Throwable t) {
+                        Log.d("REG", "onFailure: "+ t.getMessage());
+                        Toast.makeText(VerificationActivity.this, "Nisam uspio registrirati. Razlog: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                Intent intent = new Intent(VerificationActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        }).run();
+            }
 
 
 }

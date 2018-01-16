@@ -9,16 +9,21 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static hr.fer.opp.onedayjob.Activities.ChatActivity.editKucica;
+
 /**
  * Created by Josip Kalafatic on 1/15/2018.
  */
 
 public class JsonTask extends AsyncTask<String, String, String> {
+
+    String data="";
     @Override
     protected String doInBackground(String... params) {
 
         HttpURLConnection connection = null;
         BufferedReader reader = null;
+
 
         try {
             //URL url = new URL(params[0]);
@@ -37,7 +42,7 @@ public class JsonTask extends AsyncTask<String, String, String> {
             while ((line = reader.readLine()) != null) {
                 buffer.append(line + "\n");
                 Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
+                //data=buffer.toString();
                 return buffer.toString();
 
             }
@@ -51,6 +56,8 @@ public class JsonTask extends AsyncTask<String, String, String> {
 
         protected void onPostExecute(String str) {
             super.onPostExecute(str);
+
+            //editKucica.setText(this.data);
 
 
     }

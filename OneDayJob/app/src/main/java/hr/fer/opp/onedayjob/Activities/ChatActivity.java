@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import hr.fer.opp.onedayjob.R;
 public class ChatActivity extends AppCompatActivity {
     //Intent myIntent = getIntent();
     //String talkingTo = myIntent.getStringExtra("talkingTo");
+    public static EditText editKucica;
 
     int[] slike={R.drawable.user1, R.drawable.instrukcije};
     String[] messages={"bok", "posao?"};
@@ -26,6 +28,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        editKucica=(EditText) findViewById(R.id.ed);
 
         ListView messegesListView=(ListView) findViewById(R.id.listV);
         CustomAdapter customAdapter=new CustomAdapter();

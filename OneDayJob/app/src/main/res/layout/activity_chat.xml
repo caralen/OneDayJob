@@ -20,6 +20,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/ed"
             android:layout_width="0dp"
             android:layout_weight="0.80"
             android:layout_height="60dp" />

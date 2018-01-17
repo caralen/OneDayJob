@@ -48,6 +48,8 @@
                 android:layout_height="match_parent"
                 android:visibility="gone">
 
+                <include layout="@layout/activity_maps"/>
+
                 <Button
                     android:id="@+id/navigation_gps_button"
                     android:layout_width="wrap_content"
@@ -56,7 +58,8 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="50dp"
                     android:text="  GPS  "
-                    android:textSize="50dp" />
+                    android:textSize="50dp"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
 

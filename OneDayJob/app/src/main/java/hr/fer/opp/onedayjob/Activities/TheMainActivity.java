@@ -48,6 +48,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.zip.Inflater;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.FeedAdapter;
 import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
@@ -133,8 +135,8 @@ public class TheMainActivity extends AppCompatActivity
         /*-- NAV_HEADER_THE_MAIN elements TODO --*/
         //header_profilePhoto = (ImageView)findViewById(R.id.nav_header_profilePhoto);
         //header_firstAndLastName = (TextView)findViewById(R.id.nav_header_name_and_lastname);
-        //header_email = (TextView)findViewById(R.id.nav_header_email);
-
+       // header_email = (TextView)findViewById(R.id.nav_header_email);
+        //Log.d("ll", "onCreate: "+header_email);
         //loadUserData();
         /*-- NAV_HEADER_THE_MAIN elements TODO --*/
 
@@ -224,7 +226,7 @@ public class TheMainActivity extends AppCompatActivity
         usersListV.setOnItemClickListener(this);
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
 
-
+        loadUserData();
 
 
     }

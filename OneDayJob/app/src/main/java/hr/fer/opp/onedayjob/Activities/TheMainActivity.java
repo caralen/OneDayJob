@@ -64,7 +64,7 @@ public class TheMainActivity extends AppCompatActivity
     /* GPS vars*/
     private GoogleMap mMap;
     List<Address> results = new ArrayList<Address>();
-    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+    Geocoder geocoder;
     LatLng fokus = null;
     /* GPS vars*/
 
@@ -105,6 +105,7 @@ public class TheMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        geocoder = new Geocoder(this, Locale.getDefault());
         setContentView(R.layout.activity_the_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

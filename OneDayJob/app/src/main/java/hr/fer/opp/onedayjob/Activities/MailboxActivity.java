@@ -3,6 +3,7 @@ package hr.fer.opp.onedayjob.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,7 +16,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MailboxActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     ListView usersListV;
@@ -29,7 +37,39 @@ public class MailboxActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mailbox);
 
-        new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+        //tu nekako dodati ID korisnika
+        service.getKorisnik("korisnik/2/rezgovori").enqueue(new Callback<Korisnik>() {
+
+            @Override
+            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                Korisnik korisnik = response.body();
+                if(korisnik==null){
+                    Log.d("LOGIN RETROFIT", "onResponse: nema");
+                }else{
+                    Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Korisnik> call, Throwable t) {
+                Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+                Log.d("LOGIN", "onFailure: " + t.getMessage());
+            }
+        });
+
+
+
+        //new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
+
         //Button chatButton = (Button) findViewById(R.id.chat_button);
 
         //chatButton.setOnClickListener(new View.OnClickListener() {

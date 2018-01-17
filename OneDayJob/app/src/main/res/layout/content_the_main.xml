@@ -70,6 +70,8 @@
                 android:id="@+id/navigation_mail"
                 android:visibility="gone">
 
+                <include layout="@layout/activity_mailbox"/>
+
                 <Button
                     android:id="@+id/navigation_mail_button"
                     android:layout_width="wrap_content"
@@ -78,6 +80,7 @@
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:textSize="50dp"
+                    android:visibility="gone"
                     android:text=" MAILBOX " />
 
             </RelativeLayout>

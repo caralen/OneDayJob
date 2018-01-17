@@ -38,7 +38,7 @@ public class MailboxActivity extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_mailbox);
 
 
-
+        //retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://onedayjobapp2.azurewebsites.net")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -47,7 +47,7 @@ public class MailboxActivity extends AppCompatActivity implements AdapterView.On
         final KorisnikServis service = retrofit.create(KorisnikServis.class);
 
         //tu nekako dodati ID korisnika
-        service.getKorisnik("korisnik/2/rezgovori").enqueue(new Callback<Korisnik>() {
+        service.getKorisnik("korisnik/"+"2"+"/rezgovori").enqueue(new Callback<Korisnik>() {
 
             @Override
             public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {

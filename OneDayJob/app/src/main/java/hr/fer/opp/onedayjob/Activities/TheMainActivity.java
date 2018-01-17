@@ -44,7 +44,10 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.zip.Inflater;
 
@@ -55,6 +58,12 @@ import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TheMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback,AdapterView.OnItemClickListener {
@@ -76,7 +85,9 @@ public class TheMainActivity extends AppCompatActivity
 
     int[] slike={R.drawable.user1, R.drawable.instrukcije, R.drawable.user1,R.drawable.user1,R.drawable.user1, R.drawable.user1, R.drawable.user1, R.drawable.user1};
     String[] messages={"bok", "posao?", "DAAAA >3Sta ima lima?"};
-    String[] users= {"Ivan Ivanic", "Luka Lukic", "Marija Marijanovic", "Pero Peric", "Pernica Petricic", "Ana Anicic", "lalal", "TOni"};
+    List<String> users= new ArrayList<String>();
+    List<Long> listaId= new ArrayList<>();
+
 
     /*MailBox*/
 
@@ -206,7 +217,7 @@ public class TheMainActivity extends AppCompatActivity
 
 
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
-        new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
+        //new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
         //Button chatButton = (Button) findViewById(R.id.chat_button);
 
         //chatButton.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +226,74 @@ public class TheMainActivity extends AppCompatActivity
         //    openChat();
         //}
         //});
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+        //tu nekako dodati ID korisnika
+        service.getRazgovoriId("korisnik/"+"2"+"/razgovori").enqueue(new Callback<List<Long>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Long>> call, Response<List<Long>> response) {
+                List<Long> id = response.body();
+                if(id==null){
+                    Log.d("LOGIN RETROFIT", "onResponse: nema");
+                }else{
+                    Log.d("LOGIN RETROFIT", "onResponse: " + id.toString());
+                }
+
+                Toast.makeText(TheMainActivity.this, "dohvatio: "+ id.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+            @Override
+            public void onFailure(Call<List<Long>> call, Throwable t) {
+                Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+                Log.d("LOGIN", "onFailure: " + t.getMessage());
+            }
+        });
+
+        listaId.removeAll(listaId);
+        listaId.add((long)4);
+
+        
+        for (long korisnikID : listaId){
+
+            service.getKorisnik("korisnik/"+Long.toString(korisnikID)+"/detalji").enqueue(new Callback<Korisnik>() {
+
+
+                @Override
+                public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                    Korisnik korisnik = response.body();
+                    if(korisnik==null){
+                        Log.d("LOGIN RETROFIT", "onResponse: nema");
+                    }else{
+                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
+                    }
+
+                    users.add(korisnik.getIme()+" "+korisnik.getPrezime());
+
+                }
+
+
+                @Override
+                public void onFailure(Call<Korisnik> call, Throwable t) {
+                    Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+                    Log.d("LOGIN", "onFailure: " + t.getMessage());
+                }
+            });
+
+        }
+
+
+
+
 
         usersListV=(ListView) findViewById(R.id.listV);
 
@@ -236,7 +315,7 @@ public class TheMainActivity extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return users.length;
+            return users.size();
         }
 
         @Override
@@ -257,7 +336,7 @@ public class TheMainActivity extends AppCompatActivity
 
             //userova slika ovisno cija je poruka
             imageView.setImageResource(slike[i]);
-            textView.setText(users[i]);
+            textView.setText(users.get(i));
 
 
             return view;

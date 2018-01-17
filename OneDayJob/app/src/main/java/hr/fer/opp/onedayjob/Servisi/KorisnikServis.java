@@ -28,6 +28,9 @@ public interface KorisnikServis {
     @GET("/{path}")
     Call<List<Korisnik>> getKorisnici(@Path("path") String path);
 
+    @GET("/{path}")
+    Call<List<Long>> getRazgovoriId(@Path("path") String path);
+
     @FormUrlEncoded
     @Headers("Content-Type: application/json")
     @POST("/{path}")

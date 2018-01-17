@@ -1,6 +1,10 @@
 package hr.fer.opp.onedayjob.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,10 +24,20 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import hr.fer.opp.onedayjob.FeedAdapter;
 import hr.fer.opp.onedayjob.Models.Kategorija2;
@@ -31,10 +45,18 @@ import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
 public class TheMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+
 
 
     private static final List<Posao> posloviTest = new ArrayList<>();
+
+    /* GPS vars*/
+    private GoogleMap mMap;
+    List<Address> results = new ArrayList<Address>();
+    Geocoder geocoder;
+    LatLng fokus = null;
+    /* GPS vars*/
 
     static{
         posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00").getTime(), 120, 80, false,  Arrays.asList(new Long[]{Kategorija2.FIZICKI_POSAO.getId()}), false));
@@ -57,9 +79,17 @@ public class TheMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        geocoder = new Geocoder(this, Locale.getDefault());
         setContentView(R.layout.activity_the_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /* GPS setup */
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        /* GPS setup */
 
         //FEED LAYOUT
         feedLayout = (RelativeLayout) findViewById(R.id.navigation_feed);
@@ -238,8 +268,8 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     private void openGps(){
-        Intent intent = new Intent(TheMainActivity.this, GpsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(TheMainActivity.this, GpsActivity.class);
+        //startActivity(intent);
     }
 
     private void openProfile(){
@@ -256,4 +286,93 @@ public class TheMainActivity extends AppCompatActivity
         Intent intent = new Intent(TheMainActivity.this, MailboxActivity.class);
         startActivity(intent);
     }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        /*TEST*/
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+
+
+        //locationManager.removeUpdates(locationListener);
+        /*TEST*/
+
+
+        for (Posao p : posloviTest){
+
+            //Iz String lokacije izvuci adresu (class Adress)
+            try {
+                results = geocoder.getFromLocationName(p.getLokacija(),2);
+            } catch (IOException e) {
+                continue;
+            }
+            if (results.isEmpty())continue;
+
+            //Daj mi Latitude i Longitude adrese
+            LatLng posaoLatLng = new LatLng(results.get(0).getLatitude(),results.get(0).getLongitude());
+
+            //Postavi marker
+            Marker posaoMarker = mMap.addMarker(new MarkerOptions().position(posaoLatLng).title(p.getNaslov()));
+
+
+        }
+
+        /*Lat i Long od fera, tu ce biti pocetni zoom mape*/
+        if (fokus == null){
+            fokus = new LatLng(45.8007017,15.9690278);
+        }
+
+        //LatLng trg = new LatLng(45.813104, 15.977587);
+        //LatLng
+
+        // googleMap.setOnInfoWindowClickListener(listener);
+
+        //final Marker m1 = mMap.addMarker(new MarkerOptions().position(trg).title("Ovde jest trg ba"));
+        //final Marker m2 = mMap.addMarker(new MarkerOptions().position(fer).title("Ovdje je nas najdrazi faksic"));
+
+
+
+        GoogleMap.OnInfoWindowClickListener listener = new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                //Ovo vjv moze bolje - Spajanje markera i posla
+                String title = marker.getTitle();
+
+                for (Posao pos : posloviTest){
+                    if (title.equals(pos.getNaslov())){
+
+                        Intent intent = new Intent(TheMainActivity.this, JobActivity.class);
+
+                        Bundle bundle = new Bundle();
+
+                        Log.d("odabrani posao", "onClick: saljem posao" + pos.getNaslov());
+                        bundle.putSerializable("odabraniPosao", pos);
+                        intent.putExtras(bundle);
+
+                        startActivity(intent);
+
+
+                        //gpsButton.setVisibility(View.VISIBLE);
+                        // gpsButton.setText(pos.getPosaoId() + "");
+
+
+
+                    }
+                }
+
+
+            }
+        };
+
+        mMap.setOnInfoWindowClickListener(listener);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(fokus));
+        mMap.animateCamera( CameraUpdateFactory.zoomTo( 13.0f ) );
+    }
+
+
 }

@@ -45,4 +45,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_the_main">OneDayJob</string>
     <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,36 +89,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         if(fazaTestiranja){
-            mEmailView.setText("james.bond007@MI6.com");
-            mPasswordView.setText("JB007");
+            mEmailView.setText("email1@a.a");
+            mPasswordView.setText("pass1");
         }
-
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://onedayjobapp2.azurewebsites.net")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        final KorisnikServis service = retrofit.create(KorisnikServis.class);
-
-        service.getKorisnik("korisnik/1/detalji").enqueue(new Callback<Korisnik>() {
-
-            @Override
-            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
-                Korisnik korisnik = response.body();
-                if(korisnik==null){
-                    Log.d("LOGIN RETROFIT", "onResponse: nema");
-                }else{
-                    Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Korisnik> call, Throwable t) {
-                Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
-                Log.d("LOGIN", "onFailure: " + t.getMessage());
-            }
-        });
     }
 
     private void populateAutoComplete() {
@@ -173,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (mAuthTask != null) {
             return;
         }
-         Log.d("tu", "attemptLogin: tu");
+
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -209,10 +183,57 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView.requestFocus();
         } else {
 
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+            service.getKorisnici("korisnik/getAll").enqueue(new Callback<List<Korisnik>>() {
+
+                @Override
+                public void onResponse(Call<List<Korisnik>> call, Response<List<Korisnik>> response) {
+                    List<Korisnik> korisnici = response.body();
+                    if(korisnici==null){
+                        Log.d("LOGIN RETROFIT", "onResponse: nema");
+                        Toast.makeText(LoginActivity.this, "Baza je down!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }else{
+//                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnici.toString());
+                    }
+
+                    for(Korisnik korisnik : korisnici){
+                        Log.d("LOGIN", "onResponse: provjeravam: "+ korisnik);
+
+                        if(mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())){
+                            Log.d("tu", "onResponse: ttu");
+                            Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
+
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("korisnik", korisnik);
+                            intent.putExtras(bundle);
+                            Toast.makeText(LoginActivity.this, "Uspješno logiranje!", Toast.LENGTH_SHORT).show();
+
+                            startActivity(intent);
+                            return;
+                        }
+                    }
+                    Toast.makeText(LoginActivity.this, "Kombinacija email i password nije odgovarajuća! Al puštam te dalje...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFailure(Call<List<Korisnik>> call, Throwable t) {
+                    Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+                    Log.d("LOGIN", "onFailure: " + t.getMessage());
+                    Toast.makeText(LoginActivity.this, "Cannot communicate with database. Reason: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
-            startActivity(intent);
+
             /*ovo se treba odkomentirati i iskoristiti kad ce se fakat spajat na backend*/
 //            showProgress(true);
 //            mAuthTask = new UserLoginTask(email, password);

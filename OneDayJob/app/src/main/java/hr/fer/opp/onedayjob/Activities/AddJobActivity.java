@@ -3,6 +3,7 @@ package hr.fer.opp.onedayjob.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.ThemedSpinnerAdapter;
 import android.widget.Toast;
 
 import com.google.gson.annotations.SerializedName;
@@ -31,7 +33,17 @@ import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.PosaoServis;
 import hr.fer.opp.onedayjob.util.Util;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class AddJobActivity extends AppCompatActivity {
 
@@ -224,7 +236,48 @@ public class AddJobActivity extends AppCompatActivity {
                  boolean posaoRezerviranNew=false;
 
 
-                 Posao posao = new Posao(posaoIdNew,poslodavacIdNew,posloprimacIdNew,naslovNew,opisNew,lokacijaNew,vrijemeNew,trajanjeNew,ponudeniNovacNew,posaoGotovNew,kategorijaIDNew,posaoRezerviranNew);
+                 final Posao posao = new Posao(posaoIdNew,poslodavacIdNew,posloprimacIdNew,naslovNew,opisNew,lokacijaNew,vrijemeNew,trajanjeNew,ponudeniNovacNew,posaoGotovNew,kategorijaIDNew,posaoRezerviranNew);
+
+                // Logging ...
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .client(httpClient.build())
+                        .build();
+                final PosaoServis service = retrofit.create(PosaoServis.class);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        service.dodajPosao(posao).enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                Toast.makeText(AddJobActivity.this, "Dodan posao!", Toast.LENGTH_SHORT).show();
+                                Log.d("REG", "onResponse: dodao sam posao!");
+
+                                Intent intent = new Intent(AddJobActivity.this, TheMainActivity.class);
+
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("korisnik", korisnik);
+                                intent.putExtras(bundle);
+
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                Log.d("REG", "onFailure: " + t.getMessage());
+                                Toast.makeText(AddJobActivity.this, "Nisam uspio registrirati. Razlog: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).run();
 
 
 

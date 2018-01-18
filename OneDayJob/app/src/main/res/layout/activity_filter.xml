@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="hr.fer.opp.onedayjob.Activities.FilterActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/filter_category_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/instrukcije" />
+
+
+    <LinearLayout
+        android:id="@+id/filter_job_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/filter_category_image"
+        android:layout_marginTop="5dp"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST"
+            android:textSize="10dp"
+            android:visibility="invisible"/>
+
+        <Spinner
+            android:id="@+id/filter_dropDownMenu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="20dp"
+            android:entries="@array/category_arrays"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="26dp"
+            android:textStyle="bold">
+
+        </Spinner>
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:padding="20dp"
+            android:gravity="bottom"
+            android:text="Potvrdi"
+            android:id="@+id/filter_submit"
+            android:layout_marginBottom="50dp"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:padding="20dp"
+            android:gravity="bottom"
+            android:text="Makni filter"
+            android:id="@+id/filter_remove"
+            android:layout_marginBottom="50dp"/>
+
+
+    </LinearLayout>
+
+    </RelativeLayout>
+
+
+</ScrollView>

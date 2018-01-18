@@ -22,4 +22,9 @@ public interface PosaoServis {
 
     @POST("/dodajPosao")
     Call<Boolean> dodajPosao(@Body Posao posao);
+
+    @POST("/posao/update")
+    Call<Posao> updatePosao(@Body Posao posao);
+
+
 }

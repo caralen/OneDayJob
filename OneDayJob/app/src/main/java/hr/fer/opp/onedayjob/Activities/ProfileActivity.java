@@ -14,8 +14,22 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.sql.Timestamp;
+
+import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
+import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.PosaoServis;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -172,21 +186,52 @@ public class ProfileActivity extends AppCompatActivity {
                 if(sucess){
                     //novi intent odi
 
-                    Korisnik updateani = new Korisnik(korisnik.getKorisnikID(),newName,newLastName,newEmail,zaporkaHash,korisnik.getDob(),newBio,korisnik.getDatumRegistracije(),korisnik.getBrojTelefona(),korisnik.isJeValidiran(),korisnik.isJeAdmin());
+                    final Korisnik updateani = new Korisnik(korisnik.getKorisnikID(),newName,newLastName,newEmail,zaporkaHash,korisnik.getDob(),newBio,korisnik.getDatumRegistracije(),korisnik.getBrojTelefona(),korisnik.isJeValidiran(),korisnik.isJeAdmin());
 
 
                     //POSALJI U BAZU +
 
+                    // Logging ...
+                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .client(httpClient.build())
+                            .build();
+                    final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            service.updateKorisnik(updateani).enqueue(new Callback<Korisnik>() {
+                                @Override
+                                public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                                    Log.d("Login", "onResponse: " + response.body());
+                                    submit.setClickable(true);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("korisnik", updateani); //OVDJE TREBA NOVI KORISNIK
+                                    Intent intent = new Intent(ProfileActivity.this, TheMainActivity.class);
+                                    intent.putExtras(bundle);
+                                    Toast.makeText(ProfileActivity.this, "Promjena prihvaćena",Toast.LENGTH_LONG).show();
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onFailure(Call<Korisnik> call, Throwable t) {
+                                    Log.d("Login", "onFailure: " + t.getMessage());
+                                    Toast.makeText(ProfileActivity.this, "Nisam uspio spremiti podatke", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }).run();
 
                     //POSALJI U BAZU -
-                    submit.setClickable(true);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("korisnik", updateani); //OVDJE TREBA NOVI KORISNIK TODO provjeri
-                    Intent intent = new Intent(ProfileActivity.this, TheMainActivity.class);
-                    intent.putExtras(bundle);
-                    Toast.makeText(ProfileActivity.this, "Promjena prihvaćena",Toast.LENGTH_LONG).show();
-                    startActivity(intent);
                 }else{
                     submit.setClickable(true);
                 }

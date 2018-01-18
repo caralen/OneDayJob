@@ -46,6 +46,7 @@
     <string name="title_activity_the_main">OneDayJob</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="add_photo">add photo</string>
 
     <string-array name="category_arrays">
         <item>Kategorija</item>

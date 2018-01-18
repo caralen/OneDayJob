@@ -37,13 +37,8 @@ public class Util {
         return vrijemeString.substring(0,10).replaceAll("-", "/");
     }
 
-    public static List<Kategorija2> dajEnumKategorije(List<Long> kategorijeID) {
-        List<Kategorija2> kategorije = new ArrayList<>();
-        for(Long kategorijaID : kategorijeID){
-            kategorije.add(Kategorija2.dajKategoriju(kategorijaID));
-            Log.d("UTIL", "dajEnumKategorije: dodao" + kategorijaID);
-        }
-        return kategorije;
+    public static Kategorija2 dajEnumKategorije(Long kategorijaID) {
+        return Kategorija2.dajKategoriju(kategorijaID);
     }
 
 

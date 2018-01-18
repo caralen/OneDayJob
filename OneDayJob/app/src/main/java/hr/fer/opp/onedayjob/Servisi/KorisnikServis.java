@@ -31,6 +31,9 @@ public interface KorisnikServis {
     @POST("/register")
     Call<Korisnik> registerKorisnik(@Body Korisnik korisnik);
 
+    @POST("/korisnik/update")
+    Call<Korisnik> updateKorisnik(@Body Korisnik korisnik);
+
     @GET("/verify")
     Call<String> verifyKorisnik(@Query("email") String email);
 }

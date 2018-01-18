@@ -76,7 +76,7 @@ public class JobManagementActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<List<Posao>> call, Response<List<Posao>> response) {
                         Log.d("Login", "onResponse: " + response.body());
-
+                        mojiPoslovi.clear();
                         sviPoslovi = response.body();
                         for(Posao posao: sviPoslovi){
                             if(posao.getPoslodavacId() == korisnik.getkorisnikID()){

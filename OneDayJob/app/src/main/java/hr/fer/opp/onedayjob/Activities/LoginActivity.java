@@ -204,6 +204,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onResponse(Call<List<Korisnik>> call, Response<List<Korisnik>> response) {
+                    if(response.code() != 200){
+                        Toast.makeText(LoginActivity.this, "Greska!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     List<Korisnik> korisnici = response.body();
                     if (korisnici == null) {
                         Log.d("LOGIN RETROFIT", "onResponse: nema");

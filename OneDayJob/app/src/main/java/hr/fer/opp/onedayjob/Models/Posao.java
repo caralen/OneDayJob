@@ -8,11 +8,11 @@ import java.util.List;
 
 
 public class Posao implements Serializable {
-    @SerializedName("posaoId")
+    @SerializedName("posaoID")
     private long posaoId;
-    @SerializedName("poslodavacId")
+    @SerializedName("poslodavacID")
     private long poslodavacId;
-    @SerializedName("posloprimacId")
+    @SerializedName("posloprimacID")
     private long posloprimacId;
     @SerializedName("naslov")
     private String naslov;

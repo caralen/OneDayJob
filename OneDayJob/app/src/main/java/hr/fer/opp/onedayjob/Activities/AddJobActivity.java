@@ -1,7 +1,9 @@
 package hr.fer.opp.onedayjob.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,22 +13,41 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.ThemedSpinnerAdapter;
 import android.widget.Toast;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import hr.fer.opp.onedayjob.Models.Kategorija2;
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.PosaoServis;
 import hr.fer.opp.onedayjob.util.Util;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class AddJobActivity extends AppCompatActivity {
+
+    Korisnik korisnik;
 
     ImageView cover;
     Spinner category;
@@ -46,7 +67,7 @@ public class AddJobActivity extends AppCompatActivity {
 
         //Makni fokus
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        loadUserData();
 
 
         cover = (ImageView)findViewById (R.id.add_job_category_image);
@@ -168,7 +189,11 @@ public class AddJobActivity extends AppCompatActivity {
                     ToastAndClickable("Upišite datum");
                     return;
                 }
-                //TODO : provjeriti je li datum okej
+
+                if (!isValidDate(datum)){
+                    ToastAndClickable("Format datuma nije dobar! (npr. 18.1.2018");
+                    return;
+                }
 
                 if (trajanje.isEmpty()){
                     ToastAndClickable("Upišite trajanje");
@@ -188,7 +213,7 @@ public class AddJobActivity extends AppCompatActivity {
                 }
 
                 try{
-                    Long.parseLong(placa);
+                    Integer.parseInt(placa);
                 }catch (Exception ex){
                     ToastAndClickable("plaća mora biti broj!");
                     return;
@@ -196,8 +221,62 @@ public class AddJobActivity extends AppCompatActivity {
 
 
 
+                 long posaoIdNew=0;
+                 long poslodavacIdNew=korisnik.getkorisnikID();
+                 long posloprimacIdNew=0;
+                 String naslovNew=naslov;
+                 String opisNew=kratkiOpis;
+                 String lokacijaNew=lokacija;
+                 long vrijemeNew=stringToDateToLong(datum);
+                 long trajanjeNew=Long.parseLong(trajanje);
+                 int ponudeniNovacNew=Integer.parseInt(placa);
+                 boolean posaoGotovNew=false;
+                 Long kategorijaIDNew=Kategorija2.KategorijaStringToID(kategorija);
+                 boolean posaoRezerviranNew=false;
 
-                ToastAndClickable("Sve okej");
+
+                 final Posao posao = new Posao(posaoIdNew,poslodavacIdNew,posloprimacIdNew,naslovNew,opisNew,lokacijaNew,vrijemeNew,trajanjeNew,ponudeniNovacNew,posaoGotovNew,kategorijaIDNew,posaoRezerviranNew);
+
+                // Logging ...
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .client(httpClient.build())
+                        .build();
+                final PosaoServis service = retrofit.create(PosaoServis.class);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        service.dodajPosao(posao).enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                Toast.makeText(AddJobActivity.this, "Dodan posao!", Toast.LENGTH_SHORT).show();
+                                Log.d("REG", "onResponse: dodao sam posao!");
+
+                                Intent intent = new Intent(AddJobActivity.this, TheMainActivity.class);
+
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("korisnik", korisnik);
+                                intent.putExtras(bundle);
+
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                Log.d("REG", "onFailure: " + t.getMessage());
+                                Toast.makeText(AddJobActivity.this, "Nisam uspio registrirati. Razlog: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).run();
 
 
 
@@ -220,26 +299,55 @@ public class AddJobActivity extends AppCompatActivity {
     }
 
     public boolean isValidDate(String input) {
+        Date date = null;
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try{
+             date =  df.parse(input);
+        }catch (Exception ex){
+            return  false;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        //Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
+
+        long milliseconds = date.getTime();
 
         return true;
-//        boolean valid = false;
-//
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-//        try {
-//            Date date = new Date();
-//            String dateTime = dateFormat.format(date);
-//
-//            String txt = dateTime + "";
-//            Toast.makeText(AddJobActivity.this, txt,Toast.LENGTH_LONG).show();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return valid;
     }
 
+    public long stringToDateToLong(String input){
+        Date date = null;
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try{
+            date =  df.parse(input);
+        }catch (Exception ex){
+            return 0;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        //Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
+
+        long milliseconds = date.getTime();
+
+        return milliseconds;
+    }
+
+
+    private void loadUserData(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        korisnik = (Korisnik) bundle.get("korisnik");
+    }
 
 
 }

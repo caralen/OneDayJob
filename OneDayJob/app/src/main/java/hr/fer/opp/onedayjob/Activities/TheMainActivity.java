@@ -53,6 +53,7 @@ import java.util.zip.Inflater;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.FeedAdapter;
+import hr.fer.opp.onedayjob.Models.Filter;
 import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Poruka;
@@ -79,7 +80,7 @@ public class TheMainActivity extends AppCompatActivity
     static Korisnik korisnik;
     CustomAdapter customAdapter;
     /* GPS vars*/
-    private GoogleMap mMap;
+    GoogleMap mMap;
     List<Address> results = new ArrayList<Address>();
     Geocoder geocoder;
     LatLng fokus = null;
@@ -97,11 +98,6 @@ public class TheMainActivity extends AppCompatActivity
     /*MailBox*/
 
 
-    static{
-        posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00").getTime(), 120, 80, false,  Kategorija2.FIZICKI_POSAO.getId(), false));
-        posloviTest.add(new Posao(2, 2, 2, "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00").getTime(), 60, 150, false, Kategorija2.CISCENJE.getId(), false));
-        posloviTest.add(new Posao(3, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00").getTime(), 90, 60, false, Kategorija2.CUVANJE_ZIVOTINJE.getId(), false));
-    }
 
     //layout_FEED
     ListView listJobs;
@@ -479,13 +475,34 @@ public class TheMainActivity extends AppCompatActivity
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Posao p = new Posao(0, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00").getTime(), 90, 60, false, Kategorija2.CUVANJE_ZIVOTINJE.getId(), false);
                 service.getAktivniPoslovi().enqueue(new Callback<List<Posao>>() {
                     @Override
                     public void onResponse(Call<List<Posao>> call, Response<List<Posao>> response) {
                         Log.d("Login", "onResponse: " + response.body());
 
                         posloviTest = response.body();
+                        TheMainActivity.this.onMapReady(mMap);
+
+                        Intent intent = getIntent();
+                        Bundle bundle = intent.getExtras();
+                        Filter filter = null;
+                        filter =(Filter) bundle.get("filter");
+                        List<Posao> posloviFiltrirani = new ArrayList<>();
+
+
+                        if (filter != null){
+                            for (Posao p : posloviTest){
+                                if (p.getKategorijaID() == filter.getKategorijaID().longValue()){
+                                    posloviFiltrirani.add(p);
+                                }
+                            }
+
+                            FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviFiltrirani);
+                            listJobs.setAdapter(feedAdapter);
+                            return;
+                        }
+
+
 
                         FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviTest);
                         listJobs.setAdapter(feedAdapter);
@@ -553,6 +570,7 @@ public class TheMainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.filter_item) {
+
             openFilter();
         } else if (id == R.id.moji_poslovi_item) {
             openJobManagement();
@@ -586,12 +604,18 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     private void openFilter(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, FilterActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
     private void openJobManagement(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, JobManagementActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

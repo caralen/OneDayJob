@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -203,6 +204,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onResponse(Call<List<Korisnik>> call, Response<List<Korisnik>> response) {
+                    if(response.code() != 200){
+                        Toast.makeText(LoginActivity.this, "Greska!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     List<Korisnik> korisnici = response.body();
                     if (korisnici == null) {
                         Log.d("LOGIN RETROFIT", "onResponse: nema");
@@ -248,6 +253,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            showProgress(true);
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
+        }
+    }
+
+    private Boolean exit = false;
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            moveTaskToBack(true);
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
         }
     }
 

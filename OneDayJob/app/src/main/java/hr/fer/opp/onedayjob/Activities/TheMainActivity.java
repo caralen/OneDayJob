@@ -113,7 +113,7 @@ public class TheMainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        loadUserData();
+
 
         /* ------------ GPS setup -------- */
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -145,7 +145,7 @@ public class TheMainActivity extends AppCompatActivity
 
 
 
-
+        loadUserData();
         mailbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -383,7 +383,11 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     private void createJob() {
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, AddJobActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -398,7 +402,11 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     private void editProfile(){
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, ProfileActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

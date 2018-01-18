@@ -5,11 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -18,19 +23,18 @@ public class ProfileActivity extends AppCompatActivity {
 
     ImageView userImage;
     Button submit ;
+    Korisnik korisnik;
 
+    TextView headerFirstAndLastName;
+    TextView headerBio;
 
-//  korisnikID: VARCHAR(255) - autogenerirani primarni ključ korisnika
-//	ime: VARCHAR(255) - ime korisnika
-//	prezime: VARCHAR(255)  - prezime korisnika
-//	email: VARCHAR(255) - email korisnika
-//	zaporkaHASH: VARCHAR(255) - heširana zaporka korisnika
-//	dob: SMALLINT(127) - dob korisnika
-//	slikaID: VARCHAR(255) - ključ slike spremljen u drugoj tablici
-//	opis: VARCHAR(255)  - opis korisnika
-//	datumRegistracije: TIMESTAMP - datum kada se korisnik prvi puta registrirao
-//	jeValidiran: BOOLEAN - je li korisnik verificirao svoj korisnički račun
-//	brojTelefona: VARCHAR(15) - telefonski broj korisnika
+    EditText name;
+    EditText lastName;
+    EditText email;
+    EditText bio;
+    EditText currentPassword;
+    EditText newPasswordOne;
+    EditText newPasswordTwo;
 
 
     //TODO
@@ -44,11 +48,34 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        //GetKorisnik
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        //GetKorisnik
+        loadUserData();
 
         submit = (Button)findViewById(R.id.submit);
         userImage = (ImageView)findViewById(R.id.user_profile_photo);
+        headerFirstAndLastName=(TextView)findViewById(R.id.user_profile_name);
+        headerBio=(TextView)findViewById(R.id.user_profile_short_bio);
+        name=(EditText)findViewById(R.id.edit_user_name);
+        lastName=(EditText)findViewById(R.id.edit_user_lastname);
+        email=(EditText)findViewById(R.id.edit_user_email);
+        bio=(EditText)findViewById(R.id.edit_user_bio);
+        currentPassword=(EditText)findViewById(R.id.edit_user_currentPassword);
+        newPasswordOne=(EditText)findViewById(R.id.edit_user_newPasswordOne);
+        newPasswordTwo=(EditText)findViewById(R.id.edit_user_newPasswordTwo);
+
+
+        headerFirstAndLastName.setText(korisnik.getIme()+ " " + korisnik.getPrezime());
+        headerBio.setText(korisnik.getOpis());
+        name.setText(korisnik.getIme());
+        lastName.setText(korisnik.getPrezime());
+        email.setText(korisnik.getEmail());
+        bio.setText(korisnik.getOpis());
+
+
+
+
 
         Log.d("trump", "onCreate: Trebao bih staviti trumpa");
 
@@ -56,7 +83,115 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Dohvati ovdje sve s ekrana korisnika i pretvori u objekt Korisnik
-                Log.d("ProfileActivity", "onClick: zelim spremiti sve promjene u bazu za korisnika:");            }
+                Log.d("ProfileActivity", "onClick: zelim spremiti sve promjene u bazu za korisnika:");
+                boolean sucess = false;
+                submit.setClickable(false);
+
+                String newName=null;
+                String newLastName=null;
+                String newEmail=null;
+                String newBio=null;
+                String newOne=null;
+                String newTwo=null;
+
+                String zaporkaHash=korisnik.getZaporkaHash().toString();
+
+                newName=name.getText().toString();
+                newLastName=lastName.getText().toString();
+                newEmail=email.getText().toString();
+                newBio=bio.getText().toString();
+                newOne=newPasswordOne.getText().toString();
+                newTwo=newPasswordTwo.getText().toString();
+
+
+                if (newName.isEmpty()){
+                    ToastAndClickable("Ime ne smije biti prazno!");
+                    return;
+                }
+
+                if (newName.length() > 30){
+                    ToastAndClickable("Ime smije sadržavati najviše 30 znakova");
+                    return;
+                }
+
+                if (newLastName.isEmpty()){
+                    ToastAndClickable("Prezime ne smije biti prazno!");
+                    return;
+                }
+
+                if (newLastName.length() > 30){
+                    ToastAndClickable("Prezime smije sadržavati najviše 30 znakova");
+                    return;
+                }
+
+                if (newEmail.isEmpty()){
+                    ToastAndClickable("Polje E-Mail ne smije biti prazno!");
+                    return;
+                }
+
+                if (newEmail.length() > 40){
+                    ToastAndClickable("E-Mail smije sadržavati najviše 40 znakova");
+                    return;
+                }
+
+                if (newBio.isEmpty()){
+                    ToastAndClickable("Polje O meni ne smije biti prazno!");
+                    return;
+                }
+
+
+
+
+                if(!currentPassword.getText().toString().equals(korisnik.getZaporkaHash())){
+                    ToastAndClickable("Netočna zaporka! Za svaku promjenu je potrebna zaporka");
+                    return;
+                }
+
+                if (newOne.isEmpty()&&newTwo.isEmpty()){
+                    sucess=true;
+                }else{
+                    if (!newOne.equals(newTwo)){
+                        ToastAndClickable("Nova zaporka se ne poklapa s potvrdnom.");
+                        return;
+                    }
+                    if (newOne.isEmpty()){
+                        ToastAndClickable("Zaporka mora imati minimalno 4 znaka");
+                        return;
+                    }
+
+                    if (newOne.length() < 4){
+                        ToastAndClickable("Zaporka mora imati minimalno 4 znaka");
+                        return;
+                    }
+                    zaporkaHash=newOne;
+                }
+
+
+
+
+                if(sucess){
+                    //novi intent odi
+
+                    Korisnik updateani = new Korisnik(korisnik.getKorisnikID(),newName,newLastName,newEmail,zaporkaHash,korisnik.getDob(),newBio,korisnik.getDatumRegistracije(),korisnik.getBrojTelefona(),korisnik.isJeValidiran(),korisnik.isJeAdmin());
+
+
+                    //POSALJI U BAZU +
+
+
+                    //POSALJI U BAZU -
+                    submit.setClickable(true);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("korisnik", updateani); //OVDJE TREBA NOVI KORISNIK TODO provjeri
+                    Intent intent = new Intent(ProfileActivity.this, TheMainActivity.class);
+                    intent.putExtras(bundle);
+                    Toast.makeText(ProfileActivity.this, "Promjena prihvaćena",Toast.LENGTH_LONG).show();
+                    startActivity(intent);
+                }else{
+                    submit.setClickable(true);
+                }
+
+            }
         });
     }
 
@@ -78,6 +213,17 @@ public class ProfileActivity extends AppCompatActivity {
                 Picasso.with(ProfileActivity.this).load(data.getData()).noPlaceholder().centerCrop().fit().into(userImage);
             }
         }
+    }
+
+    private void loadUserData(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        korisnik = (Korisnik) bundle.get("korisnik");
+    }
+
+    private void ToastAndClickable(String txt){
+        Toast.makeText(ProfileActivity.this, txt,Toast.LENGTH_LONG).show();
+        submit.setClickable(true);
     }
 
 }

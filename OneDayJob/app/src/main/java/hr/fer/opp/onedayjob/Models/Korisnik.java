@@ -64,7 +64,7 @@ public class Korisnik implements Serializable {
         this.brojTelefona = brojTelefona;
         this.jeValidiran = jeValidiran;
         this.jeAdmin = jeAdmin;
-        Log.d("Korisnik", "Korisnik:radim ");
+//        Log.d("Korisnik", "Korisnik:radim ");
     }
 
     public long getkorisnikID() {

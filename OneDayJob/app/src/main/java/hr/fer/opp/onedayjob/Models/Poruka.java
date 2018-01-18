@@ -1,5 +1,7 @@
 package hr.fer.opp.onedayjob.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 
@@ -8,10 +10,15 @@ import java.io.Serializable;
  */
 
 public class Poruka implements Serializable {
+    @SerializedName("porukaID")
     private long porukaId;
+    @SerializedName("sadrzaj")
     private String sadrzaj;
+    @SerializedName("datum")
     private long datum;
+    @SerializedName("posiljateljId")
     private long posiljateljId;
+    @SerializedName("primateljId")
     private long primateljId;
 
     public Poruka(long porukaId, String sadrzaj, long datum, long posiljateljId, long primateljId) {

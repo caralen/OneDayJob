@@ -286,6 +286,9 @@ public class TheMainActivity extends AppCompatActivity
         String talkingTo=(String)usersListV.getItemAtPosition(position);
         //Toast.makeText(this, talkingTo, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(TheMainActivity.this, ChatActivity.class);
+
+
+
         intent.putExtra("takingTo", talkingTo);
         startActivity(intent);
     }

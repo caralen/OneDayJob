@@ -21,4 +21,6 @@ public interface PorukaServis {
 
     @POST("/posaljiPoruku")
     Call<Poruka> posaljiPoruku(@Body Poruka poruka);
+
+
 }

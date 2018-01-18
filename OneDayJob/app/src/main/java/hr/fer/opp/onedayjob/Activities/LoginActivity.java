@@ -192,8 +192,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-
-
+            showProgress(true);
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://onedayjobapp2.azurewebsites.net")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -236,6 +235,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onFailure(Call<List<Korisnik>> call, Throwable t) {
+                    showProgress(false);
                     Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
                     Log.d("LOGIN", "onFailure: " + t.getMessage());
                     Toast.makeText(LoginActivity.this, "Cannot communicate with database. Reason: " + t.getMessage(), Toast.LENGTH_SHORT).show();

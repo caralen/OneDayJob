@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,8 +56,11 @@ import hr.fer.opp.onedayjob.FeedAdapter;
 import hr.fer.opp.onedayjob.Models.Filter;
 import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
+import hr.fer.opp.onedayjob.Models.Poruka;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.PorukaServis;
 import hr.fer.opp.onedayjob.Servisi.PosaoServis;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -73,8 +77,8 @@ public class TheMainActivity extends AppCompatActivity
     //TODO : izbrisati MapsActivity(class) i GpsActivity(class) vjv nepotrebni
 
     private static  List<Posao> posloviTest = new ArrayList<>();
-    Korisnik korisnik;
-
+    static Korisnik korisnik;
+    CustomAdapter customAdapter;
     /* GPS vars*/
     GoogleMap mMap;
     List<Address> results = new ArrayList<Address>();
@@ -82,13 +86,14 @@ public class TheMainActivity extends AppCompatActivity
     LatLng fokus = null;
     /* GPS vars*/
 
+    List<Long> razgovori;
+
 
     /*MailBox*/
     ListView usersListV;
 
     int[] slike={R.drawable.user1, R.drawable.instrukcije, R.drawable.user1,R.drawable.user1,R.drawable.user1, R.drawable.user1, R.drawable.user1, R.drawable.user1};
-    String[] messages={"bok", "posao?", "DAAAA >3Sta ima lima?"};
-    String[] users= {"Ivan Ivanic", "Luka Lukic", "Marija Marijanovic", "Pero Peric", "Pernica Petricic", "Ana Anicic", "lalal", "TOni"};
+    List<Korisnik> users = new ArrayList<>();
 
     /*MailBox*/
 
@@ -109,6 +114,7 @@ public class TheMainActivity extends AppCompatActivity
     ImageView header_profilePhoto;
     TextView header_firstAndLastName;
     TextView header_email;
+    private Korisnik porukaPrimatelj;
 
 
     @Override
@@ -118,6 +124,7 @@ public class TheMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_the_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        loadUserData();
 
 
 
@@ -151,7 +158,6 @@ public class TheMainActivity extends AppCompatActivity
 
 
 
-        loadUserData();
         mailbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,6 +188,7 @@ public class TheMainActivity extends AppCompatActivity
                         feedLayout.setVisibility(View.GONE);
                         gpsLayout.setVisibility(View.GONE);
                         mailLayout.setVisibility(View.VISIBLE);
+                        stvoriRazgovor();
                         return true;
                 }
 
@@ -221,7 +228,7 @@ public class TheMainActivity extends AppCompatActivity
 
 
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
-        new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
+        //new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
         //Button chatButton = (Button) findViewById(R.id.chat_button);
 
         //chatButton.setOnClickListener(new View.OnClickListener() {
@@ -230,10 +237,60 @@ public class TheMainActivity extends AppCompatActivity
         //    openChat();
         //}
         //});
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                service.getRazgovori(korisnik.getKorisnikID()).enqueue(new Callback<List<Long>>() {
+
+
+                    @Override
+                    public void onResponse(Call<List<Long>> call, Response<List<Long>> response) {
+                        razgovori = response.body();
+                        if(razgovori==null){
+                            Log.d("LOGIN RETROFIT", "onResponse: nema");
+                        }else{
+                            Log.d("LOGIN RETROFIT", "onResponse: " + razgovori.toString());
+                        }
+
+                        //Toast.makeText(TheMainActivity.this, "dohvatio: "+ id.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    @Override
+                    public void onFailure(Call<List<Long>> call, Throwable t) {
+                        Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+                        Log.d("LOGIN", "onFailure: " + t.getMessage());
+                    }
+                });
+
+            }
+        }).run();
+
+
+
+
+
+        //dohvati SLIKE! test
+
+
 
         usersListV=(ListView) findViewById(R.id.listV);
 
-        CustomAdapter customAdapter=new CustomAdapter();
+        customAdapter=new CustomAdapter();
         usersListV.setAdapter(customAdapter);
 
         //ArrayAdapter<String> userAdapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
@@ -242,12 +299,65 @@ public class TheMainActivity extends AppCompatActivity
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
     }
 
+    private void stvoriRazgovor() {
+
+        if(razgovori == null){
+            Toast.makeText(this, "nema razgovora", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+
+
+        for (long korisnikID : razgovori){
+            if(korisnikID==korisnik.getKorisnikID()){
+                continue;
+            }
+
+            service.getKorisnik("korisnik/"+Long.toString(korisnikID)+"/detalji").enqueue(new Callback<Korisnik>() {
+
+
+                @Override
+                public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                    Korisnik korisnik = response.body();
+                    if(korisnik==null){
+                        Log.d("LOGIN RETROFIT", "onResponse: nema");
+                    }else{
+                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnik.toString());
+                    }
+
+                    users.add(korisnik);
+                    customAdapter.notifyDataSetChanged();
+                }
+
+
+                @Override
+                public void onFailure(Call<Korisnik> call, Throwable t) {
+                    Log.d("LOGIN RETROFIT", "onFailure: nisam se uspio spojit na bazu!");
+                    Log.d("LOGIN", "onFailure: " + t.getMessage());
+                }
+            });
+
+        }
+    }
+
     /*-------------------------------------------- MAILBOX Adapter ---------------------------------------------------------------- */
     class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return users.length;
+            return users.size();
         }
 
         @Override
@@ -268,9 +378,7 @@ public class TheMainActivity extends AppCompatActivity
 
             //userova slika ovisno cija je poruka
             imageView.setImageResource(slike[i]);
-            textView.setText(users[i]);
-
-
+            textView.setText(users.get(i).getIme() + " " + users.get(i).getPrezime());
             return view;
         }
     }
@@ -279,11 +387,58 @@ public class TheMainActivity extends AppCompatActivity
     /*-------------------------------------------- MAILBOX method ---------------------------------------------------------------- */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-        String talkingTo=(String)usersListV.getItemAtPosition(position);
-        //Toast.makeText(this, talkingTo, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(TheMainActivity.this, ChatActivity.class);
-        intent.putExtra("takingTo", talkingTo);
-        startActivity(intent);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        final PorukaServis pservice = retrofit.create(PorukaServis.class);
+        porukaPrimatelj = users.get(position);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pservice.getPoruke(korisnik.getKorisnikID(), porukaPrimatelj.getKorisnikID()).enqueue(new Callback<List<Poruka>>() {
+                    @Override
+                    public void onResponse(Call<List<Poruka>> call, Response<List<Poruka>> response) {
+                        Log.d("Login", "onResponse: " + response.body());
+                        List<Poruka> poruke = response.body();
+                        Bundle bundle = new Bundle();
+                        Intent intent = new Intent(TheMainActivity.this, ChatActivity.class);
+                        intent.putExtra("poruke", (Serializable) poruke);
+                        bundle.putLong("poslodavac", porukaPrimatelj.getKorisnikID());
+
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Poruka>> call, Throwable t) {
+                        Log.d("Login", "onFailure: " + t.getMessage());
+                    }
+                });
+            }
+        }).run();
+
+//
+//        String talkingTo=(String)usersListV.getItemAtPosition(position);
+//        //Toast.makeText(this, talkingTo, Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(TheMainActivity.this, ChatActivity.class);
+//        Bundle bundle=new Bundle();
+//        bundle.putSerializable("korisnik1" , getIntent().getExtras().getSerializable("korisnik"));
+//        bundle.putSerializable("korisnik2", razgovori.get(position));
+//        intent.putExtras(bundle);
+//
+//
+//        startActivity(intent);
     }
     /*-------------------------------------------- MAILBOX method ---------------------------------------------------------------- */
 
@@ -474,12 +629,19 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     public void openJob(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, JobActivity.class);
+        intent.putExtras(bundle);
+        Toast.makeText(this, bundle.getSerializable("korisnik").toString(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 
     private void openProfile(){
-        Intent intent = new Intent(TheMainActivity.this, ProfileViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
+        Intent intent = new Intent(TheMainActivity.this, ProfileActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -500,7 +662,8 @@ public class TheMainActivity extends AppCompatActivity
     private void loadUserData(){
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        korisnik = (Korisnik) bundle.get("korisnik");
+        korisnik = (Korisnik) bundle.getSerializable("korisnik");
+//        Toast.makeText(this, korisnik.toString(), Toast.LENGTH_SHORT).show();
     }
 
 

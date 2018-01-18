@@ -293,6 +293,12 @@
                 android:visibility="invisible"
                 android:onClick="izmijeniPosao"/>
             <Button
+                android:id="@+id/kontaktiraj_poslodavca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kontaktiraj poslodavca"
+                android:onClick="kontaktiraj"/>
+            <Button
                 android:id="@+id/gumb_izbrisi_posao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

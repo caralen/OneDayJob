@@ -17,8 +17,10 @@ import retrofit2.http.Query;
 
 public interface PorukaServis {
     @GET("/poruke")
-    Call<List<Poruka>> getPoruke(@Query("korisnikID1") Korisnik korisnik1, @Query("korisnikID2") Korisnik korisnik2);
+    Call<List<Poruka>> getPoruke(@Query("korisnikID1") Long korisnik1, @Query("korisnikID2") Long korisnik2);
 
     @POST("/posaljiPoruku")
-    Call<Poruka> posaljiPoruku(@Body Poruka poruka);
+    Call<Boolean> posaljiPoruku(@Body Poruka poruka);
+
+
 }

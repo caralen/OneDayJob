@@ -27,6 +27,8 @@ public interface KorisnikServis {
     @GET("/{path}")
     Call<List<Korisnik>> getKorisnici(@Path("path") String path);
 
+    @GET("/korisnik/{id}/razgovori")
+    Call<List<Long>> getRazgovori(@Path("id") Long id);
 
     @POST("/register")
     Call<Korisnik> registerKorisnik(@Body Korisnik korisnik);

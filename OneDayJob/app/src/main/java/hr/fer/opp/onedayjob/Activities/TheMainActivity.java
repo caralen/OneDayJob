@@ -248,7 +248,7 @@ public class TheMainActivity extends AppCompatActivity
                     Log.d("LOGIN RETROFIT", "onResponse: " + id.toString());
                 }
 
-                Toast.makeText(TheMainActivity.this, "dohvatio: "+ id.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TheMainActivity.this, "dohvatio: "+ id.toString(), Toast.LENGTH_SHORT).show();
             }
 
 
@@ -259,10 +259,11 @@ public class TheMainActivity extends AppCompatActivity
             }
         });
 
+        //OVO OBAVEZNO MAKNUTI OVO JE ZA TESTIRANJE!!!
         listaId.removeAll(listaId);
         listaId.add((long)4);
 
-        
+
         for (long korisnikID : listaId){
 
             service.getKorisnik("korisnik/"+Long.toString(korisnikID)+"/detalji").enqueue(new Callback<Korisnik>() {
@@ -291,6 +292,7 @@ public class TheMainActivity extends AppCompatActivity
 
         }
 
+        //dohvati SLIKE!
 
 
 
@@ -350,7 +352,10 @@ public class TheMainActivity extends AppCompatActivity
         String talkingTo=(String)usersListV.getItemAtPosition(position);
         //Toast.makeText(this, talkingTo, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(TheMainActivity.this, ChatActivity.class);
-        intent.putExtra("takingTo", talkingTo);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("korisnik1" , getIntent().getExtras().getSerializable("korisnik"));
+        bundle.putSerializable("korisnik2", listaId.get(position));
+        intent.putExtras(bundle);
         startActivity(intent);
     }
     /*-------------------------------------------- MAILBOX method ---------------------------------------------------------------- */

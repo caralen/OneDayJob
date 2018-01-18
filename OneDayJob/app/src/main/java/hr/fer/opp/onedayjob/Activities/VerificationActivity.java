@@ -116,6 +116,4 @@ Korisnik noviKorisnik;
             }
         }).run();
             }
-
-
 }

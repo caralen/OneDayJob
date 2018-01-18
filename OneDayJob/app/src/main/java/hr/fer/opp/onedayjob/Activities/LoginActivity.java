@@ -31,8 +31,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.Models.Korisnik;
+import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.PosaoServis;
 import hr.fer.opp.onedayjob.Servisi.StringServis;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -95,8 +97,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPasswordView.setText("pass1");
         }
 
+        // Logging ...
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        final PosaoServis service = retrofit.create(PosaoServis.class);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                service.getAktivniPoslovi().enqueue(new Callback<List<Posao>>() {
+                    @Override
+                    public void onResponse(Call<List<Posao>> call, Response<List<Posao>> response) {
+                        Log.d("Login", "onResponse: " + response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Posao>> call, Throwable t) {
+                        Log.d("Login", "onFailure: " + t.getMessage());
+                    }
+                });
+            }
+        }).run();
     }
+
+
+
+
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {

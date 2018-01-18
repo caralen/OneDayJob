@@ -1,22 +1,36 @@
 package hr.fer.opp.onedayjob.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 
 public class Posao implements Serializable {
+    @SerializedName("posaoId")
     private long posaoId;
+    @SerializedName("poslodavacId")
     private long poslodavacId;
+    @SerializedName("posloprimacId")
     private long posloprimacId;
+    @SerializedName("naslov")
     private String naslov;
+    @SerializedName("opis")
     private String opis;
+    @SerializedName("lokacija")
     private String lokacija;
+    @SerializedName("vrijeme")
     private long vrijeme;
+    @SerializedName("trajanje")
     private long trajanje;
+    @SerializedName("ponudeniNovac")
     private int ponudeniNovac;
+    @SerializedName("posaoGotov")
     private boolean posaoGotov;
-    private List<Long> kategorijeID;
+    @SerializedName("kategorijaID")
+    private Long kategorijaID;
+    @SerializedName("posaoRezerviran")
     private boolean posaoRezerviran;
 
     public long getPosloprimacId() {
@@ -27,13 +41,6 @@ public class Posao implements Serializable {
         this.posloprimacId = posloprimacId;
     }
 
-    public List<Long> getKategorijeID() {
-        return kategorijeID;
-    }
-
-    public void setKategorijeID(List<Long> kategorijeID) {
-        this.kategorijeID = kategorijeID;
-    }
 
     public boolean isPosaoRezerviran() {
         return posaoRezerviran;
@@ -43,8 +50,7 @@ public class Posao implements Serializable {
         this.posaoRezerviran = posaoRezerviran;
     }
 
-
-    public Posao(long posaoId, long poslodavacId, long posloprimacId, String naslov, String opis, String lokacija, long vrijeme, long trajanje, int ponudeniNovac, boolean posaoGotov, List<Long> kategorijeID, boolean posaoRezerviran) {
+    public Posao(long posaoId, long poslodavacId, long posloprimacId, String naslov, String opis, String lokacija, long vrijeme, long trajanje, int ponudeniNovac, boolean posaoGotov, Long kategorijaID, boolean posaoRezerviran) {
         this.posaoId = posaoId;
         this.poslodavacId = poslodavacId;
         this.posloprimacId = posloprimacId;
@@ -55,10 +61,17 @@ public class Posao implements Serializable {
         this.trajanje = trajanje;
         this.ponudeniNovac = ponudeniNovac;
         this.posaoGotov = posaoGotov;
-        this.kategorijeID = kategorijeID;
+        this.kategorijaID = kategorijaID;
         this.posaoRezerviran = posaoRezerviran;
     }
 
+    public Long getKategorijaID() {
+        return kategorijaID;
+    }
+
+    public void setKategorijaID(Long kategorijaID) {
+        this.kategorijaID = kategorijaID;
+    }
 
     public long getPosaoId() {
         return posaoId;

@@ -34,6 +34,8 @@ import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
 import hr.fer.opp.onedayjob.Servisi.StringServis;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,10 +90,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         ButterKnife.bind(this);
         populateAutoComplete();
 
-        if(fazaTestiranja){
+        if (fazaTestiranja) {
             mEmailView.setText("email1@a.a");
             mPasswordView.setText("pass1");
         }
+
+
     }
 
     private void populateAutoComplete() {
@@ -143,11 +147,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-     public void attemptLogin(View view) {
+    public void attemptLogin(View view) {
         if (mAuthTask != null) {
             return;
         }
-
+        Log.d("tu", "attemptLogin: tu");
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -195,18 +199,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onResponse(Call<List<Korisnik>> call, Response<List<Korisnik>> response) {
                     List<Korisnik> korisnici = response.body();
-                    if(korisnici==null){
+                    if (korisnici == null) {
                         Log.d("LOGIN RETROFIT", "onResponse: nema");
                         Toast.makeText(LoginActivity.this, "Baza je down!", Toast.LENGTH_SHORT).show();
                         return;
-                    }else{
+                    } else {
 //                        Log.d("LOGIN RETROFIT", "onResponse: " + korisnici.toString());
                     }
 
-                    for(Korisnik korisnik : korisnici){
-                        Log.d("LOGIN", "onResponse: provjeravam: "+ korisnik);
+                    for (Korisnik korisnik : korisnici) {
+                        Log.d("LOGIN", "onResponse: provjeravam: " + korisnik);
 
-                        if(mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())){
+                        if (mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())) {
                             Log.d("tu", "onResponse: ttu");
                             Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
 
@@ -241,7 +245,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    public void openRegistration(View view){
+    public void openRegistration(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

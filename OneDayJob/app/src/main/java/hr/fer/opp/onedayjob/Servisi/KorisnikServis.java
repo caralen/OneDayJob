@@ -5,11 +5,10 @@ import java.util.List;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Toshiba on 10-Jan-18.
@@ -28,9 +27,10 @@ public interface KorisnikServis {
     @GET("/{path}")
     Call<List<Korisnik>> getKorisnici(@Path("path") String path);
 
-    @FormUrlEncoded
-    @Headers("Content-Type: application/json")
-    @POST("/{path}")
-    Call<Korisnik> registerKorisnik(@Path("path") String path, @Body Korisnik korisnik);
 
+    @POST("/register")
+    Call<Korisnik> registerKorisnik(@Body Korisnik korisnik);
+
+    @GET("/verify")
+    Call<String> verifyKorisnik(@Query("email") String email);
 }

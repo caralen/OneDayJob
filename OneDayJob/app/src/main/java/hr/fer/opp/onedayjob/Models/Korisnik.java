@@ -64,7 +64,7 @@ public class Korisnik implements Serializable {
         this.brojTelefona = brojTelefona;
         this.jeValidiran = jeValidiran;
         this.jeAdmin = jeAdmin;
-        Log.d("Korisnik", "Korisnik:radim ");
+//        Log.d("Korisnik", "Korisnik:radim ");
     }
 
     public long getkorisnikID() {
@@ -161,7 +161,7 @@ public class Korisnik implements Serializable {
 
     @Override
     public String toString() {
-        return "\nKorisnik: \n" + ime + "\n" + prezime + "\n" + zaporkaHash+  "\n" + email + "\n" + brojTelefona +"\n" + dob + "\n" + jeValidiran + "\n" + datumRegistracije + "\n" + opis;
+        return "\nKorisnik: \n"+ korisnikID +"\n" + ime + "\n" + prezime + "\n" + zaporkaHash+  "\n" + email + "\n" + brojTelefona +"\n" + dob + "\n" + jeValidiran + "\n" + datumRegistracije + "\n" + opis;
     }
 
     public boolean isJeAdmin() {

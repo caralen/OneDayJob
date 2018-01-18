@@ -29,6 +29,8 @@ import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
 import hr.fer.opp.onedayjob.util.Util;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +43,7 @@ public class VerificationActivity extends AppCompatActivity {
 
     @BindView(R.id.verification_code)
     EditText verificationCode;
+Korisnik noviKorisnik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,41 +55,64 @@ public class VerificationActivity extends AppCompatActivity {
             verificationCode.setText("3418");
         }
     }
-    public void attemptVerification(View view) throws IOException {
+    public void attemptVerification(View view) throws IOException, InterruptedException {
 
-        Korisnik noviKorisnik = (Korisnik) getIntent().getExtras().get("noviKorisnik");
-        Integer userGivenCode = Integer.parseInt(verificationCode.getText().toString());
-        int expected = Util.calculateVerificationHash(noviKorisnik.getEmail());
+        noviKorisnik = (Korisnik) getIntent().getExtras().get("noviKorisnik");
+        String userGivenCode = verificationCode.getText().toString();
+        String expected = getIntent().getExtras().getString("kod");
 
         if(!userGivenCode.equals(expected)){
             Toast.makeText(this, "Kod nije odgovarajuć! Očekivani kod je " + expected, Toast.LENGTH_SHORT).show();
             return;
         }
         noviKorisnik.setJeValidiran(true);
-        Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik.getEmail());
+        noviKorisnik.setkorisnikID(0);
+        Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik);
+
+        // Logging ...
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://onedayjobapp2.azurewebsites.net")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
                 .build();
         final KorisnikServis service = retrofit.create(KorisnikServis.class);
 
-        Call<Korisnik> odgovor = service.registerKorisnik("register", noviKorisnik);
-        odgovor.enqueue(new Callback<Korisnik>() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
-                Toast.makeText(VerificationActivity.this, "Registriran uspješno!", Toast.LENGTH_SHORT).show();
+            public void run() {
+                service.registerKorisnik(noviKorisnik).enqueue(new Callback<Korisnik>() {
+                    @Override
+                    public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+
+                        int code = response.code();
+                        if(code==500){
+                            Log.d("Reg", "onResponse: problem pri reg. EMAIL JE KRIV" + response.toString());
+                            Toast.makeText(VerificationActivity.this, "Email već postoji u bazi!", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else if(code/100 != 2){
+                            Log.d("Reg", "onResponse: problem pri reg. NE ZNAM ŠTO JE KRIVO" + response.toString());
+                            Toast.makeText(VerificationActivity.this, "Greška pri unosu podataka u bazu!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        Log.d("REG", "onResponse: registrirao sam korisnika!");
+                        Toast.makeText(VerificationActivity.this, "Korisnik je uspješno registriran!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(VerificationActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Korisnik> call, Throwable t) {
+                        Log.d("REG", "onFailure: " + t.getMessage());
+                        Toast.makeText(VerificationActivity.this, "Nisam uspio registrirati. Razlog: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-
-            @Override
-            public void onFailure(Call<Korisnik> call, Throwable t) {
-                Toast.makeText(VerificationActivity.this, "Neuspješna komunikacija s bazom. Razlog: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+        }).run();
             }
-        });
-
-       Intent intent = new Intent(VerificationActivity.this, LoginActivity.class);
-       startActivity(intent);
-    }
-
-
 }

@@ -62,6 +62,7 @@ public class TheMainActivity extends AppCompatActivity
     //TODO : izbrisati MapsActivity(class) i GpsActivity(class) vjv nepotrebni
 
     private static final List<Posao> posloviTest = new ArrayList<>();
+    Korisnik korisnik;
 
     /* GPS vars*/
     private GoogleMap mMap;
@@ -111,6 +112,8 @@ public class TheMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_the_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        loadUserData();
 
         /* ------------ GPS setup -------- */
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -202,7 +205,13 @@ public class TheMainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.nav_header_name_and_lastname);
+        TextView nav_email = (TextView)hView.findViewById(R.id.nav_header_email);
+        ImageView nav_image = (ImageView) hView.findViewById(R.id.nav_header_profilePhoto);
 
+        nav_user.setText(korisnik.getIme() + " " + korisnik.getPrezime());
+        nav_email.setText("" + korisnik.getEmail());
 
 
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
@@ -226,7 +235,7 @@ public class TheMainActivity extends AppCompatActivity
         usersListV.setOnItemClickListener(this);
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
 
-        loadUserData();
+
 
 
     }
@@ -401,17 +410,7 @@ public class TheMainActivity extends AppCompatActivity
     private void loadUserData(){
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Korisnik k = (Korisnik) bundle.get("korisnik");
-
-       //header_email.setText("asdf");
-
-       // header_firstAndLastName.setText(k.getIme() + " " + k.getPrezime());
-       // header_email.setText(k.getEmail());
-
-        Toast.makeText(this, "This is my Toast message! "  + header_email,
-                Toast.LENGTH_LONG).show();
-
-
+        korisnik = (Korisnik) bundle.get("korisnik");
     }
 
 

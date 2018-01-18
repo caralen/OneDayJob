@@ -51,4 +51,35 @@ public enum Kategorija2 {
         }
         return null;
     }
+
+
+    public static long KategorijaStringToID(String kategorija){
+        switch (kategorija) {
+            case "Kategorija":
+                return 0;
+
+            case "Instrukcije":
+                return 1;
+
+            case "Fizički posao":
+                return 2;
+
+            case "Čuvanje životinja":
+                return 3;
+
+            case "Čuvanje djece":
+                return 4;
+
+            case "Čišćenje":
+                return 5;
+
+            case "Vožnja":
+                return 6;
+
+            default:
+                return 404;
+
+        }
+
+    }
 }

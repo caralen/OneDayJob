@@ -1,5 +1,6 @@
 package hr.fer.opp.onedayjob.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,20 +14,28 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import hr.fer.opp.onedayjob.Models.Kategorija2;
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.util.Util;
 
 public class AddJobActivity extends AppCompatActivity {
+
+    Korisnik korisnik;
 
     ImageView cover;
     Spinner category;
@@ -46,7 +55,7 @@ public class AddJobActivity extends AppCompatActivity {
 
         //Makni fokus
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        loadUserData();
 
 
         cover = (ImageView)findViewById (R.id.add_job_category_image);
@@ -137,6 +146,7 @@ public class AddJobActivity extends AppCompatActivity {
 
 
 
+
                 //Provjera je li odabrana kategorija
                 if (kategorija.equals("Kategorija")){
                     ToastAndClickable("Odaberite kategoriju");
@@ -168,7 +178,11 @@ public class AddJobActivity extends AppCompatActivity {
                     ToastAndClickable("Upišite datum");
                     return;
                 }
-                //TODO : provjeriti je li datum okej
+
+                if (!isValidDate(datum)){
+                    ToastAndClickable("Format datuma nije dobar! (npr. 18.1.2018");
+                    return;
+                }
 
                 if (trajanje.isEmpty()){
                     ToastAndClickable("Upišite trajanje");
@@ -188,7 +202,7 @@ public class AddJobActivity extends AppCompatActivity {
                 }
 
                 try{
-                    Long.parseLong(placa);
+                    Integer.parseInt(placa);
                 }catch (Exception ex){
                     ToastAndClickable("plaća mora biti broj!");
                     return;
@@ -196,8 +210,21 @@ public class AddJobActivity extends AppCompatActivity {
 
 
 
+                 long posaoIdNew=0;
+                 long poslodavacIdNew=korisnik.getkorisnikID();
+                 long posloprimacIdNew=0;
+                 String naslovNew=naslov;
+                 String opisNew=kratkiOpis;
+                 String lokacijaNew=lokacija;
+                 long vrijemeNew=stringToDateToLong(datum);
+                 long trajanjeNew=Long.parseLong(trajanje);
+                 int ponudeniNovacNew=Integer.parseInt(placa);
+                 boolean posaoGotovNew=false;
+                 Long kategorijaIDNew=Kategorija2.KategorijaStringToID(kategorija);
+                 boolean posaoRezerviranNew=false;
 
-                ToastAndClickable("Sve okej");
+
+                 Posao posao = new Posao(posaoIdNew,poslodavacIdNew,posloprimacIdNew,naslovNew,opisNew,lokacijaNew,vrijemeNew,trajanjeNew,ponudeniNovacNew,posaoGotovNew,kategorijaIDNew,posaoRezerviranNew);
 
 
 
@@ -220,26 +247,55 @@ public class AddJobActivity extends AppCompatActivity {
     }
 
     public boolean isValidDate(String input) {
+        Date date = null;
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try{
+             date =  df.parse(input);
+        }catch (Exception ex){
+            return  false;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        //Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
+
+        long milliseconds = date.getTime();
 
         return true;
-//        boolean valid = false;
-//
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-//        try {
-//            Date date = new Date();
-//            String dateTime = dateFormat.format(date);
-//
-//            String txt = dateTime + "";
-//            Toast.makeText(AddJobActivity.this, txt,Toast.LENGTH_LONG).show();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return valid;
     }
 
+    public long stringToDateToLong(String input){
+        Date date = null;
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try{
+            date =  df.parse(input);
+        }catch (Exception ex){
+            return 0;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        //Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
+
+        long milliseconds = date.getTime();
+
+        return milliseconds;
+    }
+
+
+    private void loadUserData(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        korisnik = (Korisnik) bundle.get("korisnik");
+    }
 
 
 }

@@ -46,6 +46,12 @@ public class JobManagementActivity extends AppCompatActivity {
         loadUserData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        generateData();
+    }
+
     private void generateData() {
         Log.d("poslovi_test", "generateData: " + mojiPoslovi);
 

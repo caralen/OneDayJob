@@ -1,5 +1,6 @@
 package hr.fer.opp.onedayjob.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,11 +28,14 @@ import java.util.List;
 import java.util.Locale;
 
 import hr.fer.opp.onedayjob.Models.Kategorija2;
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.util.Util;
 
 public class AddJobActivity extends AppCompatActivity {
+
+    Korisnik korisnik;
 
     ImageView cover;
     Spinner category;
@@ -49,7 +55,7 @@ public class AddJobActivity extends AppCompatActivity {
 
         //Makni fokus
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        loadUserData();
 
 
         cover = (ImageView)findViewById (R.id.add_job_category_image);
@@ -196,7 +202,7 @@ public class AddJobActivity extends AppCompatActivity {
                 }
 
                 try{
-                    Long.parseLong(placa);
+                    Integer.parseInt(placa);
                 }catch (Exception ex){
                     ToastAndClickable("plaća mora biti broj!");
                     return;
@@ -204,12 +210,21 @@ public class AddJobActivity extends AppCompatActivity {
 
 
 
+                 long posaoIdNew=0;
+                 long poslodavacIdNew=korisnik.getkorisnikID();
+                 long posloprimacIdNew=0;
+                 String naslovNew=naslov;
+                 String opisNew=kratkiOpis;
+                 String lokacijaNew=lokacija;
+                 long vrijemeNew=stringToDateToLong(datum);
+                 long trajanjeNew=Long.parseLong(trajanje);
+                 int ponudeniNovacNew=Integer.parseInt(placa);
+                 boolean posaoGotovNew=false;
+                 Long kategorijaIDNew=Kategorija2.KategorijaStringToID(kategorija);
+                 boolean posaoRezerviranNew=false;
 
 
-
-               // Posao posao = new Posao();
-
-                ToastAndClickable("Sve okej");
+                 Posao posao = new Posao(posaoIdNew,poslodavacIdNew,posloprimacIdNew,naslovNew,opisNew,lokacijaNew,vrijemeNew,trajanjeNew,ponudeniNovacNew,posaoGotovNew,kategorijaIDNew,posaoRezerviranNew);
 
 
 
@@ -268,13 +283,19 @@ public class AddJobActivity extends AppCompatActivity {
         int day = c.get(Calendar.DAY_OF_MONTH);
         int year = c.get(Calendar.YEAR);
 
-        Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
+        //Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
 
         long milliseconds = date.getTime();
 
         return milliseconds;
     }
 
+
+    private void loadUserData(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        korisnik = (Korisnik) bundle.get("korisnik");
+    }
 
 
 }

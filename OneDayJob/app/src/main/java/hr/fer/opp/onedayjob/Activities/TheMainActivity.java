@@ -335,7 +335,7 @@ public class TheMainActivity extends AppCompatActivity
         } else if (id == R.id.moji_poslovi_item) {
             openJobManagement();
         } else if (id == R.id.dodaj_posao_item) {
-
+            createJob();
         } else if (id == R.id.uredi_profil) {
             editProfile();
         } else if (id == R.id.statistika) {
@@ -349,6 +349,8 @@ public class TheMainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 
     private void openOtherUser(){
@@ -368,6 +370,11 @@ public class TheMainActivity extends AppCompatActivity
 
     private void openJobManagement(){
         Intent intent = new Intent(TheMainActivity.this, JobManagementActivity.class);
+        startActivity(intent);
+    }
+
+    private void createJob() {
+        Intent intent = new Intent(TheMainActivity.this, AddJobActivity.class);
         startActivity(intent);
     }
 

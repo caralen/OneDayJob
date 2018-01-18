@@ -18,7 +18,8 @@
         <item
             android:id="@+id/statistika"
             android:icon="@drawable/ic_menu_share"
-            android:title="Statistika" />
+            android:title="Statistika"
+            android:visible="false"/>
     </group>
 
     <item android:title="Dodatno">

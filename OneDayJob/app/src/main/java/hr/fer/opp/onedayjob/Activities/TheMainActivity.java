@@ -52,6 +52,7 @@ import java.util.zip.Inflater;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.FeedAdapter;
+import hr.fer.opp.onedayjob.Models.Filter;
 import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
@@ -75,7 +76,7 @@ public class TheMainActivity extends AppCompatActivity
     Korisnik korisnik;
 
     /* GPS vars*/
-    private GoogleMap mMap;
+    GoogleMap mMap;
     List<Address> results = new ArrayList<Address>();
     Geocoder geocoder;
     LatLng fokus = null;
@@ -331,6 +332,28 @@ public class TheMainActivity extends AppCompatActivity
                         Log.d("Login", "onResponse: " + response.body());
 
                         posloviTest = response.body();
+                        TheMainActivity.this.onMapReady(mMap);
+
+                        Intent intent = getIntent();
+                        Bundle bundle = intent.getExtras();
+                        Filter filter = null;
+                        filter =(Filter) bundle.get("filter");
+                        List<Posao> posloviFiltrirani = new ArrayList<>();
+
+
+                        if (filter != null){
+                            for (Posao p : posloviTest){
+                                if (p.getKategorijaID() == filter.getKategorijaID().longValue()){
+                                    posloviFiltrirani.add(p);
+                                }
+                            }
+
+                            FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviFiltrirani);
+                            listJobs.setAdapter(feedAdapter);
+                            return;
+                        }
+
+
 
                         FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviTest);
                         listJobs.setAdapter(feedAdapter);
@@ -398,6 +421,7 @@ public class TheMainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.filter_item) {
+
             openFilter();
         } else if (id == R.id.moji_poslovi_item) {
             openJobManagement();
@@ -431,7 +455,10 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     private void openFilter(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, FilterActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.register_summary)
     EditText desc;
 
-    private boolean enterTestData = true;
+    private boolean enterTestData = false;
 
     Korisnik noviKorisnik;
 

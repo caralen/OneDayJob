@@ -82,9 +82,9 @@ public class TheMainActivity extends AppCompatActivity
 
 
     static{
-        posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00").getTime(), 120, 80, false,  Arrays.asList(new Long[]{Kategorija2.FIZICKI_POSAO.getId()}), false));
-        posloviTest.add(new Posao(2, 2, 2, "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00").getTime(), 60, 150, false, Arrays.asList(new Long[]{Kategorija2.CISCENJE.getId()}), false));
-        posloviTest.add(new Posao(3, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00").getTime(), 90, 60, false,  Arrays.asList(new Long[]{Kategorija2.CUVANJE_ZIVOTINJE.getId()}), false));
+        posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00").getTime(), 120, 80, false,  Kategorija2.FIZICKI_POSAO.getId(), false));
+        posloviTest.add(new Posao(2, 2, 2, "Pranje auta","Treba mi oprati moj novi audi R8, masnu lovu placam.", "Ilica 125, Zagreb",  Timestamp.valueOf("2011-12-22 19:00:00").getTime(), 60, 150, false, Kategorija2.CISCENJE.getId(), false));
+        posloviTest.add(new Posao(3, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00").getTime(), 90, 60, false, Kategorija2.CUVANJE_ZIVOTINJE.getId(), false));
     }
 
     //layout_FEED
@@ -202,8 +202,13 @@ public class TheMainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.nav_header_name_and_lastname);
+        TextView nav_email = (TextView)hView.findViewById(R.id.nav_header_email);
+        ImageView nav_image = (ImageView) hView.findViewById(R.id.nav_header_profilePhoto);
 
-
+        nav_user.setText("kaj ti oces");
+        nav_email.setText("nis");
 
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
         new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");

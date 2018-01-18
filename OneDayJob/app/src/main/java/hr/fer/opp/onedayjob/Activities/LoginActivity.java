@@ -25,14 +25,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
+import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.PosaoServis;
 import hr.fer.opp.onedayjob.Servisi.StringServis;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -94,9 +98,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setText("email1@a.a");
             mPasswordView.setText("pass1");
         }
-
-
     }
+
+
+
+
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -208,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
 
                     for (Korisnik korisnik : korisnici) {
-                        Log.d("LOGIN", "onResponse: provjeravam: " + korisnik);
+//                        Log.d("LOGIN", "onResponse: provjeravam: " + korisnik);
 
                         if (mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())) {
                             Log.d("tu", "onResponse: ttu");

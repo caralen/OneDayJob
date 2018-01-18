@@ -78,7 +78,7 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void popuniZaPosao(Posao posao) {
-        Log.d("posao aktivnost", "popuniZaPosao: " + posao + "koji ima kategorije " + posao.getKategorijeID());
+        Log.d("posao aktivnost", "popuniZaPosao: " + posao + "koji ima kategoriju " + posao.getKategorijaID());
 
         String opis = posao.getOpis();
         String naslov = posao.getNaslov();
@@ -89,8 +89,7 @@ public class JobActivity extends AppCompatActivity {
         String vrijeme = new Date(posao.getVrijeme()).toString();
 
 
-        List<Kategorija2> kategorije = Util.dajEnumKategorije(posao.getKategorijeID());
-        Kategorija2 prikazanaKategorija = kategorije.get(0);
+        Kategorija2 prikazanaKategorija = Kategorija2.dajKategoriju(posao.getKategorijaID());
         Log.d("JobAct", "popuniZaPosao: prikazujem" + prikazanaKategorija);
         String nazivKategorije = prikazanaKategorija.getIme();
 
@@ -104,7 +103,7 @@ public class JobActivity extends AppCompatActivity {
         vrijemePosla.setText(vrijeme);
 
 //        slikaKategorijePosla.setBackgroundResource(Util.slikaZa(kategorije));
-        slikaKategorijePosla.setImageResource(Util.slikaZa(kategorije));
+        slikaKategorijePosla.setImageResource(prikazanaKategorija.getSlikaID());
     }
 
     public void izbrisiPosao(View view){

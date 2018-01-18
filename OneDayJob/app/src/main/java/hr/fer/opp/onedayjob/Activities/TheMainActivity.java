@@ -244,9 +244,6 @@ public class TheMainActivity extends AppCompatActivity
         //usersListV.setAdapter(userAdapter);
         usersListV.setOnItemClickListener(this);
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
-
-
-
     }
 
     /*-------------------------------------------- MAILBOX Adapter ---------------------------------------------------------------- */

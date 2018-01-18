@@ -217,8 +217,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                         if (mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())) {
                             Log.d("tu", "onResponse: ttu");
-                            Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
 
+                            Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("korisnik", korisnik);
                             intent.putExtras(bundle);
@@ -228,9 +228,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             return;
                         }
                     }
-                    Toast.makeText(LoginActivity.this, "Kombinacija email i password nije odgovarajuća! Al puštam te dalje...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
-                    startActivity(intent);
+//                    Toast.makeText(LoginActivity.this, "Kombinacija email i password nije odgovarajuća! Al puštam te dalje...", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(LoginActivity.this, TheMainActivity.class);
+//                    startActivity(intent);
                 }
 
                 @Override

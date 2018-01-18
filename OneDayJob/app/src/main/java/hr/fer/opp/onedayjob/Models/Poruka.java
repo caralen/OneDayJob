@@ -16,9 +16,9 @@ public class Poruka implements Serializable {
     private String sadrzaj;
     @SerializedName("datum")
     private long datum;
-    @SerializedName("posiljateljId")
+    @SerializedName("posiljateljID")
     private long posiljateljId;
-    @SerializedName("primateljId")
+    @SerializedName("primateljID")
     private long primateljId;
 
     public Poruka(long porukaId, String sadrzaj, long datum, long posiljateljId, long primateljId) {

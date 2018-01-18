@@ -1,6 +1,7 @@
 package hr.fer.opp.onedayjob.Activities;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +20,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
+import hr.fer.opp.onedayjob.Models.Poruka;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 import hr.fer.opp.onedayjob.Servisi.KorisnikServis;
+import hr.fer.opp.onedayjob.Servisi.PorukaServis;
 import hr.fer.opp.onedayjob.Servisi.PosaoServis;
 import hr.fer.opp.onedayjob.util.Util;
 import okhttp3.OkHttpClient;
@@ -67,7 +71,7 @@ public class JobActivity extends AppCompatActivity {
 
     @BindView(R.id.gumb_izbrisi_posao)
     Button izbrisiPosao;
-
+    Korisnik korisnik = TheMainActivity.korisnik;
     Posao trenutniPosao = null;
 
     @Override
@@ -76,21 +80,24 @@ public class JobActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job);
         ButterKnife.bind(this);
 
+//        korisnik = (Korisnik) getIntent().getExtras().getSerializable("korisnik");
+//        Toast.makeText(JobActivity.this, "korisnik"+  korisnik.toString(), Toast.LENGTH_SHORT).show();
 
-        if(false){ // ne može mijenjati ako nije vlasnik posla
+
+        if (false) { // ne može mijenjati ako nije vlasnik posla
             onemoguciIzmijene();
         }
 
-        if(false){ // ako je vlasnik
+        if (false) { // ako je vlasnik
             izmijeniPosao.setVisibility(View.VISIBLE);
         }
 
-        if(false){ // samo ako je admin
+        if (false) { // samo ako je admin
             izmijeniPosao.setVisibility(View.VISIBLE);
             izbrisiPosao.setVisibility(View.VISIBLE);
         }
 
-        trenutniPosao  = (Posao) getIntent().getExtras().get("odabraniPosao");
+        trenutniPosao = (Posao) getIntent().getExtras().get("odabraniPosao");
         popuniZaPosao(trenutniPosao);
     }
 
@@ -123,12 +130,12 @@ public class JobActivity extends AppCompatActivity {
         slikaKategorijePosla.setImageResource(prikazanaKategorija.getSlikaID());
     }
 
-    public void izbrisiPosao(View view){
+    public void izbrisiPosao(View view) {
         // Poziv na bazu za brisanjem posla
         Log.d("JobActivity", "izbrisiPosao: " + trenutniPosao.toString());
     }
 
-    public void izmijeniPosao(View view){
+    public void izmijeniPosao(View view) {
         // Poziv na bazu za izmjenom posla
         Log.d("JobActivity", "izmijeniPosao: moram izmjeniti" + trenutniPosao.toString());
 
@@ -157,11 +164,13 @@ public class JobActivity extends AppCompatActivity {
                     public void onResponse(Call<Posao> call, Response<Posao> response) {
                         Log.d("Login", "onResponse: " + response.body());
 
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("korisnik", trenutniPosao); //OVDJE TREBA NOVI KORISNIK
+
                         Intent intent = new Intent(JobActivity.this, TheMainActivity.class);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("korisnik", korisnik); //OVDJE TREBA NOVI KORISNIK
                         intent.putExtras(bundle);
-                        Toast.makeText(JobActivity.this, "Promjena prihvaćena",Toast.LENGTH_LONG).show();
+                        Toast.makeText(JobActivity.this, "Promjena prihvaćena", Toast.LENGTH_LONG).show();
                         startActivity(intent);
                     }
 
@@ -176,7 +185,7 @@ public class JobActivity extends AppCompatActivity {
     }
 
 
-    private void onemoguciIzmijene(){
+    private void onemoguciIzmijene() {
         lokacijaPosla.setKeyListener(null);
         opisPosla.setKeyListener(null);
         zaradaPosla.setKeyListener(null);
@@ -184,6 +193,69 @@ public class JobActivity extends AppCompatActivity {
         naslovPosla.setKeyListener(null);
         poslodavacPosla.setKeyListener(null);
         vrijemePosla.setKeyListener(null);
+    }
+
+    public void kontaktiraj(View view) {
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+//        final KorisnikServis service = retrofit.create(KorisnikServis.class);
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                service.getKorisnik("korisnik/"+korisnik2Id+"/detalji").enqueue(new Callback<Korisnik>() {
+//                    @Override
+//                    public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+//                        Log.d("Login", "onResponse: " + response.body());
+//                        korisnik2 = response.body();
+//                        user[1] = korisnik2.getIme();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Korisnik> call, Throwable t) {
+//                        Log.d("Login", "onFailure: " + t.getMessage());
+//                    }
+//                });
+//            }
+//        }).run();
+
+
+        final PorukaServis pservice = retrofit.create(PorukaServis.class);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pservice.getPoruke(korisnik.getKorisnikID(), trenutniPosao.getPoslodavacId()).enqueue(new Callback<List<Poruka>>() {
+                    @Override
+                    public void onResponse(Call<List<Poruka>> call, Response<List<Poruka>> response) {
+                        Log.d("Login", "onResponse: " + response.body());
+                        List<Poruka> poruke = response.body();
+                        Bundle bundle = new Bundle();
+                        Intent intent = new Intent(JobActivity.this, ChatActivity.class);
+                        intent.putExtra("poruke", (Serializable) poruke);
+                        bundle.putLong("poslodavac", trenutniPosao.getPoslodavacId());
+
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Poruka>> call, Throwable t) {
+                        Log.d("Login", "onFailure: " + t.getMessage());
+                    }
+                });
+            }
+        }).run();
     }
 
 }

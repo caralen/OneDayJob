@@ -23,16 +23,18 @@
             android:id="@+id/ed"
             android:layout_width="0dp"
             android:layout_weight="0.80"
-            android:layout_height="60dp" />
+            android:layout_height="60dp"
+            />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonSend"
             android:layout_width="0dp"
             android:layout_weight="0.20"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text=">" />
+            android:text=">"
+            android:onClick="send" />
     </LinearLayout>
 
 

@@ -69,7 +69,6 @@ Korisnik noviKorisnik;
         noviKorisnik.setkorisnikID(0);
         Log.d("VERIFICATION", "Upravo sam verificirao: " + noviKorisnik);
 
-
         // Logging ...
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);

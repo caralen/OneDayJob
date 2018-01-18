@@ -1,12 +1,18 @@
 package hr.fer.opp.onedayjob.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,25 +22,64 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.zip.Inflater;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hr.fer.opp.onedayjob.FeedAdapter;
 import hr.fer.opp.onedayjob.Models.Kategorija2;
+import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
 
 public class TheMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback,AdapterView.OnItemClickListener {
 
+    //TODO : izbrisati MapsActivity(class) i GpsActivity(class) vjv nepotrebni
 
     private static final List<Posao> posloviTest = new ArrayList<>();
+
+    /* GPS vars*/
+    private GoogleMap mMap;
+    List<Address> results = new ArrayList<Address>();
+    Geocoder geocoder;
+    LatLng fokus = null;
+    /* GPS vars*/
+
+
+    /*MailBox*/
+    ListView usersListV;
+
+    int[] slike={R.drawable.user1, R.drawable.instrukcije, R.drawable.user1,R.drawable.user1,R.drawable.user1, R.drawable.user1, R.drawable.user1, R.drawable.user1};
+    String[] messages={"bok", "posao?", "DAAAA >3Sta ima lima?"};
+    String[] users= {"Ivan Ivanic", "Luka Lukic", "Marija Marijanovic", "Pero Peric", "Pernica Petricic", "Ana Anicic", "lalal", "TOni"};
+
+    /*MailBox*/
+
 
     static{
         posloviTest.add(new Posao(1, 1, 1, "Čišćenje snijega","Bas super posao vam je to!", "Branimirova 15, Zagreb",  Timestamp.valueOf("2011-10-02 18:00:00").getTime(), 120, 80, false,  Arrays.asList(new Long[]{Kategorija2.FIZICKI_POSAO.getId()}), false));
@@ -53,13 +98,26 @@ public class TheMainActivity extends AppCompatActivity
     Button mailbox;
     RelativeLayout mailLayout;
 
+    // NAV_HEADER_ELEMENTS
+    ImageView header_profilePhoto;
+    TextView header_firstAndLastName;
+    TextView header_email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        geocoder = new Geocoder(this, Locale.getDefault());
         setContentView(R.layout.activity_the_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /* ------------ GPS setup -------- */
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        /* ------------ GPS setup -------- */
 
         //FEED LAYOUT
         feedLayout = (RelativeLayout) findViewById(R.id.navigation_feed);
@@ -74,18 +132,25 @@ public class TheMainActivity extends AppCompatActivity
         mailbox = (Button)findViewById(R.id.navigation_mail_button);
 
 
-        gpsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGps();
-            }
-        });
+        /*-- NAV_HEADER_THE_MAIN elements TODO --*/
+        //header_profilePhoto = (ImageView)findViewById(R.id.nav_header_profilePhoto);
+        //header_firstAndLastName = (TextView)findViewById(R.id.nav_header_name_and_lastname);
+       // header_email = (TextView)findViewById(R.id.nav_header_email);
+        //Log.d("ll", "onCreate: "+header_email);
+        //loadUserData();
+        /*-- NAV_HEADER_THE_MAIN elements TODO --*/
+
+
+
+
         mailbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMailbox();
             }
         });
+
+
 
         /*-------------------------------------------- NAVIGATION BAR ---------------------------------------------------------------- */
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -136,13 +201,91 @@ public class TheMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+        /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
+        new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");
+        //Button chatButton = (Button) findViewById(R.id.chat_button);
+
+        //chatButton.setOnClickListener(new View.OnClickListener() {
+        //@Override
+        //public void onClick(View view) {
+        //    openChat();
+        //}
+        //});
+
+        usersListV=(ListView) findViewById(R.id.listV);
+
+        CustomAdapter customAdapter=new CustomAdapter();
+        usersListV.setAdapter(customAdapter);
+
+        //ArrayAdapter<String> userAdapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
+        //usersListV.setAdapter(userAdapter);
+        usersListV.setOnItemClickListener(this);
+        /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
+
+        loadUserData();
+
+
     }
+
+    /*-------------------------------------------- MAILBOX Adapter ---------------------------------------------------------------- */
+    class CustomAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return users.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view= getLayoutInflater().inflate(R.layout.customlayout,null);
+            ImageView imageView=(ImageView)view.findViewById(R.id.imageView3);
+            TextView textView= (TextView) view.findViewById(R.id.textView_message);
+
+            //userova slika ovisno cija je poruka
+            imageView.setImageResource(slike[i]);
+            textView.setText(users[i]);
+
+
+            return view;
+        }
+    }
+    /*-------------------------------------------- MAILBOX Adapter ---------------------------------------------------------------- */
+
+    /*-------------------------------------------- MAILBOX method ---------------------------------------------------------------- */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        String talkingTo=(String)usersListV.getItemAtPosition(position);
+        //Toast.makeText(this, talkingTo, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(TheMainActivity.this, ChatActivity.class);
+        intent.putExtra("takingTo", talkingTo);
+        startActivity(intent);
+    }
+    /*-------------------------------------------- MAILBOX method ---------------------------------------------------------------- */
+
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
         generateData();
     }
+
+
 
     private void generateData() {
         //Retrofit poziv, bla bla
@@ -177,10 +320,6 @@ public class TheMainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -237,11 +376,6 @@ public class TheMainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void openGps(){
-        Intent intent = new Intent(TheMainActivity.this, GpsActivity.class);
-        startActivity(intent);
-    }
-
     private void openProfile(){
         Intent intent = new Intent(TheMainActivity.this, ProfileViewActivity.class);
         startActivity(intent);
@@ -256,4 +390,109 @@ public class TheMainActivity extends AppCompatActivity
         Intent intent = new Intent(TheMainActivity.this, MailboxActivity.class);
         startActivity(intent);
     }
+
+    private void loadUserData(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Korisnik k = (Korisnik) bundle.get("korisnik");
+
+       //header_email.setText("asdf");
+
+       // header_firstAndLastName.setText(k.getIme() + " " + k.getPrezime());
+       // header_email.setText(k.getEmail());
+
+        Toast.makeText(this, "This is my Toast message! "  + header_email,
+                Toast.LENGTH_LONG).show();
+
+
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        /*TEST*/
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+
+
+        //locationManager.removeUpdates(locationListener);
+        /*TEST*/
+
+
+        for (Posao p : posloviTest){
+
+            //Iz String lokacije izvuci adresu (class Adress)
+            try {
+                results = geocoder.getFromLocationName(p.getLokacija(),2);
+            } catch (IOException e) {
+                continue;
+            }
+            if (results.isEmpty())continue;
+
+            //Daj mi Latitude i Longitude adrese
+            LatLng posaoLatLng = new LatLng(results.get(0).getLatitude(),results.get(0).getLongitude());
+
+            //Postavi marker
+            Marker posaoMarker = mMap.addMarker(new MarkerOptions().position(posaoLatLng).title(p.getNaslov()));
+
+
+        }
+
+        /*Lat i Long od fera, tu ce biti pocetni zoom mape*/
+        if (fokus == null){
+            fokus = new LatLng(45.8007017,15.9690278);
+        }
+
+        //LatLng trg = new LatLng(45.813104, 15.977587);
+        //LatLng
+
+        // googleMap.setOnInfoWindowClickListener(listener);
+
+        //final Marker m1 = mMap.addMarker(new MarkerOptions().position(trg).title("Ovde jest trg ba"));
+        //final Marker m2 = mMap.addMarker(new MarkerOptions().position(fer).title("Ovdje je nas najdrazi faksic"));
+
+
+
+        GoogleMap.OnInfoWindowClickListener listener = new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                //Ovo vjv moze bolje - Spajanje markera i posla
+                String title = marker.getTitle();
+
+                for (Posao pos : posloviTest){
+                    if (title.equals(pos.getNaslov())){
+
+                        Intent intent = new Intent(TheMainActivity.this, JobActivity.class);
+
+                        Bundle bundle = new Bundle();
+
+                        Log.d("odabrani posao", "onClick: saljem posao" + pos.getNaslov());
+                        bundle.putSerializable("odabraniPosao", pos);
+                        intent.putExtras(bundle);
+
+                        startActivity(intent);
+
+
+                        //gpsButton.setVisibility(View.VISIBLE);
+                        // gpsButton.setText(pos.getPosaoId() + "");
+
+
+
+                    }
+                }
+
+
+            }
+        };
+
+        mMap.setOnInfoWindowClickListener(listener);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(fokus));
+        mMap.animateCamera( CameraUpdateFactory.zoomTo( 13.0f ) );
+    }
+
+
 }

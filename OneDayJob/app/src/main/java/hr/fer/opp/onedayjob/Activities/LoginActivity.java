@@ -235,6 +235,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(LoginActivity.this, "Cannot communicate with database. Reason: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+
+            /*ovo se treba odkomentirati i iskoristiti kad ce se fakat spajat na backend*/
+//            showProgress(true);
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
         }
     }
 

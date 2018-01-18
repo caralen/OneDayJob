@@ -21,5 +21,5 @@ public interface PosaoServis {
     Call<List<Posao>> getAktivniPoslovi();
 
     @POST("/dodajPosao")
-    Call<Korisnik> stvoriPosao(@Body Posao posao);
+    Call<Boolean> dodajPosao(@Body Posao posao);
 }

@@ -25,11 +25,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
@@ -96,36 +98,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setText("email1@a.a");
             mPasswordView.setText("pass1");
         }
-
-        // Logging ...
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);  // <-- this is the important line!
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://onedayjobapp2.azurewebsites.net")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
-        final PosaoServis service = retrofit.create(PosaoServis.class);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                service.getAktivniPoslovi().enqueue(new Callback<List<Posao>>() {
-                    @Override
-                    public void onResponse(Call<List<Posao>> call, Response<List<Posao>> response) {
-                        Log.d("Login", "onResponse: " + response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Posao>> call, Throwable t) {
-                        Log.d("Login", "onFailure: " + t.getMessage());
-                    }
-                });
-            }
-        }).run();
     }
 
 
@@ -242,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
 
                     for (Korisnik korisnik : korisnici) {
-                        Log.d("LOGIN", "onResponse: provjeravam: " + korisnik);
+//                        Log.d("LOGIN", "onResponse: provjeravam: " + korisnik);
 
                         if (mEmailView.getText().toString().equals(korisnik.getEmail()) && mPasswordView.getText().toString().equals(korisnik.getZaporkaHash())) {
                             Log.d("tu", "onResponse: ttu");

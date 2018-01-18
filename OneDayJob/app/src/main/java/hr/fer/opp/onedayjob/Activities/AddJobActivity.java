@@ -158,7 +158,6 @@ public class AddJobActivity extends AppCompatActivity {
 
 
 
-
                 //Provjera je li odabrana kategorija
                 if (kategorija.equals("Kategorija")){
                     ToastAndClickable("Odaberite kategoriju");

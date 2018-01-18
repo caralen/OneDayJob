@@ -14,12 +14,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Posao;
@@ -137,6 +140,7 @@ public class AddJobActivity extends AppCompatActivity {
 
 
 
+
                 //Provjera je li odabrana kategorija
                 if (kategorija.equals("Kategorija")){
                     ToastAndClickable("Odaberite kategoriju");
@@ -168,7 +172,11 @@ public class AddJobActivity extends AppCompatActivity {
                     ToastAndClickable("Upišite datum");
                     return;
                 }
-                //TODO : provjeriti je li datum okej
+
+                if (!isValidDate(datum)){
+                    ToastAndClickable("Format datuma nije dobar! (npr. 18.1.2018");
+                    return;
+                }
 
                 if (trajanje.isEmpty()){
                     ToastAndClickable("Upišite trajanje");
@@ -197,6 +205,10 @@ public class AddJobActivity extends AppCompatActivity {
 
 
 
+
+
+               // Posao posao = new Posao();
+
                 ToastAndClickable("Sve okej");
 
 
@@ -220,24 +232,47 @@ public class AddJobActivity extends AppCompatActivity {
     }
 
     public boolean isValidDate(String input) {
+        Date date = null;
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try{
+             date =  df.parse(input);
+        }catch (Exception ex){
+            return  false;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        //Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
+
+        long milliseconds = date.getTime();
 
         return true;
-//        boolean valid = false;
-//
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-//        try {
-//            Date date = new Date();
-//            String dateTime = dateFormat.format(date);
-//
-//            String txt = dateTime + "";
-//            Toast.makeText(AddJobActivity.this, txt,Toast.LENGTH_LONG).show();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return valid;
+    }
+
+    public long stringToDateToLong(String input){
+        Date date = null;
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try{
+            date =  df.parse(input);
+        }catch (Exception ex){
+            return 0;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        Toast.makeText(AddJobActivity.this,"" + day +" " + month+" " + year,Toast.LENGTH_LONG).show();
+
+        long milliseconds = date.getTime();
+
+        return milliseconds;
     }
 
 

@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
-    private boolean fazaTestiranja = true;
+    private boolean fazaTestiranja = false;
 
 
     // UI references.

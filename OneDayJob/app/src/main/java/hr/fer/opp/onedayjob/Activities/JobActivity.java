@@ -71,6 +71,23 @@ public class JobActivity extends AppCompatActivity {
 
     @BindView(R.id.gumb_izbrisi_posao)
     Button izbrisiPosao;
+
+    @BindView(R.id.kontaktiraj_poslodavca)
+    Button kontaktirajPoslodavca;
+
+
+    @BindView(R.id.gumb_unesi_posloprimca)
+    Button unesiPosloprimca;
+
+
+
+
+    @BindView(R.id.posloprimac_email)
+    EditText posloprimacEmail;
+
+
+
+
     Korisnik korisnik = TheMainActivity.korisnik;
     Posao trenutniPosao = null;
 
@@ -79,26 +96,72 @@ public class JobActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job);
         ButterKnife.bind(this);
+        trenutniPosao = (Posao) getIntent().getExtras().get("odabraniPosao");
+        popuniZaPosao(trenutniPosao);
 
 //        korisnik = (Korisnik) getIntent().getExtras().getSerializable("korisnik");
 //        Toast.makeText(JobActivity.this, "korisnik"+  korisnik.toString(), Toast.LENGTH_SHORT).show();
 
+        boolean owner = false;
+        boolean admin = false;
 
-        if (false) { // ne može mijenjati ako nije vlasnik posla
+        if (korisnik.getkorisnikID() == trenutniPosao.getPoslodavacId()){
+            kontaktirajPoslodavca.setVisibility(View.GONE);
+            owner=true;
+        }
+
+
+
+        if (!owner) { // ne može mijenjati ako nije vlasnik posla
             onemoguciIzmijene();
         }
 
-        if (false) { // ako je vlasnik
+        if (owner) { // ako je vlasnik
             izmijeniPosao.setVisibility(View.VISIBLE);
         }
 
-        if (false) { // samo ako je admin
-            izmijeniPosao.setVisibility(View.VISIBLE);
+        if (admin) { // samo ako je admin
             izbrisiPosao.setVisibility(View.VISIBLE);
         }
 
-        trenutniPosao = (Posao) getIntent().getExtras().get("odabraniPosao");
-        popuniZaPosao(trenutniPosao);
+        izbrisiPosao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO IZBRISI - BAZA
+            }
+        });
+
+        izmijeniPosao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String opisPoslaNew=opisPosla.getText().toString();
+                String naslovPosla;
+
+            }
+        });
+
+        unesiPosloprimca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               //TODO provjeri da li postoji u bazi user s mailom:
+                String posloprimacMail = posloprimacEmail.getText().toString();
+
+
+
+                Toast.makeText(JobActivity.this,"Posao dodjeljen",Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("korisnik", korisnik);
+                Intent intent = new Intent(JobActivity.this, TheMainActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+
+            }
+        });
+
+
+
+
     }
 
     private void popuniZaPosao(Posao posao) {
@@ -193,6 +256,12 @@ public class JobActivity extends AppCompatActivity {
         naslovPosla.setKeyListener(null);
         poslodavacPosla.setKeyListener(null);
         vrijemePosla.setKeyListener(null);
+
+        posloprimacEmail.setVisibility(View.GONE);
+        izbrisiPosao.setVisibility(View.GONE);
+        izmijeniPosao.setVisibility(View.GONE);
+        unesiPosloprimca.setVisibility(View.GONE);
+
     }
 
     public void kontaktiraj(View view) {

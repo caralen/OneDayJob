@@ -87,12 +87,13 @@ public class TheMainActivity extends AppCompatActivity
     /* GPS vars*/
 
     List<Long> razgovori;
+    Boolean startFlag=true;
 
 
     /*MailBox*/
     ListView usersListV;
 
-    int[] slike={R.drawable.user1, R.drawable.instrukcije, R.drawable.user1,R.drawable.user1,R.drawable.user1, R.drawable.user1, R.drawable.user1, R.drawable.user1};
+    int[] slike={R.mipmap.anonymous_user};
     List<Korisnik> users = new ArrayList<>();
 
     /*MailBox*/
@@ -188,7 +189,13 @@ public class TheMainActivity extends AppCompatActivity
                         feedLayout.setVisibility(View.GONE);
                         gpsLayout.setVisibility(View.GONE);
                         mailLayout.setVisibility(View.VISIBLE);
-                        stvoriRazgovor();
+                        if(startFlag){
+                            stvoriRazgovor();
+                            startFlag=false;
+                        }
+
+
+
                         return true;
                 }
 
@@ -377,7 +384,7 @@ public class TheMainActivity extends AppCompatActivity
             TextView textView= (TextView) view.findViewById(R.id.textView_message);
 
             //userova slika ovisno cija je poruka
-            imageView.setImageResource(slike[i]);
+            imageView.setImageResource(slike[0]);
             textView.setText(users.get(i).getIme() + " " + users.get(i).getPrezime());
             return view;
         }
@@ -633,7 +640,7 @@ public class TheMainActivity extends AppCompatActivity
         bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, JobActivity.class);
         intent.putExtras(bundle);
-        Toast.makeText(this, bundle.getSerializable("korisnik").toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, bundle.getSerializable("korisnik").toString(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 

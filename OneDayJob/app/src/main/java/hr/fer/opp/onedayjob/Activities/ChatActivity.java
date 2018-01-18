@@ -65,7 +65,7 @@ public class ChatActivity extends AppCompatActivity {
         sendButton = (Button) findViewById(R.id.buttonSend);
 
         poruke = (List<Poruka>)getIntent().getSerializableExtra("poruke");
-        Toast.makeText(this, poruke.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, poruke.toString(), Toast.LENGTH_SHORT).show();
 
 
         ListView messegesListView=(ListView) findViewById(R.id.listV);
@@ -165,8 +165,13 @@ public class ChatActivity extends AppCompatActivity {
 
             textView.setText(poruke.get(i).getSadrzaj());
             textView.setBackgroundResource(R.drawable.bg);
-            textUser.setText(String.valueOf(poruke.get(i).getPosiljateljId()));
-
+            if(poruke.get(i).getPosiljateljId() == TheMainActivity.korisnik.getkorisnikID()){
+                textUser.setText("You");
+            }
+            else {
+                //textUser.setText("Poslodavac");
+                textUser.setText("Sugovornik (ID: "+ String.valueOf(poruke.get(i).getPosiljateljId()) +")");
+            }
             return view;
         }
     }

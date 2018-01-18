@@ -52,7 +52,7 @@ Korisnik noviKorisnik;
         ButterKnife.bind(this);
 
         if(fillTestCode){
-            verificationCode.setText("3418");
+            //verificationCode.setText("3418");
         }
     }
     public void attemptVerification(View view) throws IOException, InterruptedException {
@@ -62,7 +62,7 @@ Korisnik noviKorisnik;
         String expected = getIntent().getExtras().getString("kod");
 
         if(!userGivenCode.equals(expected)){
-            Toast.makeText(this, "Kod nije odgovarajuć! Očekivani kod je " + expected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Kod nije odgovarajuć!", Toast.LENGTH_SHORT).show();
             return;
         }
         noviKorisnik.setJeValidiran(true);

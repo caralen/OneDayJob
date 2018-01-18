@@ -278,6 +278,8 @@
 
         </LinearLayout>
 
+
+
         <LinearLayout
             android:id="@+id/dodatne_inf_6"
             android:layout_width="match_parent"
@@ -285,27 +287,66 @@
             android:layout_below="@+id/dodatne_inf_5"
             android:background="#ffffff"
             android:orientation="vertical">
-            <Button
-                android:id="@+id/gumb_izmijeni_posao"
+
+            <EditText
+                android:id="@+id/posloprimac_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Izmijeni"
-                android:visibility="invisible"
-                android:onClick="izmijeniPosao"/>
+                android:visibility="visible"
+                android:hint="mail za pridruzivanje posla"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dodatne_inf_7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dodatne_inf_6"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+
             <Button
                 android:id="@+id/kontaktiraj_poslodavca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kontaktiraj poslodavca"
+                android:text="Kontaktiraj"
+                android:visibility="visible"
                 android:onClick="kontaktiraj"/>
+
+            <Button
+                android:id="@+id/gumb_izmijeni_posao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Izmijeni"
+                android:textColor="#FF0000"
+                android:visibility="visible"
+                android:onClick="izmijeniPosao"/>
+
+            <Button
+
+                android:id="@+id/gumb_unesi_posloprimca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unesi Posloprimca"
+                android:textColor="#FF0000"
+                android:visibility="visible"
+                android:onClick="izbrisiPosao"/>
+
+
             <Button
                 android:id="@+id/gumb_izbrisi_posao"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Izbrisi"
                 android:textColor="#FF0000"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:onClick="izbrisiPosao"/>
+
         </LinearLayout>
+
+
+
+
     </RelativeLayout>
 </ScrollView>

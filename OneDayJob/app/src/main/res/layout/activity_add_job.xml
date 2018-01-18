@@ -65,7 +65,7 @@
                 android:gravity="center"
                 android:hint=" Naslov posla "
                 android:singleLine="true"
-                android:maxLength="20"
+                android:maxLength="15"
                 android:textColor="#000000"
                 android:textSize="24dp"
                 android:textStyle="bold" />

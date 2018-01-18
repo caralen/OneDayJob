@@ -436,7 +436,10 @@ public class TheMainActivity extends AppCompatActivity
     }
 
     private void openJobManagement(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("korisnik", korisnik);
         Intent intent = new Intent(TheMainActivity.this, JobManagementActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

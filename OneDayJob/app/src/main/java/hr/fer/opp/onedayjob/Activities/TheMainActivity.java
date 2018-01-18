@@ -56,13 +56,22 @@ import hr.fer.opp.onedayjob.Models.Kategorija2;
 import hr.fer.opp.onedayjob.Models.Korisnik;
 import hr.fer.opp.onedayjob.Models.Posao;
 import hr.fer.opp.onedayjob.R;
+import hr.fer.opp.onedayjob.Servisi.PosaoServis;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class TheMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback,AdapterView.OnItemClickListener {
 
     //TODO : izbrisati MapsActivity(class) i GpsActivity(class) vjv nepotrebni
 
-    private static final List<Posao> posloviTest = new ArrayList<>();
+    private static  List<Posao> posloviTest = new ArrayList<>();
     Korisnik korisnik;
 
     /* GPS vars*/
@@ -300,9 +309,47 @@ public class TheMainActivity extends AppCompatActivity
         //Retrofit poziv, bla bla
         //stvaranje i punjenje ove arrayListe koja je treci argument u konstruktoru FeedAdaptera sa stvarnim podacima
         Log.d("poslovi_test", "generateData: " + posloviTest);
-        // zasad koristimo dummy podatke
-        FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviTest);
-        listJobs.setAdapter(feedAdapter);
+
+        // Logging ...
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://onedayjobapp2.azurewebsites.net")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        final PosaoServis service = retrofit.create(PosaoServis.class);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Posao p = new Posao(0, 3, 3, "Hranjenje ljubimaca","Idem na put i treba mi nahraniti sve moje ljubimce, a pošto imam doma cijeli zoološki vrt trebat će vam vremena da to napravite.", "Vukovarska 30, Zagreb",  Timestamp.valueOf("2011-01-20 10:00:00").getTime(), 90, 60, false, Kategorija2.CUVANJE_ZIVOTINJE.getId(), false);
+                service.getAktivniPoslovi().enqueue(new Callback<List<Posao>>() {
+                    @Override
+                    public void onResponse(Call<List<Posao>> call, Response<List<Posao>> response) {
+                        Log.d("Login", "onResponse: " + response.body());
+
+                        posloviTest = response.body();
+
+                        FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviTest);
+                        listJobs.setAdapter(feedAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Posao>> call, Throwable t) {
+                        Log.d("Login", "onFailure: " + t.getMessage());
+
+                        Toast.makeText(TheMainActivity.this, "Nisam dohvatio iz baze!", Toast.LENGTH_SHORT).show();
+                        FeedAdapter feedAdapter = new FeedAdapter(TheMainActivity.this, R.layout.list_element, posloviTest);
+                        listJobs.setAdapter(feedAdapter);
+                    }
+                });
+            }
+        }).run();
     }
 
     private Boolean exit = false;

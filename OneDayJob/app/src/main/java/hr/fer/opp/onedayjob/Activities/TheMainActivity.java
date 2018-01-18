@@ -202,8 +202,13 @@ public class TheMainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.nav_header_name_and_lastname);
+        TextView nav_email = (TextView)hView.findViewById(R.id.nav_header_email);
+        ImageView nav_image = (ImageView) hView.findViewById(R.id.nav_header_profilePhoto);
 
-
+        nav_user.setText("kaj ti oces");
+        nav_email.setText("nis");
 
         /*-------------------------------------------- MAILBOX ---------------------------------------------------------------- */
         new JsonTask().execute("https://onedayjobapp2.azurewebsites.net/poruke?korisnikID1=2&&korisnikID2=3");

@@ -78,7 +78,8 @@
 
         <activity
             android:name=".Activities.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Activities.AddJobActivity"></activity>
     </application>
 
 </manifest>

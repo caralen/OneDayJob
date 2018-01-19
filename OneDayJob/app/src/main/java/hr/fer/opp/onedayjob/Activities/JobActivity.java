@@ -148,12 +148,21 @@ public class JobActivity extends AppCompatActivity {
 
 
 
-                Toast.makeText(JobActivity.this,"Posao dodjeljen",Toast.LENGTH_LONG).show();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("korisnik", korisnik);
-                Intent intent = new Intent(JobActivity.this, TheMainActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if( posloprimacMail.contains("@") ){
+                    Toast.makeText(JobActivity.this,"Posao dodjeljen",Toast.LENGTH_LONG).show();
+                    //Log.d("JobActivity", "Posao prihvacen");
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("korisnik", korisnik);
+                    Intent intent = new Intent(JobActivity.this, TheMainActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(JobActivity.this,"Unesite ispravan email",Toast.LENGTH_LONG).show();
+                }
+
+                //Toast.makeText(JobActivity.this,"Posao dodjeljen",Toast.LENGTH_LONG).show();
+
 
 
             }
@@ -191,6 +200,15 @@ public class JobActivity extends AppCompatActivity {
 
 //        slikaKategorijePosla.setBackgroundResource(Util.slikaZa(kategorije));
         slikaKategorijePosla.setImageResource(prikazanaKategorija.getSlikaID());
+    }
+
+    public void unesiPosloprimca(View view) {
+        // Poziv na bazu za brisanjem posla
+        EditText edit=(EditText) findViewById (R.id.posloprimac_email);
+        if( edit.getText().toString().contains("@") ){
+            Log.d("JobActivity", "Posao prihvacen");
+        }
+        Log.d("JobActivity", "Unesiti ispravan email ");
     }
 
     public void izbrisiPosao(View view) {

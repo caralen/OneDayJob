@@ -331,14 +331,14 @@
                 android:text="Unesi Posloprimca"
                 android:textColor="#FF0000"
                 android:visibility="visible"
-                android:onClick="izbrisiPosao"/>
+                android:onClick="unesiPosloprimca"/>
 
 
             <Button
                 android:id="@+id/gumb_izbrisi_posao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Izbrisi"
+                android:text="Obriši"
                 android:textColor="#FF0000"
                 android:visibility="visible"
                 android:onClick="izbrisiPosao"/>
